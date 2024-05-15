@@ -19,7 +19,7 @@ export default {
         'Text': '#2d2e2e',
       },
       fontFamily:{
-        'body':"Open Sans"
+        'body': ['Poppins', 'sans-serif']
       }
     },
   },
