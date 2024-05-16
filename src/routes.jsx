@@ -10,6 +10,7 @@ import { Navbar } from "./Components/Navbar/Navbar";
 import { Footer } from "./Components/Footer/Footer";
 import { LandingPage } from "./Pages/Buyer/LandingPage/LandingPage";
 import { SellerDashboard } from "./Pages/Seller/Dashboard/SellerDashboard";
+import { StoreForm } from "./Pages/Seller/StoreForm/StoreForm";
 
 const routes = [
     {
@@ -63,6 +64,16 @@ const routes = [
         Element: () => (
             <Layout Sidebar={SellerSidebar}>
                 <SellerDashboard />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "seller",
+    },
+    {
+        path: "/seller/store",
+        Element: () => (
+            <Layout Sidebar={SellerSidebar}>
+                <StoreForm />
             </Layout>
         ),
         isAuthenticated: true,
