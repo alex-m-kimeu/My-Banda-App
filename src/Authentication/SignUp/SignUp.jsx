@@ -87,7 +87,7 @@ export const SignUp = () => {
                 } else if (decodedToken.sub.role === 'deliverer') {
                     navigate('/deliverer/dashboard');
                 } else if (decodedToken.sub.role === 'buyer') {
-                    navigate('/buyer/dashboard');
+                    navigate('/buyer/home');
                 } else {
                     throw new Error('Invalid role');
                 }

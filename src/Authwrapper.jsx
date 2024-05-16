@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { jwtDecode } from 'jwt-decode';
 
-const AuthWrapper = ({ children, role, Sidebar }) => {
+const AuthWrapper = ({ children, role, Sidebar, Header, Footer }) => {
   const token = localStorage.getItem("token");
   const isAuthenticated = !!token;
   const decodedToken = token ? jwtDecode(token) : null;
@@ -21,7 +21,9 @@ const AuthWrapper = ({ children, role, Sidebar }) => {
   return (
     <div>
       {Sidebar && <Sidebar />}
+      {Header && <Header />}
       {children}
+      {Footer && <Footer />}
     </div>
   );
 };
