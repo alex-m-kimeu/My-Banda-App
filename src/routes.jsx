@@ -2,12 +2,14 @@ import { SignIn } from "./Authentication/SignIn/SignIn";
 import { SignUp } from "./Authentication/SignUp/SignUp";
 import { Layout } from "./Components/Layout/Layout";
 import { AdminSidebar } from "./Components/Sidebar/AdminSidebar";
+import { SellerSidebar } from "./Components/Sidebar/SellerSidebar";
 import { ComplaintsAdmin } from "./Pages/Admin/Complaints/ComplaintsAdmin";
 import { DashboardAdmin } from "./Pages/Admin/Dashboard/DashboardAdmin";
 import { UsersAdmin } from "./Pages/Admin/Users/UsersAdmin";
 import { Navbar } from "./Components/Navbar/Navbar";
 import { Footer } from "./Components/Footer/Footer";
 import { LandingPage } from "./Pages/Buyer/LandingPage/LandingPage";
+import { SellerDashboard } from "./Pages/Seller/Dashboard/SellerDashboard";
 
 const routes = [
     {
@@ -55,6 +57,16 @@ const routes = [
         ),
         isAuthenticated: true,
         role: "admin",
+    },
+    {
+        path: "/seller/dashboard",
+        Element: () => (
+            <Layout Sidebar={SellerSidebar}>
+                <SellerDashboard />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "seller",
     },
     {
         path: "/buyer/home",
