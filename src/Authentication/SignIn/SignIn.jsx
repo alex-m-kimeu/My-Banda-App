@@ -92,7 +92,7 @@ export const SignIn = () => {
           } else if (decodedToken.sub.role === 'seller') {
             navigate('/seller/dashboard');
           } else if (decodedToken.sub.role === 'buyer') {
-            navigate('/buyer/dashboard');
+            navigate('/buyer/home');
           } else if (decodedToken.sub.role === 'deliverer') {
             navigate('/deliverer/dashboard');
           } else {

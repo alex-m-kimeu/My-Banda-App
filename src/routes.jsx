@@ -5,6 +5,9 @@ import { AdminSidebar } from "./Components/Sidebar/AdminSidebar";
 import { ComplaintsAdmin } from "./Pages/Admin/Complaints/ComplaintsAdmin";
 import { DashboardAdmin } from "./Pages/Admin/Dashboard/DashboardAdmin";
 import { UsersAdmin } from "./Pages/Admin/Users/UsersAdmin";
+import { Navbar } from "./Components/Navbar/Navbar";
+import { Footer } from "./Components/Footer/Footer";
+import { LandingPage } from "./Pages/Buyer/LandingPage/LandingPage";
 
 const routes = [
     {
@@ -52,7 +55,18 @@ const routes = [
         ),
         isAuthenticated: true,
         role: "admin",
-    },  
+    },
+    {
+        path: "/buyer/home",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <LandingPage />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+
 ];
 
 export default routes;

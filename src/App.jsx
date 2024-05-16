@@ -14,7 +14,7 @@ function App() {
         {routes.map((route, index) => (
           route.path !== "/signin" &&
           <Route key={index} path={route.path} element={
-            <AuthWrapper role={route.role} Sidebar={route.Sidebar}>
+            <AuthWrapper role={route.role} Sidebar={route.Sidebar} Header={route.Header} Footer={route.Footer}>
               <route.Element />
             </AuthWrapper>
           }/>
