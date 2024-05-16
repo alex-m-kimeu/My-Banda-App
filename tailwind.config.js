@@ -14,6 +14,7 @@ export default {
         'Secondary': '#F3C82E',
         'Variant': '#000000',
         'Variant2': '#4B5563',
+        'Variant3': '#F3F4F6',
         'Green': '#1F9254',
         'Red': '#FF3C5F',
         'Text': '#2d2e2e',
