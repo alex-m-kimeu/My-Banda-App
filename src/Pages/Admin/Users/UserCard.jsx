@@ -7,7 +7,7 @@ export const UserCard = ({ user, onDelete }) => {
     fetch(`http://127.0.0.1:5500/${user.id}`, {
       method: "DELETE",
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': 'Bearer ' + token,
       },
     })
     .then(response => {

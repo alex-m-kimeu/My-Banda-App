@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { UserList } from "./UserList";
 import { Search } from "./Search";
 
-export const Users = () => {
+export const UsersAdmin = () => {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState("");
 

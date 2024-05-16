@@ -6,7 +6,7 @@ import { AiOutlineDollar } from "react-icons/ai";
 import { GoReport } from "react-icons/go";
 import bg from "../../../assets/admin.png"
 
-export const Dashboard = () => {
+export const DashboardAdmin = () => {
     const [users, setUsers] = useState([]);
     const [complaints, setComplaints] = useState([]);
 
