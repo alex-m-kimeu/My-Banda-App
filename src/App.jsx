@@ -3,11 +3,13 @@ import AuthWrapper from './Authwrapper';
 import routes from './routes';
 import { SignIn } from './Authentication/SignIn/SignIn';
 import { AddProduct } from './Pages/Seller/AddProduct';
+import { ProductsPage } from './Pages/Seller/Products/ProductsPage';
 
 function App() {
   return (
     <>
     <AddProduct/>
+    <ProductsPage/>
     </>
     // <Router       
     //   basename={import.meta.env.DEV ? '/' : '/My-Banda-App/'}
