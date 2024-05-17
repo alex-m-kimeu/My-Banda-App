@@ -1,196 +1,202 @@
-import React, { useState } from 'react';
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useRef, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 export const AddProduct = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [images, setImages] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [storeID, setStoreID] = useState('');
 
-  const token = localStorage.getItem('token');
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.sub.id;
 
-  const handleSave = async () => {
-    const formData = new FormData();
-    formData.append('name', title);
-    formData.append('description', description);
-    formData.append('price', price);
-    formData.append('quantity', quantity);
-    images.forEach((image) => {
-      formData.append('images', image.file);
+    fetchUser(token, userId);
+  }, []);
+
+  const fetchUser = (token, userId) => {
+    fetch(`http://127.0.0.1:5500/user/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setStoreID(data.store.id);
+      })
+      .catch(error => console.error('Error:', error));
+  };
+
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    price: '',
+    quantity: '',
+    images: [],
+    category_name: ''
+  });
+
+  const [preview, setPreview] = useState([]);
+  const imageInputRef = useRef();
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setFormData((prevFormData) => ({ ...prevFormData, images: files }));
+    const filePreviews = files.map(file => URL.createObjectURL(file));
+    setPreview(filePreviews);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+
+    const storeData = new FormData();
+    storeData.append('title', formData.title);
+    storeData.append('description', formData.description);
+    formData.images.forEach((image, index) => {
+      storeData.append(`images[${index}]`, image);
     });
-    formData.append('categories', JSON.stringify(categories));
+    storeData.append('price', formData.price);
+    storeData.append('quantity', formData.quantity);
+    storeData.append('seller_id', storeID);
+    storeData.append('category_name', formData.category_name);
 
-    try {
-      const response = await fetch('http://127.0.0.1:5500/products', {
-        method: 'POST',
-        headers: {
-          "Authorization": `Bearer ${token}`
-        },
-        body: formData,
+    fetch("http://127.0.0.1:5500/products", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+      body: storeData,
+    })
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return resp.json();
+      })
+      .then((data) => {
+        console.log("Product created successfully:", data);
+      })
+      .catch((error) => {
+        console.error('There has been a problem with your post operation:', error);
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error saving product:', errorData);
-        alert(`Error saving product: ${errorData.message}`);
-        return;
-      }
-
-      alert('Product saved successfully!');
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while saving the product.');
-    }
-  };
-
-  const handleImageChange = (event) => {
-    const files = Array.from(event.target.files);
-    const imagesArray = files.map((file) => ({
-      file,
-      previewURL: URL.createObjectURL(file),
-    }));
-    setImages(imagesArray);
-  };
-
-  const handleCategoryChange = (category) => {
-    setCategories((prevCategories) => {
-      if (prevCategories.includes(category)) {
-        return prevCategories.filter((cat) => cat !== category);
-      } else {
-        return [...prevCategories, category];
-      }
+    setFormData({
+      title: '',
+      description: '',
+      price: '',
+      quantity: '',
+      category_name: '',
+      images: []
     });
+    imageInputRef.current.value = '';
+    setPreview([]);
   };
 
   return (
-    <div className="flex flex-col md:flex-row p-8 ">
-      <div className="w-full md:w-3/4 lg:w-4/5 px-4 shadow-md  p-2 ">
-        <div className="w-full md:w-1/4 lg:w-1/5 px-4 mb-4 md:mb-0">
-        
-          <div className="text-gray-600 cursor-pointer mb-5">
-            <FontAwesomeIcon icon={faArrowLeft} />
-            <button className='bg-Secondary p-2 ml-2 text-black rounded'>Back</button> 
-          </div>
-  
-
-          <div className="font-extrabold mb-5">Add Products</div>
-        </div>
-        <div className="p-6">
-          <h1 className="font-bold mb-4">Information</h1>
-          <div className="grid grid-cols-1 gap-6">
-            <div>
-              <label htmlFor="title" className="text-gray-900">Product Name</label>
-              <div className="border border-gray-300 p-1">
-                <input
-                  id="title"
-                  placeholder="Product Name"
-                  className="w-full outline-none"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
+    <div className="flex justify-center items-center">
+      <div className="max-w-md">
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-5 w-[350px]">
+          <h3 className="text-lg text-center font-bold mb-2">Add Product</h3>
+          <div className="flex flex-col space-y-4">
+            <input
+              id="title"
+              type="text"
+              name="title"
+              placeholder="Product Name"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <input
+              id="price"
+              type="text"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <input
+              id="quantity"
+              type="text"
+              name="quantity"
+              placeholder="Quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <input
+              id="category_name"
+              type="text"
+              name="category_name"
+              placeholder="Category"
+              value={formData.category_name}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <input
+              ref={imageInputRef}
+              id="image"
+              type="file"
+              name="image"
+              multiple
+              onChange={handleImageChange}
+              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            {preview.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                {preview.map((src, index) => (
+                  <img key={index} src={src} alt="Preview" className="w-full h-64 object-cover" />
+                ))}
               </div>
-            </div>
-
-            <div>
-              <label htmlFor="description" className="text-gray-900">Product Description</label>
-              <div className="border border-gray-300 p-1">
-                <textarea
-                  id="description"
-                  placeholder="Product description"
-                  className="w-full h-40 outline-none resize-none"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="images" className="text-gray-900 font-bold">Images</label>
-              <div className="border border-dashed border-gray-400 p-1 mt-6" style={{ minHeight: '170px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-                <input
-                  id="images"
-                  type="file"
-                  multiple
-                  className="w-full h-full opacity-0 cursor-pointer"
-                  onChange={handleImageChange}
-                />
-                <label htmlFor="images" className="border-2 border-gray-400 text-Secondary py-2 px-4 rounded-md cursor-pointer mt-2">Add File
-                {images.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {images.map((image, index) => (
-                      <div key={index} className="w-20 h-20 border border-gray-300 relative overflow-hidden">
-                        <img src={image.previewURL} alt={`preview-${index}`} className="absolute inset-0 w-full h-full object-cover" />
-                      </div>
-                    ))}
-                  </div>
-                )}
-                </label>
-                <span className="text-gray-500 text-sm mt-2">Or drag and drop files</span>
-                
-              </div>
-            </div>
-
-            <div className="flex gap-2 items-center">
-              <div>
-                <label htmlFor="price" className="text-gray-900 font-bold">Price</label>
-                <div>
-                  <label htmlFor="price" className="text-gray-700">Product Price</label>
-                </div>
-                <div className="border border-gray-300 p-1">
-                  <input
-                    id="price"
-                    placeholder="Enter Price"
-                    className="w-full outline-none"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-2 items-center">
-                <div className="mt-6">
-                  <div>
-                    <label htmlFor="quantity" className="text-gray-900">Quantity</label>
-                  </div>
-                  <input
-                    id="quantity"
-                    placeholder="Quantity"
-                    className="border border-gray-300 p-1 w-full outline-none"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
-                </div>
-              </div>
-
-            <div className="flex mt-3">
-              <button className="border-2 border-gray-400 text-black py-2 px-4 rounded">Cancel</button>
-              <button className="bg-Secondary text-black py-2 px-4 rounded ml-4" onClick={handleSave}>Save</button>
+            )}
+            <div className="flex justify-between">
+              <button
+                type="submit"
+                className="bg-Primary hover:bg-Secondary text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Add
+              </button>
+              <button
+                type="button"
+                className="bg-Primary hover:bg-Secondary text-black hover:text-Primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                onClick={() => {
+                  setFormData({
+                    title: '',
+                    description: '',
+                    price: '',
+                    quantity: '',
+                    category_name: '',
+                    images: []
+                  });
+                  imageInputRef.current.value = '';
+                  setPreview([]);
+                }}
+              >
+                Cancel
+              </button>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="w-full px-4">
-        <div className="p-6">
-          <h1 className="font-bold mb-2">Categories</h1>
-          <div className="p-6 gap-2 h-auto">
-            {['Clothes', 'Electronics', 'Shoes', 'Personal Care and Beauty','Food and Beverage'].map((category) => (
-              <label key={category} className="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  className="mr-2 cursor-pointer"
-                  checked={categories.includes(category)}
-                  onChange={() => handleCategoryChange(category)}
-                />
-                {category}
-              </label>
-            ))}
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );

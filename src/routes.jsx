@@ -2,6 +2,7 @@ import { SignIn } from "./Authentication/SignIn/SignIn";
 import { SignUp } from "./Authentication/SignUp/SignUp";
 import { Layout } from "./Components/Layout/Layout";
 import { AdminSidebar } from "./Components/Sidebar/AdminSidebar";
+import { SellerSidebar } from "./Components/Sidebar/SellerSidebar"
 import { ComplaintsAdmin } from "./Pages/Admin/Complaints/ComplaintsAdmin";
 import { DashboardAdmin } from "./Pages/Admin/Dashboard/DashboardAdmin";
 import { UsersAdmin } from "./Pages/Admin/Users/UsersAdmin";
@@ -59,7 +60,7 @@ const routes = [
     {
         path: "/seller/dashboard",
         Element: () => (
-            <Layout Header={Navbar} Footer={Footer}>
+            <Layout Sidebar={SellerSidebar}>
                 <AddProduct />
             </Layout>
         ),
