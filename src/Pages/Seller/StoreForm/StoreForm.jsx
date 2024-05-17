@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 export const StoreForm = () => {
   const [formData, setFormData] = useState({
@@ -8,23 +9,41 @@ export const StoreForm = () => {
     image: ''
   });
 
+  const [preview, setPreview] = useState(null);
+  const imageInputRef = useRef();
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prevFormData) => ({ ...prevFormData, image: file }));
+
+    setPreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.sub.id;
+
+    const storeData = new FormData();
+    storeData.append('store_name', formData.store_name);
+    storeData.append('description', formData.description);
+    storeData.append('location', formData.location);
+    storeData.append('seller_id', userId);
+    storeData.append('image', formData.image);
 
     fetch("http://127.0.0.1:5500/stores", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify(formData),
+      body: storeData,
     })
       .then((resp) => {
         if (!resp.ok) {
@@ -36,7 +55,7 @@ export const StoreForm = () => {
         console.log("Store created successfully:", data);
       })
       .catch((error) => {
-        console.error('There has been a problem with your fetch operation:', error);
+        console.error('There has been a problem with your post operation:', error);
       });
 
     setFormData({
@@ -45,6 +64,8 @@ export const StoreForm = () => {
       image: '',
       location: ''
     });
+    imageInputRef.current.value = '';
+    setPreview(null);
   };
 
   return (
@@ -75,23 +96,27 @@ export const StoreForm = () => {
             <input
               id="location"
               type="text"
-              name="loaction"
+              name="location"
               placeholder="Location"
               value={formData.location}
               onChange={handleChange}
               className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
               required
             />
-             <input
+            <input
+              ref={imageInputRef}
               id="image"
-              type="text"
+              type="file"
               name="image"
-              placeholder="Logo URL"
-              value={formData.image}
-              onChange={handleChange}
+              onChange={handleImageChange}
               className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
               required
             />
+
+            {preview && (
+              <img src={preview} alt="Preview" className="w-full h-64 object-cover mt-4" />
+            )}
+
             <div className="flex justify-between">
               <button
                 type="submit"
@@ -102,12 +127,16 @@ export const StoreForm = () => {
               <button
                 type="button"
                 className="bg-Primary hover:bg-Secondary text-black hover:text-Primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                onClick={() => setFormData({
-                  store_name: '',
-                  description: '',
-                  location: '',
-                  image: ''
-                })}
+                onClick={() => {
+                  setFormData({
+                    store_name: '',
+                    description: '',
+                    location: '',
+                    image: ''
+                  });
+                  imageInputRef.current.value = '';
+                  setPreview(null);
+                }}
               >
                 Cancel
               </button>
