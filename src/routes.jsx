@@ -7,7 +7,7 @@ import { DashboardAdmin } from "./Pages/Admin/Dashboard/DashboardAdmin";
 import { UsersAdmin } from "./Pages/Admin/Users/UsersAdmin";
 import { Navbar } from "./Components/Navbar/Navbar";
 import { Footer } from "./Components/Footer/Footer";
-import { LandingPage } from "./Pages/Buyer/LandingPage/LandingPage";
+import { AddProduct } from "./Pages/Seller/AddProduct";
 
 const routes = [
     {
@@ -57,14 +57,14 @@ const routes = [
         role: "admin",
     },
     {
-        path: "/buyer/home",
+        path: "/seller/dashboard",
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
-                <LandingPage />
+                <AddProduct />
             </Layout>
         ),
         isAuthenticated: true,
-        role: "buyer",
+        role: "seller",
     },
 
 ];

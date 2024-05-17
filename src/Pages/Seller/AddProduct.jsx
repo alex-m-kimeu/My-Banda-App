@@ -67,7 +67,7 @@ export const AddProduct = () => {
 
   return (
     <div className="flex flex-col md:flex-row p-8 ">
-      <div className="w-full md:w-3/4 lg:w-4/5 px-4 shadow-md border-2 border-gray-300 p-2">
+      <div className="w-full md:w-3/4 lg:w-4/5 px-4 shadow-md  p-2 ">
         <div className="w-full md:w-1/4 lg:w-1/5 px-4 mb-4 md:mb-0">
           <div className="text-gray-600 cursor-pointer mb-5">
             <FontAwesomeIcon icon={faArrowLeft} /> Back
