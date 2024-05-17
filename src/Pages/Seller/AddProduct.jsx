@@ -66,15 +66,15 @@ export const AddProduct = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row p-8">
-      <div className="w-full md:w-3/4 lg:w-4/5 px-4">
+    <div className="flex flex-col md:flex-row p-8 ">
+      <div className="w-full md:w-3/4 lg:w-4/5 px-4 shadow-md border-2 border-gray-300 p-2">
         <div className="w-full md:w-1/4 lg:w-1/5 px-4 mb-4 md:mb-0">
           <div className="text-gray-600 cursor-pointer mb-5">
             <FontAwesomeIcon icon={faArrowLeft} /> Back
           </div>
           <div className="font-extrabold mb-5 text-xl">Add Products</div>
         </div>
-        <div className="p-6 border border-gray-300 rounded shadow-md">
+        <div className="p-6">
           <h1 className="font-bold mb-4">Information</h1>
           <div className="grid grid-cols-1 gap-6">
             <div>
