@@ -6,7 +6,7 @@ export const AddProduct = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [discount, setDiscount] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [images, setImages] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -17,7 +17,7 @@ export const AddProduct = () => {
     formData.append('name', title);
     formData.append('description', description);
     formData.append('price', price);
-    formData.append('discount', discount);
+    formData.append('quantity', quantity);
     images.forEach((image) => {
       formData.append('images', image.file);
     });
@@ -69,10 +69,14 @@ export const AddProduct = () => {
     <div className="flex flex-col md:flex-row p-8 ">
       <div className="w-full md:w-3/4 lg:w-4/5 px-4 shadow-md  p-2 ">
         <div className="w-full md:w-1/4 lg:w-1/5 px-4 mb-4 md:mb-0">
+        
           <div className="text-gray-600 cursor-pointer mb-5">
-            <FontAwesomeIcon icon={faArrowLeft} /> Back
+            <FontAwesomeIcon icon={faArrowLeft} />
+            <button className='bg-Secondary p-2 ml-2 text-black rounded'>Back</button> 
           </div>
-          <div className="font-extrabold mb-5 text-xl">Add Products</div>
+  
+
+          <div className="font-extrabold mb-5">Add Products</div>
         </div>
         <div className="p-6">
           <h1 className="font-bold mb-4">Information</h1>
@@ -145,25 +149,26 @@ export const AddProduct = () => {
                   />
                 </div>
               </div>
-              <div>
+            </div>
+
+            <div className="flex gap-2 items-center">
                 <div className="mt-6">
                   <div>
-                    <label htmlFor="discount" className="text-gray-900">Discount Price</label>
+                    <label htmlFor="quantity" className="text-gray-900">Quantity</label>
                   </div>
                   <input
-                    id="discount"
-                    placeholder="Price at Discount"
+                    id="quantity"
+                    placeholder="Quantity"
                     className="border border-gray-300 p-1 w-full outline-none"
-                    value={discount}
-                    onChange={(e) => setDiscount(e.target.value)}
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
                   />
                 </div>
               </div>
-            </div>
 
             <div className="flex mt-3">
               <button className="border-2 border-gray-400 text-black py-2 px-4 rounded">Cancel</button>
-              <button className="bg-Secondary text-white py-2 px-4 rounded ml-4" onClick={handleSave}>Save</button>
+              <button className="bg-Secondary text-black py-2 px-4 rounded ml-4" onClick={handleSave}>Save</button>
             </div>
           </div>
         </div>
