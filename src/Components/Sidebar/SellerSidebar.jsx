@@ -17,7 +17,7 @@ export const SellerSidebar = () => {
   };
 
   return (
-    <div className=" flex flex-col justify-between h-screen">
+    <div className=" flex flex-col justify-between h-screen shadow-md">
       <div className="gap-[50px] ">
         <div className="flex flex-col items-center gap-[20px]">
           <img
