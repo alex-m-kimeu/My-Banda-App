@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 export const AddProduct = () => {
   const [storeID, setStoreID] = useState('');
@@ -98,10 +99,20 @@ export const AddProduct = () => {
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="max-w-md">
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-5 w-[350px]">
-          <h3 className="text-lg text-center font-bold mb-2">Add Product</h3>
+    <div className="flex flex-col md:flex-row p-8 ">
+      <div className="w-full md:w-3/4 lg:w-4/5 px-4 shadow-md border-2 border-gray-300 p-2 ">
+        <div className="w-full md:w-1/4 lg:w-1/5 px-4 mb-4 md:mb-0">
+          <div className="text-gray-600 cursor-pointer mb-5">
+            <button className='flex bg-Secondary hover:bg-yellow-500 p-2 rounded'>
+            <FaLongArrowAltLeft className='mr-1 pt-1' />
+              Back
+            </button>
+          </div>
+          <div className="font-extrabold mb-5 text-xl">Add Products</div>
+          <h1 className="font-bold mb-4">Information</h1>
+        </div>
+
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded ">
           <div className="flex flex-col space-y-4">
             <input
               id="title"
@@ -172,13 +183,13 @@ export const AddProduct = () => {
             <div className="flex justify-between">
               <button
                 type="submit"
-                className="bg-Primary hover:bg-Secondary text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-Secondary hover:bg-yellow-500 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >
                 Add
               </button>
               <button
                 type="button"
-                className="bg-Primary hover:bg-Secondary text-black hover:text-Primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-Secondary hover:bg-yellow-500 text-black hover:text-Primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 onClick={() => {
                   setFormData({
                     title: '',
@@ -196,8 +207,11 @@ export const AddProduct = () => {
               </button>
             </div>
           </div>
-        </form>
+          </form>
+
       </div>
+
+
     </div>
   );
 };
