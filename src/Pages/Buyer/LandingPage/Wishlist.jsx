@@ -1,37 +1,42 @@
+import { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 export const Wishlist = () => {
-  const wishlistItems = [
-    {
-      id: 1,
-      name: "Gucci duffle bag",
-      price: 860,
-      image: "path-to-image/gucci-bag.png",
-    },
-    {
-      id: 2,
-      name: "RGB Liquid CPU Cooler",
-      price: 190,
-      image: "path-to-image/rgb-cpu-cooler.png",
-    },
-    {
-      id: 3,
-      name: "GP11 Shooter USB Gamepad",
-      price: 950,
-      image: "path-to-image/gamepad.png",
-    },
-    {
-      id: 4,
-      name: "Quilted Satin Jacket",
-      price: 710,
-      image: "path-to-image/satin-jacket.png",
-    },
-  ];
+  const [wishlistItems, setWishlistItems] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.sub.id;
+
+    fetchWishlistItems(token, userId);
+  }, []);
+
+  // eslint-disable-next-line no-unused-vars
+  const fetchWishlistItems = (token, userId) => {
+    fetch(`http://localhost:5500/wishlists`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setWishlistItems(data);
+      })
+      .catch(error => {
+        console.error('Error fetching wishlist items:', error);
+      });
+  };
 
   return (
-    <>
     <div className="bg-Primary text-Text font-body min-h-screen">
       <main className="p-8">
-        <h2 className="text-2xl font-bold mb-4">Wish-list (4)</h2>
+        <h2 className="text-2xl font-bold mb-4">Wish-list ({wishlistItems.length})</h2>
         <button className="bg-Secondary text-Variant rounded p-2 mb-6">
           Move All To Bag
         </button>
@@ -56,6 +61,5 @@ export const Wishlist = () => {
         </div>
       </main>
     </div>
-    </>
   );
 };
