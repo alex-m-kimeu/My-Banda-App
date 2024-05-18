@@ -11,6 +11,8 @@ import { Footer } from "./Components/Footer/Footer";
 import { LandingPage } from "./Pages/Buyer/LandingPage/LandingPage";
 import { SellerDashboard } from "./Pages/Seller/Dashboard/SellerDashboard";
 import { StoreForm } from "./Pages/Seller/StoreForm/StoreForm";
+import { Wishlist } from "./Pages/Buyer/LandingPage/Wishlist";
+import { CategoriesPage } from "./Pages/Buyer/LandingPage/CategoriesPage";
 
 const routes = [
     {
@@ -89,7 +91,26 @@ const routes = [
         isAuthenticated: true,
         role: "buyer",
     },
-
+    {
+        path: "/buyer/wishlist",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <Wishlist />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+    {
+        path: "/buyer/category",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <CategoriesPage />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
 ];
 
 export default routes;
