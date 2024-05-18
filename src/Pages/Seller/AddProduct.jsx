@@ -80,6 +80,7 @@ export const AddProduct = () => {
         return resp.json();
       })
       .then((data) => {
+        alert("Product created successfully")
         console.log("Product created successfully:", data);
       })
       .catch((error) => {
