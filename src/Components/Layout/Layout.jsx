@@ -35,10 +35,12 @@ export const Layout = ({ Sidebar, Header, Footer, children }) => {
                     )}
                 </>
             )}
-            <div className={`flex-grow px-4 lg:px-[50px] py-4 lg:py-[20px] ${Sidebar ? '' : 'px-4 py-4'}`}>
-                {children}
+            <div className="flex flex-col flex-grow">
+                <div className={`px-4 lg:px-[50px] py-4 lg:py-[20px] ${Sidebar ? '' : 'px-4 py-4'}`}>
+                    {children}
+                </div>
+                {Footer && <Footer />}
             </div>
-            {Footer && <Footer />}
         </div>
     )
 }
