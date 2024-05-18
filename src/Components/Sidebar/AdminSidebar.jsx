@@ -24,8 +24,8 @@ export const AdminSidebar = () => {
   };
 
   return (
-    <div className=" flex flex-col p-[25px] lg:p-[20px] justify-between h-screen shadow-md items-center lg:items-start">
-      <div className="flex flex-col gap-[20px] md:gap-[30px]">
+    <div className="flex flex-col p-[25px] lg:p-[20px] justify-between h-screen shadow-md items-center lg:items-start">
+      <div className="flex flex-col gap-[20px] md:gap-[25px]">
         <div className="flex flex-col px-[10px]">
           <img
             src={logo}
