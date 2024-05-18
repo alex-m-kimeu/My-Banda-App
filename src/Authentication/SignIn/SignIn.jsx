@@ -2,13 +2,20 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import logo from "../../assets/logo.png";
+import { PiEyeLight } from "react-icons/pi";
+import { PiEyeSlash } from "react-icons/pi";
 
 export const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const refreshToken = useRef(async () => {
     const refreshToken = localStorage.getItem('refreshToken');
@@ -87,20 +94,20 @@ export const SignIn = () => {
         }
         localStorage.setItem('role', decodedToken.sub.role);
 
-          if (decodedToken.sub.role === 'admin') {
-            navigate('/admin/dashboard');
-          } else if (decodedToken.sub.role === 'seller') {
-            navigate('/seller/dashboard');
-          } else if (decodedToken.sub.role === 'buyer') {
-            navigate('/buyer/home');
-          } else if (decodedToken.sub.role === 'deliverer') {
-            navigate('/deliverer/dashboard');
-          } else {
-            throw new Error('Invalid role');
-          }
+        if (decodedToken.sub.role === 'admin') {
+          navigate('/admin/dashboard');
+        } else if (decodedToken.sub.role === 'seller') {
+          navigate('/seller/dashboard');
+        } else if (decodedToken.sub.role === 'buyer') {
+          navigate('/buyer/home');
+        } else if (decodedToken.sub.role === 'deliverer') {
+          navigate('/deliverer/dashboard');
         } else {
-          console.error('Access token is missing in the response');
+          throw new Error('Invalid role');
         }
+      } else {
+        console.error('Access token is missing in the response');
+      }
     } catch (error) {
       console.error('Error:', error);
     }
@@ -119,14 +126,23 @@ export const SignIn = () => {
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-          <input
-            className='border p-2 rounded-[8px] outline-none text-Variant2'
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          {passwordError && <p className='text-Red text-sm text-center'>{passwordError}</p>}
+          <div className='relative border p-2 rounded-[8px]'>
+            <input
+              className=' text-Variant2 pr-10 outline-none'
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+            <div className='absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5'>
+              {passwordVisible ? (
+                <PiEyeSlash className='fill-Variant2' onClick={togglePasswordVisibility} />
+              ) : (
+                <PiEyeLight className='fill-Variant2' onClick={togglePasswordVisibility} />
+              )}
+            </div>
+          </div>
+          {passwordError && <p className='text-Red text-sm text-center'>{passwordError}</p>}          
           <div className='flex items-center justify-between'>
             <div className='flex items-center space-x-2 text-sm font-normal text-Variant2'>
               <input type='checkbox' checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />

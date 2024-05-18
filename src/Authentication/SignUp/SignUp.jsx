@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import logo from "../../assets/logo.png";
+import { PiEyeLight } from "react-icons/pi";
+import { PiEyeSlash } from "react-icons/pi";
 
 export const SignUp = () => {
     const navigate = useNavigate();
@@ -9,6 +11,11 @@ export const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     const refreshToken = useRef(async () => {
         const refreshToken = localStorage.getItem('refreshToken');
@@ -84,11 +91,14 @@ export const SignUp = () => {
 
                 if (decodedToken.sub.role === 'seller') {
                     navigate('/seller/dashboard');
-                } else if (decodedToken.sub.role === 'deliverer') {
+                }
+                else if (decodedToken.sub.role === 'deliverer') {
                     navigate('/deliverer/dashboard');
-                } else if (decodedToken.sub.role === 'buyer') {
+                }
+                else if (decodedToken.sub.role === 'buyer') {
                     navigate('/buyer/home');
-                } else {
+                }
+                else {
                     throw new Error('Invalid role');
                 }
             } else {
@@ -129,16 +139,25 @@ export const SignUp = () => {
                             <option value="">Select a role</option>
                             <option value="buyer">Buyer</option>
                             <option value="seller">Seller</option>
-                            <option value="deliverer">Deliverer</option>
+                            {/* <option value="deliverer">Deliverer</option> */}
                         </select>
                     </div>
-                    <input
-                        className='border p-2 rounded-[8px] outline-none text-Variant2'
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div className='relative border p-2 rounded-[8px]'>
+                        <input
+                            className=' text-Variant2 pr-10 outline-none'
+                            type={passwordVisible ? "text" : "password"}
+                            placeholder="Password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        <div className='absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5'>
+                            {passwordVisible ? (
+                                <PiEyeSlash className='fill-Variant2' onClick={togglePasswordVisibility} />
+                            ) : (
+                                <PiEyeLight className='fill-Variant2' onClick={togglePasswordVisibility} />
+                            )}
+                        </div>
+                    </div>
                     <button
                         className='bg-Variant text-Primary p-2 rounded-[8px] mt-4'
                         type='submit'
