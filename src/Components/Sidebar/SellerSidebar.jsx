@@ -1,10 +1,10 @@
 import logo from '/src/assets/logo.png'
-import { IoHomeOutline } from "react-icons/io5";
-import { AiOutlineTag } from "react-icons/ai";
-import { TfiPackage } from "react-icons/tfi";
+import { LiaHomeSolid } from "react-icons/lia";
+import { LiaTagSolid } from "react-icons/lia";
+import { LiaBoxSolid } from "react-icons/lia";
 import { LiaStoreAltSolid } from "react-icons/lia";
 import { BiLogOut } from "react-icons/bi";
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useMatch } from 'react-router-dom'
 
 export const SellerSidebar = () => {
   const navigate = useNavigate();
@@ -16,69 +16,76 @@ export const SellerSidebar = () => {
     navigate("/signin");
   };
 
+  const dashboardMatch = useMatch("/seller/dashboard");
+  const productsMatch = useMatch("/seller/products");
+  const ordersMatch = useMatch("/seller/orders");
+  const storeMatch = useMatch("/seller/store");
+
+  const getClassName = (match) => {
+    return match ? "text-Secondary" : "text-Text";
+  }
+
   return (
-    <div className=" flex flex-col justify-between h-screen shadow-md">
-      <div className="gap-[50px] ">
-        <div className="flex flex-col items-center gap-[20px]">
+    <div className="flex flex-col p-[25px] lg:p-[20px] justify-between h-screen shadow-md items-center lg:items-start">
+      <div className="flex flex-col gap-[20px] md:gap-[25px]">
+        <div className="flex flex-col px-[10px]">
           <img
             src={logo}
             alt="logo"
-            className="w-[130px] h-[64px] max-w-full"
+            className="w-[100px] h-auto max-w-full"
           />
         </div>
-        <div className="flex flex-col gap-[20px] py-[30px] items-center">
-          <div>
-            <ul className="flex flex-col gap-[25px]">
+        <div className="flex flex-col p-[10px]">
+          <nav>
+            <ul className="flex flex-col gap-[30px]">
               <li>
-                <a
-                  href=""
-                  className="flex gap-[10px]  hover:text-Secondary active:text-Secondary"
+                <NavLink
+                  to="/seller/dashboard"
+                  className={`flex items-center gap-[10px] ${getClassName(dashboardMatch)}`}
                 >
-                  <IoHomeOutline className="w-7 h-7" />
-                  <span className="pt-1 text-[15px]">Dashboard</span>
-                </a>
+                  <LiaHomeSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Dashboard</h2>
+                </NavLink>
               </li>
+
               <li>
-                <a
-                  href=""
-                  className="flex gap-[10px]  hover:text-Secondary active:text-Secondary"
+                <NavLink
+                  to="/seller/products"
+                  className={`flex items-center gap-[10px] ${getClassName(productsMatch)}`}
                 >
-                  <AiOutlineTag className="w-7 h-7" />
-                  <span className="pt-1 text-[15px]">Products</span>
-                </a>
+                  <LiaTagSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Products</h2>
+                </NavLink>
               </li>
+
               <li>
-                <a
-                  href=""
-                  className="flex gap-[10px]  hover:text-Secondary active:text-Secondary"
+                <NavLink
+                  to="/seller/orders"
+                  className={`flex items-center gap-[10px] ${getClassName(ordersMatch)}`}
                 >
-                  <TfiPackage className="w-7 h-7 hover:text-Secondary" />
-                  <span className="pt-1 text-[15px] text-body">Orders</span>
-                </a>
+                  <LiaBoxSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Orders</h2>
+                </NavLink>
               </li>
+
               <li>
-                <a
-                  href=""
-                  className="flex gap-[10px]  hover:text-Secondary active:text-Secondary"
+                <NavLink
+                  to="/seller/store"
+                  className={`flex items-center gap-[10px] ${getClassName(storeMatch)}`}
                 >
-                  <LiaStoreAltSolid className="w-7 h-7 hover:text-Secondary" />
-                  <span className="pt-1 text-[15px] text-body">Store</span>
-                </a>
+                  <LiaStoreAltSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Store</h2>
+                </NavLink>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
       </div>
-      <div className='p-[5px] flex flex-col gap-[25px] text-center lg:text-left items-center mb-5'>
-        <div className='flex gap-[30px]'>
-          <BiLogOut className="w-7 h-7 hover:text-Secondary mt-1 -mr-3" />
-          <button
-            className='bg-Secondary  hover:cursor-pointer px-[10px] py-[5px] rounded-[5px] text-[15px]'
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </div>
+      <div
+        className="flex gap-[10px] p-[10px] items-center cursor-pointer text-Text hover:text-Secondary"
+        onClick={handleLogout}>
+        <BiLogOut className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+        <h1 className="text-sm font-medium">Logout</h1>
       </div>
     </div>
   )
