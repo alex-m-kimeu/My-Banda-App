@@ -12,7 +12,7 @@ export const Search = ({ search, setSearch }) => {
           id="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by username..."
+          placeholder="Search..."
         />
       </div>
     );

@@ -15,9 +15,11 @@ export const UsersAdmin = () => {
                 'Authorization': 'Bearer ' + token,
             },
         })
-
             .then(response => response.json())
-            .then(data => setUsers(data))
+            .then(data => {
+                const nonAdminUsers = data.filter(user => user.role !== 'admin');
+                setUsers(nonAdminUsers);
+            })
             .catch(error => console.error(error));
     }, []);
 
@@ -33,11 +35,13 @@ export const UsersAdmin = () => {
     }
 
     return (
-        <div>
-            <h2 className="text-Text font-bold text-xl text-center lg:text-left py-5">
+        <div className="p-[10px] space-y-4">
+            <h1 className="text-Text font-bold text-xl text-center lg:text-left">
                 Users
-            </h2>
-            <Search search={search} setSearch={setSearch} />
+            </h1>
+            <div className="w-full md:w-1/3">
+                <Search search={search} setSearch={setSearch} />
+            </div>
             <UserList users={filteredUsers} onDelete={handleDelete} />
         </div>
     );
