@@ -11,12 +11,23 @@ const AuthWrapper = ({ children, role, Sidebar, Header, Footer }) => {
 
   useEffect(() => {
     if (!isAuthenticated && role) {
-        navigate("/signin");
+      navigate("/signin");
     }
     if (isAuthenticated && role && role !== userRole) {
-        navigate("/signin");
+      navigate("/signin");
     }
   }, [isAuthenticated, navigate, role, userRole]);
+
+  useEffect(() => {
+    if (role === 'buyer' || role === 'seller') {
+      const s1 = document.createElement("script");
+      const s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/6648a8c89a809f19fb329503/1hu5t6kmp';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    }
+  }, [role]);
 
   return (
     <div>
