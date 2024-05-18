@@ -1,9 +1,9 @@
 import logo from "/src/assets/logo.png";
-import { IoHomeOutline } from "react-icons/io5";
-import { HiOutlineUser } from "react-icons/hi2";
-import { RiUserVoiceLine } from "react-icons/ri";
+import { LiaUserSolid } from "react-icons/lia";
 import { BiLogOut } from "react-icons/bi";
-import { NavLink, useNavigate } from 'react-router-dom'
+import { LiaHomeSolid } from "react-icons/lia";
+import { LiaFileAltSolid } from "react-icons/lia";
+import { NavLink, useNavigate, useMatch } from 'react-router-dom'
 
 export const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -15,61 +15,65 @@ export const AdminSidebar = () => {
     navigate("/signin");
   };
 
+  const dashboardMatch = useMatch("/admin/dashboard");
+  const usersMatch = useMatch("/admin/users");
+  const complaintsMatch = useMatch("/admin/complaints");
+
+  const getClassName = (match) => {
+    return match ? "text-Secondary" : "text-Text";
+  };
+
   return (
-    <div className=" flex flex-col justify-between h-screen shadow-md">
-      <div className="gap-[50px] ">
-        <div className="flex flex-col items-center gap-[20px]">
+    <div className=" flex flex-col p-[25px] lg:p-[20px] justify-between h-screen shadow-md items-center lg:items-start">
+      <div className="flex flex-col gap-[20px] md:gap-[30px]">
+        <div className="flex flex-col px-[10px]">
           <img
             src={logo}
             alt="logo"
-            className="w-[130px] h-[64px] max-w-full"
+            className="w-[100px] h-auto max-w-full"
           />
         </div>
-        <div className="flex flex-col gap-[20px] py-[30px] items-center">
-          <div>
-            <ul className="flex flex-col gap-[25px]">
+        <div className="flex flex-col p-[10px]">
+          <nav>
+            <ul className="flex flex-col gap-[30px]">
               <li>
                 <NavLink
                   to="/admin/dashboard"
-                  className="flex gap-[10px]  hover:text-Secondary active:text-Secondary"
+                  className={`flex items-center gap-[10px] ${getClassName(dashboardMatch)}`}
                 >
-                  <IoHomeOutline className="w-7 h-7" />
-                  <span className="pt-1 text-[15px]">Dashboard</span>
+                  <LiaHomeSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Dashboard</h2>
                 </NavLink>
               </li>
+
               <li>
                 <NavLink
                   to="/admin/users"
-                  className="flex gap-[10px]  hover:text-Secondary active:text-Secondary"
+                  className={`flex items-center gap-[10px] ${getClassName(usersMatch)}`}
                 >
-                  <HiOutlineUser className="w-7 h-7" />
-                  <span className="pt-1 text-[15px]">Users</span>
+                  <LiaUserSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Users</h2>
                 </NavLink>
               </li>
+
               <li>
                 <NavLink
                   to="/admin/complaints"
-                  className="flex gap-[10px]  hover:text-Secondary active:text-Secondary"
+                  className={`flex items-center gap-[10px] ${getClassName(complaintsMatch)}`}
                 >
-                  <RiUserVoiceLine className="w-7 h-7 hover:text-Secondary" />
-                  <span className="pt-1 text-[15px] text-body">Complaints</span>
+                  <LiaFileAltSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Complaints</h2>
                 </NavLink>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
       </div>
-      <div className='p-[5px] flex flex-col gap-[25px] text-center lg:text-left items-center mb-5'>
-        <div
-          onClick={handleLogout}
-          className='flex gap-[30px]'>
-          <BiLogOut className="w-7 h-7 hover:text-Secondary mt-1 -mr-3" />
-          <button
-            className='bg-Secondary  hover:cursor-pointer px-[10px] py-[5px] rounded-[5px] text-[15px]'
-          >
-            Logout
-          </button>
-        </div>
+      <div
+        className="flex gap-[10px] p-[10px] items-center cursor-pointer text-Text hover:text-Secondary"
+        onClick={handleLogout}>
+        <BiLogOut className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+        <h1 className="text-sm font-medium">Logout</h1>
       </div>
     </div>
   );
