@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import AuthWrapper from './Authwrapper';
 import routes from './routes';
 import { SignIn } from './Authentication/SignIn/SignIn';
-import { AddProduct } from './Pages/Seller/AddProduct';
 
 
 function App() {
