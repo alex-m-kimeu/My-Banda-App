@@ -73,6 +73,10 @@ export const LandingPage = () => {
       });
   };
 
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/categories/${encodeURIComponent(categoryName)}`);
+  };
+
   return (
     <div className="bg-Primary text-Text font-body">
       {/* Banner */}
@@ -96,7 +100,11 @@ export const LandingPage = () => {
         <h3 className="text-2xl font-bold mb-4">Browse By Category</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {categories.map((category) => (
-            <div key={category.name} className="flex flex-col items-center">
+            <div
+              key={category.name}
+              className="flex flex-col items-center cursor-pointer"
+              onClick={() => handleCategoryClick(category.name)}
+            >
               <img
                 src={category.icon}
                 alt={`${category.name} icon`}
@@ -121,39 +129,43 @@ export const LandingPage = () => {
               Enhance Your Music Experience
             </h3>
             <p className="mt-2">
-              Discover the best sound quality with our top-rated speakers
+              Get the best sound quality with JBL speakers and headphones
             </p>
-            <button className="bg-Secondary text-Variant p-2 rounded-md mt-4">
-              Buy Now
+            <button className="bg-Secondary text-Primary p-2 rounded-md mt-4">
+              Shop Now
             </button>
           </div>
         </div>
       </section>
 
-      {/* Explore products */}
+      {/* Recommended Products */}
       <section className="p-8">
-        <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-          Explore Products
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <h3 className="text-2xl font-bold mb-4">Recommended Products</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => (
-            <div key={product.id} className="flex flex-col items-center">
+            <div
+              key={product.id}
+              className="bg-Primary p-4 rounded-md shadow-md"
+            >
               <img
-                src={product.images[0]}
-                alt={product.title}
-                className="w-full h-56 object-cover rounded-md shadow-md cursor-pointer"
+                src={product.image}
+                alt={product.name}
+                className="w-full h-48 object-cover mb-4 rounded-md"
               />
-              <div className="font-bold mt-2">{product.title}</div>
-              <p className="mt-1">{product.description}</p>
-              <div className="flex items-center mt-2">
-                <p className="font-bold text-xl mr-2">${product.price}</p>
-                <button onClick={() => addToWishlist(product)}>
-                  <MdFavoriteBorder className="w-7 h-7 -mr-3" />
+              <h4 className="text-lg font-bold">{product.name}</h4>
+              <p className="text-Secondary mt-2">{product.price}</p>
+              <div className="mt-4 flex justify-between items-center">
+                <button
+                  className="bg-Secondary text-Primary p-2 rounded-md"
+                  onClick={() => addToWishlist(product)}
+                >
+                  <MdFavoriteBorder className="inline-block mr-1" />
+                  Add to Wishlist
                 </button>
-                <button className="bg-Secondary ml-5 py-2 px-4 rounded-md text-Primary flex items-center">
-                  <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
-                  Add
-                </button>
+                <FontAwesomeIcon
+                  icon={faShoppingCart}
+                  className="text-Secondary cursor-pointer"
+                />
               </div>
             </div>
           ))}
@@ -162,5 +174,3 @@ export const LandingPage = () => {
     </div>
   );
 };
-
-export default LandingPage;
