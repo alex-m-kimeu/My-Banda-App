@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import banner from "../../../assets/banner.jpg";
+import banner2 from "../../../assets/banner2.jpg";
 import electronicsIcon from "../../../assets/electronics.svg";
 import clothingIcon from "../../../assets/clothing.svg";
 import shoesIcon from "../../../assets/shoes.svg";
@@ -73,6 +73,30 @@ export const LandingPage = () => {
       });
   };
 
+  const addToCart = (productId) => {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:5500/carts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ product_id: productId }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Item added to cart:", data);
+      })
+      .catch((error) => {
+        console.error("Error adding item to cart:", error);
+      });
+  };
+
   const handleCategoryClick = (categoryName) => {
     navigate(`/categories/${encodeURIComponent(categoryName)}`);
   };
@@ -81,13 +105,13 @@ export const LandingPage = () => {
     <div className="bg-Primary text-Text font-body">
       {/* Banner */}
       <div className="relative">
-        <img src={banner} alt="Banner" className="w-full h-64 object-cover" />
+        <img src={banner2} alt="Banner" className="w-full h-64 object-cover" />
         <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-50 p-4">
           <h2 className="text-3xl text-Primary font-bold">
-            Give your vehicle some love
+            Welcome to My Banda
           </h2>
           <p className="text-Primary mt-2">
-            Find the best parts and accessories for your car
+            Find the best products with the best deals!
           </p>
           <button className="bg-Secondary text-Variant p-2 rounded-md mt-4">
             Shop Now
@@ -140,7 +164,7 @@ export const LandingPage = () => {
 
       {/* Recommended Products */}
       <section className="p-8">
-        <h3 className="text-2xl font-bold mb-4">Recommended Products</h3>
+        <h3 className="text-2xl font-bold mb-4">Explore Products</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => (
             <div
@@ -165,6 +189,7 @@ export const LandingPage = () => {
                 <FontAwesomeIcon
                   icon={faShoppingCart}
                   className="text-Secondary cursor-pointer"
+                  onClick={() => addToCart(product.id)}
                 />
               </div>
             </div>
