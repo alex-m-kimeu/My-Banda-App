@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import {jwtDecode} from 'jwt-decode'; 
+import { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import { LuPlus } from 'react-icons/lu';
 import { CiSearch, CiEdit } from 'react-icons/ci';
 import { BsTrash3Fill } from 'react-icons/bs';
 import DataTable from 'react-data-table-component';
-import Authmodal from './Authmodal';
-
+import { AddProductModal } from './AddProductModal';
 
 export const ProductsPage = () => {
   const [records, setRecords] = useState([]);
@@ -25,16 +24,24 @@ export const ProductsPage = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.sub.id;
 
-        const response = await fetch(`http://127.0.0.1:5500/products?userId=${userId}`, {
+        const userResponse = await fetch(`http://127.0.0.1:5500/user/${userId}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const userData = await userResponse.json();
+        const storeId = userData.store.id;
+
+        const response = await fetch(`http://127.0.0.1:5500/products`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
-        const data = await response.json();
-        setRecords(data);
+        let data = await response.json();
+        data = data.filter(product => product.store_id === storeId);
 
         const uniqueCategories = ['All', ...new Set(data.map(product => product.category_name))];
         setCategories(uniqueCategories);
@@ -57,20 +64,20 @@ export const ProductsPage = () => {
   };
 
   const columns = [
-    { 
-      name: "Product", 
+    {
+      name: "Product",
       selector: row => (
         <div className="flex items-center">
           <img src={row.images} alt="" className="w-10 h-10 object-cover" />
           <span className="ml-2">{row.title}</span>
         </div>
-      ), 
-      sortable: true 
+      ),
+      sortable: true
     },
     { name: "Quantity", selector: row => row.quantity, sortable: true },
     { name: "Price", selector: row => row.price, sortable: true },
-    { 
-      name: "Actions", 
+    {
+      name: "Actions",
       cell: row => (
         <div className='flex gap-1'>
           <button type="button" className="p-2 border-2 border-gray-300 rounded-md">
@@ -80,7 +87,7 @@ export const ProductsPage = () => {
             <BsTrash3Fill />
           </button>
         </div>
-      ) 
+      )
     },
   ];
 
@@ -95,20 +102,20 @@ export const ProductsPage = () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to delete product');
-      }
-      console.log('Product deleted successfully');
-    })
-    .catch(error => {
-      console.error('Error deleting product:', error);
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to delete product');
+        }
+        console.log('Product deleted successfully');
+      })
+      .catch(error => {
+        console.error('Error deleting product:', error);
+      });
   };
 
   return (
     <div className="product-list-container mx-4 py-4  relative">
-      {isModalOpen && <Authmodal closeModal={toggleModal} />}
+      {isModalOpen && <AddProductModal closeModal={toggleModal} />}
       <h1 className="mb-4 mt-1 font-bold text-lg md:text-2xl text-center md:text-left">Product List</h1>
 
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-2 shadow-sm">
@@ -118,14 +125,14 @@ export const ProductsPage = () => {
           </div>
 
           <div className="flex-1 flex items-center relative border-2 border-gray-300 p-1">
-            <CiSearch className="mr-2"/>
+            <CiSearch className="mr-2" />
             <input type="text" placeholder="Search..." className="w-full outline-none p-1" />
           </div>
         </div>
 
         <div className="flex justify-between w-full md:w-auto gap-4 py-2">
           <div className="flex"></div>
-          <button 
+          <button
             className="bg-Secondary py-2 px-4 rounded-md text-white flex items-center"
             onClick={toggleModal}
           >
@@ -137,16 +144,15 @@ export const ProductsPage = () => {
       <h3 className="mb-4 mt-1 font-bold text-lg md:text-2xl text-center md:text-left">Categories</h3>
       <div className="flex gap-6 overflow-x-auto py-2 border-2 md:rounded-full min-w-full flex-wrap">
         {categories.map(category => (
-          <button 
+          <button
             key={category}
             onClick={() => handleCategoryClick(category)}
-            className={`py-2 px-4 ${
-              selectedCategory === category
-                ? 'bg-black rounded-full text-white font-bold'
-                : category === 'All'
+            className={`py-2 px-4 ${selectedCategory === category
+              ? 'bg-black rounded-full text-white font-bold'
+              : category === 'All'
                 ? 'text-black font-extrabold'
                 : 'bg-white text-black font-extrabold'
-            } cursor-pointer rounded-md md:rounded-none`}
+              } cursor-pointer rounded-md md:rounded-none`}
           >
             {category}
           </button>
@@ -161,9 +167,9 @@ export const ProductsPage = () => {
           fixedHeader
           pagination
           responsive
-          noHeader 
+          noHeader
           className="text-xl"
-          customStyles={{ 
+          customStyles={{
             headCells: {
               style: {
                 fontWeight: 'bold',

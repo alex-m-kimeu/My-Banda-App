@@ -1,31 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import { FaLongArrowAltLeft } from "react-icons/fa";
 
 export const AddProduct = () => {
-  const [storeID, setStoreID] = useState('');
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.sub.id;
-
-    fetchUser(token, userId);
-  }, []);
-
-  const fetchUser = (token, userId) => {
-    fetch(`http://127.0.0.1:5500/user/${userId}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setStoreID(data.store.id);
-      })
-      .catch(error => console.error('Error:', error));
-  };
-
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -50,10 +26,20 @@ export const AddProduct = () => {
     setPreview(filePreviews);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.sub.id;
+
+    const userResponse = await fetch(`http://127.0.0.1:5500/user/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const userData = await userResponse.json();
+    const storeID = userData.store.id;
 
     const storeData = new FormData();
     storeData.append('title', formData.title);
@@ -63,7 +49,7 @@ export const AddProduct = () => {
     });
     storeData.append('price', formData.price);
     storeData.append('quantity', formData.quantity);
-    storeData.append('seller_id', storeID);
+    storeData.append('store_id', storeID);
     storeData.append('category_name', formData.category_name);
 
     fetch("http://127.0.0.1:5500/products", {
@@ -103,116 +89,111 @@ export const AddProduct = () => {
     <div className="flex flex-col md:flex-row p-8 ">
       <div className="w-full md:w-3/4 lg:w-4/5  p-2 ">
         <div className="w-full md:w-1/4 lg:w-1/5 px-4 mb-4 md:mb-0">
-          {/* <div className="text-gray-600 cursor-pointer mb-5">
-            <button className='flex bg-Secondary hover:bg-yellow-500 p-2 rounded'>
-            <FaLongArrowAltLeft className='mr-1 pt-1' />
-              Back
-            </button>
-          </div> */}
         </div>
-
         <form onSubmit={handleSubmit} className=''>
-      <div className="flex flex-col space-y-4">
-        <input
-          id="title"
-          type="text"
-          name="title"
-          placeholder="Product Name"
-          value={formData.title}
-          onChange={handleChange}
-          className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
-          required
-        />
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-          className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
-          required
-        />
-        <input
-          id="price"
-          type="text"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
-          required
-        />
-        <input
-          id="quantity"
-          type="text"
-          name="quantity"
-          placeholder="Quantity"
-          value={formData.quantity}
-          onChange={handleChange}
-          className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
-          required
-        />
-        <input
-          id="category_name"
-          type="text"
-          name="category_name"
-          placeholder="Category"
-          value={formData.category_name}
-          onChange={handleChange}
-          className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
-          required
-        />
-        <input
-          ref={imageInputRef}
-          id="image"
-          type="file"
-          name="image"
-          accept="image/*"
-          multiple
-          onChange={handleImageChange}
-          className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
-          required
-        />
+          <div className="flex flex-col space-y-4">
+            <input
+              id="title"
+              type="text"
+              name="title"
+              placeholder="Product Name"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleChange}
+              className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <input
+              id="price"
+              type="text"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+              onChange={handleChange}
+              className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <input
+              id="quantity"
+              type="text"
+              name="quantity"
+              placeholder="Quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
+            <select
+              id="category_name"
+              name="category_name"
+              value={formData.category_name}
+              onChange={handleChange}
+              className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            >
+              <option value="">Select Category</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Personal Care and Beauty">Personal Care and Beauty</option>
+              <option value="Food and Beverage">Food and Beverage</option>
+            </select>
+            <input
+              ref={imageInputRef}
+              id="image"
+              type="file"
+              name="image"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+              className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              required
+            />
 
-        {preview.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-            {preview.map((src, index) => (
-              <img key={index} src={src} alt="Preview" className="w-full h-64 object-cover" />
-            ))}
+            {preview.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                {preview.map((src, index) => (
+                  <img key={index} src={src} alt="Preview" className="w-full h-64 object-cover" />
+                ))}
+              </div>
+            )}
+            <div className="flex gap-4">
+              <button
+                type="submit"
+                className="bg-secondary hover:bg-yellow-500 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Add
+              </button>
+              <button
+                type="button"
+                className="bg-secondary hover:bg-yellow-500 text-black hover:text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                onClick={() => {
+                  setFormData({
+                    title: '',
+                    description: '',
+                    price: '',
+                    quantity: '',
+                    category_name: '',
+                    images: []
+                  });
+                  imageInputRef.current.value = '';
+                  setPreview([]);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-        )}
-        <div className="flex gap-4">
-          <button
-            type="submit"
-            className="bg-secondary hover:bg-yellow-500 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Add
-          </button>
-          <button
-            type="button"
-            className="bg-secondary hover:bg-yellow-500 text-black hover:text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => {
-              setFormData({
-                title: '',
-                description: '',
-                price: '',
-                quantity: '',
-                category_name: '',
-                images: []
-              });
-              imageInputRef.current.value = '';
-              setPreview([]);
-            }}
-          >
-            Cancel
-          </button>
-        </div>
+        </form>
       </div>
-    </form>
-
-      </div>
-
-
     </div>
   );
 };
