@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import { CartsList } from './CartList';
+import { NavLink } from 'react-router-dom';
+
 
 
 export const Buyercart = () => {
@@ -83,9 +85,11 @@ export const Buyercart = () => {
 <div  className="relative overflow-x-auto w-full">
 <div className="flex justify-between">
 <h1 className="text-2xl font-body font-medium">Cart</h1>
+<NavLink to="/buyer/home">
 <button className="border border-gray-300 px-5 py-2 rounded hover:border-none hover:bg-Secondary">
 Continue Shopping
 </button>
+</NavLink>
 </div>
 <CartsList products={products} onDelete={handleDelete} setButtonClicked={setButtonClicked} />
 </div>
@@ -121,11 +125,13 @@ Continue Shopping
                         
                     ) : (
                         <div>
-                          <div className="flex justify-between">
-<h1 className="text-2xl font-body font-medium">Cart</h1>
-<button className="border border-gray-300 px-5 py-2 rounded hover:border-none hover:bg-Secondary">
+                          <div className="flex justify-between ">
+<h1 className="text-lg md:text-xl lg:text-2xl font-body font-medium">Cart</h1>
+<NavLink to="/buyer/home">
+<button className="border text-xs  border-gray-300 px-5 py-2 rounded hover:border-none hover:bg-Secondary">
 Explore Shop
 </button>
+</NavLink>
 </div>
 <div className='flex justify-center'>
   <img src="https://www.adasglobal.com/img/empty-cart.png" alt=""  className=' w-full lg:h-80 lg:w-80 mt-5 '/>
