@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { jwtDecode } from "jwt-decode";
+import { FaTrash } from 'react-icons/fa'; 
+import { jwtDecode } from 'jwt-decode';
 
 export const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -83,6 +84,25 @@ export const Wishlist = () => {
     });
   };
 
+  const handleDelete = (productId) => {
+    const token = localStorage.getItem('token');
+    fetch(`http://localhost:5500/wishlists/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      setWishlistItems(wishlistItems.filter(item => item.id !== productId));
+    })
+    .catch(error => {
+      console.error('Error deleting item from wishlist:', error);
+    });
+  };
+
   return (
     <div className="bg-Primary text-Text font-body min-h-screen">
       <main className="p-8">
@@ -111,6 +131,13 @@ export const Wishlist = () => {
                 onClick={() => handleAddToCart(item.id)}
               >
                 Add To Cart
+              </button>
+              <button
+                className="bg-black text-Primary rounded p-2 mt-2 w-full"
+                onClick={() => handleDelete(item.id)}
+              >
+                <FaTrash className="inline-block mr-1" />
+                Remove
               </button>
             </div>
           ))}
