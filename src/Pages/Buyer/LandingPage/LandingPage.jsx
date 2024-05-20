@@ -48,6 +48,9 @@ export const LandingPage = () => {
 
   const addToWishlist = (product) => {
     const token = localStorage.getItem("token");
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.sub.id;
+  
     fetch(`http://localhost:5500/wishlists`, {
       method: "POST",
       headers: {
@@ -55,7 +58,8 @@ export const LandingPage = () => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        productId: product.id,
+        buyer_id: userId,
+        product_id: product.id,
       }),
     })
       .then((response) => {
@@ -72,6 +76,7 @@ export const LandingPage = () => {
         console.error("Error adding product to wishlist:", error);
       });
   };
+  
 
   const addToCart = (productId) => {
     const token = localStorage.getItem("token");

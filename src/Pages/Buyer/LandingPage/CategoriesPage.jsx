@@ -61,13 +61,12 @@ export const CategoriesPage = () => {
 
   const addToWishlist = (productId) => {
     const token = localStorage.getItem("token");
-    fetch(`http://127.0.0.1:5500/wishlists`, {
+    fetch(`http://127.0.0.1:5500/wishlists/${productId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ product_id: productId }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -83,6 +82,7 @@ export const CategoriesPage = () => {
       });
   };
 
+
   return (
     <div className="bg-Primary font-body text-Text min-h-screen">
       <main className="p-4 md:p-8 lg:p-12">
@@ -96,15 +96,25 @@ export const CategoriesPage = () => {
               className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
             >
               <img
-                src={product.images[0]} // Assuming the first image is the main product image
+                src={
+                  product.images && product.images.length > 0
+                    ? product.images[0]
+                    : ""
+                }
                 alt={product.title}
                 className="w-full h-48 object-cover"
               />
               <div className="p-4 flex flex-col justify-between flex-grow">
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">{product.title}</h3>
-                  <p className="text-Green text-sm mb-2">By {product.store.name}</p>
-                  <p className="text-Green text-lg font-bold">${product.price}</p>
+                  <h3 className="font-semibold text-lg mb-2">
+                    {product.title}
+                  </h3>
+                  <p className="text-Green text-sm mb-2">
+                    By {product.store ? product.store.name : "Unknown"}
+                  </p>
+                  <p className="text-Green text-lg font-bold">
+                    ${product.price}
+                  </p>
                 </div>
                 <div className="mt-4 flex justify-between items-center">
                   <button
