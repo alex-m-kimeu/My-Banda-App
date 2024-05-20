@@ -50,7 +50,7 @@ export const LandingPage = () => {
     const token = localStorage.getItem("token");
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.sub.id;
-  
+
     fetch(`http://localhost:5500/wishlists/${product.id}`, {
       method: "POST",
       headers: {
@@ -176,7 +176,11 @@ export const LandingPage = () => {
               className="bg-Primary p-4 rounded-md shadow-md"
             >
               <img
-                src={product.image}
+                src={
+                  product.images && product.images.length > 0
+                    ? product.images[0]
+                    : ""
+                }
                 alt={product.name}
                 className="w-full h-48 object-cover mb-4 rounded-md"
               />
