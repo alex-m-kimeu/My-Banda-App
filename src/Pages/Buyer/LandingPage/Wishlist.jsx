@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { FaTrash } from 'react-icons/fa'; // Import trash icon
+import { FaTrash } from 'react-icons/fa'; 
 import { jwtDecode } from 'jwt-decode';
 
 export const Wishlist = () => {
