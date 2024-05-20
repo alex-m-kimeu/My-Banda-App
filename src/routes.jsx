@@ -114,7 +114,7 @@ const routes = [
         role: "buyer",
     },
     {
-        path: "/buyer/category",
+        path: "/categories/:categoryName",
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
                 <CategoriesPage />
