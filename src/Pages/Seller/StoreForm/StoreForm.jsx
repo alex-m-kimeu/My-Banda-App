@@ -69,11 +69,12 @@ export const StoreForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <div className=" max-w-md">
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-5 w-[350px]">
-          <h3 className="text-lg text-center font-bold mb-2">Edit Store</h3>
-          <div className="flex flex-col space-y-4">
+    <div className="flex justify-center lg:justify-start min-h-screen p-4 ">
+      <div className=" max-w-md w-full">
+        <form onSubmit={handleSubmit} className="bg-primary">
+          <h3 className="text-lg text-start font-bold mb-4 text-Variant">Edit Store</h3>
+          <h3 className="text-2x1 text-start font-bold text-Variant mb-4">Information</h3>
+          <div className="flex flex-col space-y-6">
             <input
               id="store_name"
               type="text"
@@ -81,7 +82,7 @@ export const StoreForm = () => {
               placeholder="Store Name"
               value={formData.store_name}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
               required
             />
             <textarea
@@ -90,7 +91,7 @@ export const StoreForm = () => {
               placeholder="Store Description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
               required
             />
             <input
@@ -100,7 +101,7 @@ export const StoreForm = () => {
               placeholder="Location"
               value={formData.location}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
               required
             />
             <input
@@ -109,7 +110,7 @@ export const StoreForm = () => {
               type="file"
               name="image"
               onChange={handleImageChange}
-              className="w-full px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
               required
             />
 
@@ -117,16 +118,16 @@ export const StoreForm = () => {
               <img src={preview} alt="Preview" className="w-full h-64 object-cover mt-4" />
             )}
 
-            <div className="flex justify-between">
+            <div className="flex justify-start space-x-6">
               <button
                 type="submit"
-                className="bg-Primary hover:bg-Secondary text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-Primary hover:bg-Secondary text-Variant hover:text-Primary font-semibold py-2 px-4"
               >
                 Save
               </button>
               <button
                 type="button"
-                className="bg-Primary hover:bg-Secondary text-black hover:text-Primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-Secondary hover:bg-Primary text-Primary hover:text-Variant font-semibold py-2 px-4  focus:outline-none focus:shadow"
                 onClick={() => {
                   setFormData({
                     store_name: '',

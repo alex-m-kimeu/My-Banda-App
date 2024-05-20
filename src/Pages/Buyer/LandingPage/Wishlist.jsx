@@ -103,6 +103,25 @@ export const Wishlist = () => {
       });
   };
 
+  const handleDelete = (productId) => {
+    const token = localStorage.getItem('token');
+    fetch(`http://localhost:5500/wishlists/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      setWishlistItems(wishlistItems.filter(item => item.id !== productId));
+    })
+    .catch(error => {
+      console.error('Error deleting item from wishlist:', error);
+    });
+  };
+
   return (
     <div className="bg-Primary text-Text font-body min-h-screen">
       <main className="p-8">

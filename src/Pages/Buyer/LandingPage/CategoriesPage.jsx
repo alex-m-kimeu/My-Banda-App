@@ -67,6 +67,7 @@ export const CategoriesPage = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+
     })
       .then((response) => {
         if (!response.ok) {
@@ -81,7 +82,6 @@ export const CategoriesPage = () => {
         console.error("Error adding item to wishlist:", error);
       });
   };
-
 
   return (
     <div className="bg-Primary font-body text-Text min-h-screen">
@@ -101,6 +101,7 @@ export const CategoriesPage = () => {
                     ? product.images[0]
                     : ""
                 }
+
                 alt={product.title}
                 className="w-full h-48 object-cover"
               />
