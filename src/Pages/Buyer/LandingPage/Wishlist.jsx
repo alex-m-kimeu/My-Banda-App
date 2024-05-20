@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
-import { FaTrash } from 'react-icons/fa'; 
-import { jwtDecode } from 'jwt-decode';
+import { useState, useEffect } from "react";
+import { FaTrash } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
 
 export const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.sub.id;
 
@@ -17,96 +17,98 @@ export const Wishlist = () => {
   const fetchWishlistItems = (token, userId) => {
     fetch(`http://localhost:5500/wishlists`, {
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setWishlistItems(data);
       })
-      .catch(error => {
-        console.error('Error fetching wishlist items:', error);
+      .catch((error) => {
+        console.error("Error fetching wishlist items:", error);
       });
   };
 
   const handleAddAllToCart = () => {
-    const token = localStorage.getItem('token');
-    wishlistItems.forEach(item => {
+    const token = localStorage.getItem("token");
+    wishlistItems.forEach((item) => {
       fetch(`http://localhost:5500/carts`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ product_id: item.id })
+        body: JSON.stringify({ product_id: item.id }),
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Item added to cart:', data);
-      })
-      .catch(error => {
-        console.error('Error adding item to cart:', error);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Item added to cart:", data);
+        })
+        .catch((error) => {
+          console.error("Error adding item to cart:", error);
+        });
     });
   };
 
   const handleAddToCart = (productId) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     fetch(`http://localhost:5500/carts`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ product_id: productId })
+      body: JSON.stringify({ product_id: productId }),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Item added to cart:', data);
-    })
-    .catch(error => {
-      console.error('Error adding item to cart:', error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Item added to cart:", data);
+      })
+      .catch((error) => {
+        console.error("Error adding item to cart:", error);
+      });
   };
 
   const handleDelete = (productId) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     fetch(`http://localhost:5500/wishlists/${productId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      setWishlistItems(wishlistItems.filter(item => item.id !== productId));
-    })
-    .catch(error => {
-      console.error('Error deleting item from wishlist:', error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        setWishlistItems(wishlistItems.filter((item) => item.id !== productId));
+      })
+      .catch((error) => {
+        console.error("Error deleting item from wishlist:", error);
+      });
   };
 
   return (
     <div className="bg-Primary text-Text font-body min-h-screen">
       <main className="p-8">
-        <h2 className="text-2xl font-bold mb-4">Wish-list ({wishlistItems.length})</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          Wish-list ({wishlistItems.length})
+        </h2>
         <button
           className="bg-Secondary text-Variant rounded p-2 mb-6"
           onClick={handleAddAllToCart}
@@ -120,7 +122,9 @@ export const Wishlist = () => {
               className="border border-Variant2 rounded p-4 shadow-md"
             >
               <img
-                src={item.image}
+                src={
+                  item.images && item.images.length > 0 ? item.images[0] : ""
+                }
                 alt={item.name}
                 className="w-full h-48 object-cover mb-4"
               />
