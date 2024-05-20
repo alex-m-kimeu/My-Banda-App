@@ -51,7 +51,7 @@ export const LandingPage = () => {
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.sub.id;
   
-    fetch(`http://localhost:5500/wishlists`, {
+    fetch(`http://localhost:5500/wishlists/${product.id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,13 +70,12 @@ export const LandingPage = () => {
       })
       .then((data) => {
         console.log("Product added to wishlist:", data);
-        navigate("/wishlist");
+        navigate("/buyer/wishlist");
       })
       .catch((error) => {
         console.error("Error adding product to wishlist:", error);
       });
   };
-  
 
   const addToCart = (productId) => {
     const token = localStorage.getItem("token");
