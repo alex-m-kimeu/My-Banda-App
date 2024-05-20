@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
@@ -81,25 +80,6 @@ export const Wishlist = () => {
       })
       .catch((error) => {
         console.error("Error adding item to cart:", error);
-      });
-  };
-
-  const handleDelete = (productId) => {
-    const token = localStorage.getItem("token");
-    fetch(`http://localhost:5500/wishlists/${productId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        setWishlistItems(wishlistItems.filter((item) => item.id !== productId));
-      })
-      .catch((error) => {
-        console.error("Error deleting item from wishlist:", error);
       });
   };
 

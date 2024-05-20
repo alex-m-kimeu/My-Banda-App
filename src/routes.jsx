@@ -13,8 +13,9 @@ import { SellerDashboard } from "./Pages/Seller/Dashboard/SellerDashboard";
 import { StoreForm } from "./Pages/Seller/StoreForm/StoreForm";
 import { Wishlist } from "./Pages/Buyer/LandingPage/Wishlist";
 import { CategoriesPage } from "./Pages/Buyer/LandingPage/CategoriesPage";
-import { ProductsPage } from "./Pages/Seller/Products/ProductPage";
+import { Products } from "./Pages/Seller/Products/Products";
 import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
+import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 
 const routes = [
     {
@@ -87,7 +88,17 @@ const routes = [
         path: "/seller/products",
         Element: () => (
             <Layout Sidebar={SellerSidebar}>
-                <ProductsPage />
+                <Products />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "seller",
+    },
+    {
+        path: "/seller/Add/Products",
+        Element: () => (
+            <Layout Sidebar={SellerSidebar}>
+                <AddProduct />
             </Layout>
         ),
         isAuthenticated: true,
