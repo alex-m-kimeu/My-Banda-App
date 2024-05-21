@@ -14,6 +14,7 @@ export const AddProduct = () => {
         price: '',
         quantity: '',
         images: [],
+        newImages: [],
         category_name: ''
     });
 
@@ -22,7 +23,19 @@ export const AddProduct = () => {
 
     useEffect(() => {
         if (editingProduct) {
-            setFormData(editingProduct);
+            setFormData({
+                ...editingProduct,
+                images: editingProduct.images,
+                newImages: []
+            });
+
+            const oldImagePreviews = editingProduct.images.map((image, index) => ({
+                id: index,
+                src: image,
+                file: image
+            }));
+
+            setPreview(oldImagePreviews);
         }
     }, [editingProduct]);
 
@@ -33,6 +46,10 @@ export const AddProduct = () => {
 
     const handleImageChange = (e) => {
         const newFiles = Array.from(e.target.files);
+        if (formData.newImages.length + newFiles.length > 4) {
+            alert('You can only upload up to 4 images.');
+            return;
+        }
         const newFilePreviews = newFiles.map((file, index) => ({
             id: index + Date.now(),
             src: URL.createObjectURL(file),
@@ -41,7 +58,7 @@ export const AddProduct = () => {
 
         setFormData((prevFormData) => ({
             ...prevFormData,
-            images: [...prevFormData.images, ...newFiles]
+            newImages: [...prevFormData.newImages, ...newFiles]
         }));
 
         setPreview((prevPreview) => [...prevPreview, ...newFilePreviews]);
@@ -51,10 +68,18 @@ export const AddProduct = () => {
         const imageToRemove = preview.find((image) => image.id === id);
 
         setPreview((prevPreview) => prevPreview.filter((image) => image.id !== id));
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            images: prevFormData.images.filter((image) => image !== imageToRemove.file)
-        }));
+
+        if (typeof imageToRemove.file === 'string') {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                images: prevFormData.images.filter((image) => image !== imageToRemove.file)
+            }));
+        } else {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                newImages: prevFormData.newImages.filter((image) => image !== imageToRemove.file)
+            }));
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -75,9 +100,13 @@ export const AddProduct = () => {
         const storeData = new FormData();
         storeData.append('title', formData.title);
         storeData.append('description', formData.description);
-        formData.images.forEach((image) => {
-            storeData.append('images', image);
-        });
+        if (formData.newImages.length > 0) {
+            formData.newImages.forEach((image) => {
+                storeData.append('images', image);
+            });
+        } else if (formData.images.length > 0) {
+            storeData.append('oldImages', JSON.stringify(formData.images));
+        }
         storeData.append('price', formData.price);
         storeData.append('quantity', formData.quantity);
         storeData.append('store_id', storeID);
@@ -131,7 +160,8 @@ export const AddProduct = () => {
             price: '',
             quantity: '',
             category_name: '',
-            images: []
+            images: [],
+            newImages: []
         });
         imageInputRef.current.value = '';
         setPreview([]);
@@ -161,7 +191,7 @@ export const AddProduct = () => {
                         placeholder="Description"
                         value={formData.description}
                         onChange={handleChange}
-                        className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
+                        className="w-auto h-[80px] px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
                         required
                     />
                     <input
@@ -210,13 +240,13 @@ export const AddProduct = () => {
                         className="w-auto px-3 py-2 bg-white rounded-md text-sm border border-gray-300 outline-none"
                         required
                     />
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-2  gap-2 mt-4">
                         {preview.map((image) => (
                             <div key={image.id} className="relative">
                                 <img src={image.src} alt="Preview" className="w-[200px] h-[200px] object-cover" />
                                 <button
                                     onClick={() => handleImageRemove(image.id)}
-                                    className="absolute top-1 right-4 bg-Secondary p-1 rounded-full"
+                                    className="absolute top-1 right-5 bg-Secondary p-1 rounded-full"
                                 >
                                     <RxCross2 className='fill-Primary' />
                                 </button>
@@ -226,13 +256,13 @@ export const AddProduct = () => {
                     <div className="flex gap-4">
                         <button
                             type="submit"
-                            className="bg-secondary hover:bg-yellow-500 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="bg-Secondary text-black hover:text-white font-normal py-2 px-4 "
                         >
                             Add
                         </button>
                         <button
                             type="button"
-                            className="bg-secondary hover:bg-yellow-500 text-black hover:text-primary font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="bg-Secondary text-black hover:text-white font-normal py-2 px-4"
                             onClick={() => {
                                 setFormData({
                                     title: '',
