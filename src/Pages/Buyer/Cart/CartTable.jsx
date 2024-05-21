@@ -5,7 +5,7 @@ import { MdDeleteOutline } from "react-icons/md";
 
 
 
-export const CartTable = ({ product, onDelete,  setButtonClicked}) => {
+export const CartTable = ({ product, onDelete,  setButtonClicked, setClicked}) => {
   const [quantity, setQuantity]= useState(product.quantity);
   const [subtotal, setSubtotal]= useState(product.subtotal);
 
@@ -46,6 +46,7 @@ export const CartTable = ({ product, onDelete,  setButtonClicked}) => {
     setQuantity(products.quantity)
     setSubtotal(products.subtotal)
   setButtonClicked(subtotal)
+  setClicked(quantity)
     
 
   })
@@ -71,6 +72,7 @@ const handleDecreaseQuantity =()=>{
   setQuantity(products.quantity)
   setSubtotal(products.subtotal)
   setButtonClicked(subtotal)
+  setClicked(quantity)
  
 
 

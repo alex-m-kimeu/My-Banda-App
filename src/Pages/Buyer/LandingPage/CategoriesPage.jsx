@@ -1,13 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import BuyerContext from "../BuyerContext/BuyerContext";
+import { useNavigate } from "react-router-dom";
+
 
 export const CategoriesPage = () => {
+  const{ handleAddToCart, handleAddToWishlist}=useContext(BuyerContext)
+  const navigate = useNavigate()
+
+
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);
 
@@ -34,54 +41,10 @@ export const CategoriesPage = () => {
       })
       .catch((error) => console.error("Error:", error));
   };
+  const handleProductClick=(productId) =>{
+    navigate(`/products/${productId}`);
 
-  const addToCart = (productId) => {
-    const token = localStorage.getItem("token");
-    fetch(`http://127.0.0.1:5500/carts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ product_id: productId }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Item added to cart:", data);
-      })
-      .catch((error) => {
-        console.error("Error adding item to cart:", error);
-      });
-  };
-
-  const addToWishlist = (productId) => {
-    const token = localStorage.getItem("token");
-    fetch(`http://127.0.0.1:5500/wishlists/${productId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Item added to wishlist:", data);
-      })
-      .catch((error) => {
-        console.error("Error adding item to wishlist:", error);
-      });
-  };
+  }
 
   return (
     <div className="bg-Primary font-body text-Text min-h-screen">
@@ -94,6 +57,7 @@ export const CategoriesPage = () => {
             <div
               key={product.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
+              onClick={() => handleProductClick(product.id)}
             >
               <img
                 src={
@@ -120,14 +84,14 @@ export const CategoriesPage = () => {
                 <div className="mt-4 flex justify-between items-center">
                   <button
                     className="bg-Secondary text-Primary p-2 rounded-lg flex items-center"
-                    onClick={() => addToWishlist(product.id)}
+                    onClick={() => handleAddToWishlist(product.id)}
                   >
                     <MdFavoriteBorder className="mr-1" />
                     Wishlist
                   </button>
                   <button
                     className="bg-Secondary text-Primary p-2 rounded-lg flex items-center"
-                    onClick={() => addToCart(product.id)}
+                    onClick={() => handleAddToCart(product.id)}
                   >
                     <FontAwesomeIcon icon={faShoppingCart} className="mr-1" />
                     Add

@@ -2,7 +2,7 @@ import React from "react";
 import { CartTable } from "./CartTable";
 import { Cartcard} from "./Cartcard";
 
-export const CartsList = ({onDelete, products, setButtonClicked}) => {
+export const CartsList = ({onDelete, products, setButtonClicked, setClicked}) => {
 
 
   
@@ -11,7 +11,7 @@ export const CartsList = ({onDelete, products, setButtonClicked}) => {
         <div  className="relative overflow-x-auto w-full">
         <div className="sm:hidden flex mt-4 flex-wrap justify-center gap-4">
           {products.map((product) => {
-            return <Cartcard key={product.products.id} product={product} onDelete={onDelete}  setButtonClicked={setButtonClicked}/>
+            return <Cartcard key={product.products.id} product={product}  setClicked={setClicked}  onDelete={onDelete}  setButtonClicked={setButtonClicked}/>
           })}
         </div>
 
@@ -28,7 +28,7 @@ export const CartsList = ({onDelete, products, setButtonClicked}) => {
       <tbody className="text-[16px] font-normal text-Variant2">
         {/* // one product */}
         {products.map((product) => {
-              return <CartTable  key={product.products.id}  setButtonClicked={setButtonClicked} product={product} onDelete={onDelete} />
+              return <CartTable  key={product.products.id}  setClicked={setClicked} setButtonClicked={setButtonClicked} product={product} onDelete={onDelete} />
             })}
       </tbody>
     </table>

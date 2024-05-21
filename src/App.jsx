@@ -2,10 +2,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import AuthWrapper from './Authwrapper';
 import routes from './routes';
 import { SignIn } from './Authentication/SignIn/SignIn';
+import { BuyerProvider } from './Pages/Buyer/BuyerContext/BuyerContext';
 
 function App() {
   return (
-    <Router       
+ 
+   <BuyerProvider>
+       <Router       
       basename={import.meta.env.DEV ? '/' : '/My-Banda-App/'}
     >
       <Routes>
@@ -21,6 +24,8 @@ function App() {
         ))}
       </Routes>
     </Router>
+   </BuyerProvider>
+ 
   );
 }
 

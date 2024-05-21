@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import banner2 from "../../../assets/banner2.jpg";
 import electronicsIcon from "../../../assets/electronics.svg";
 import clothingIcon from "../../../assets/clothing.svg";
@@ -12,8 +12,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import BuyerContext from "../BuyerContext/BuyerContext";
+
+
 
 export const LandingPage = () => {
+  const{ handleAddToCart, handleAddToWishlist}=useContext(BuyerContext)
+  const navigate = useNavigate()
+
   const categories = [
     { name: "Electronics", icon: electronicsIcon },
     { name: "Clothing", icon: clothingIcon },
@@ -23,7 +29,7 @@ export const LandingPage = () => {
   ];
 
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -46,70 +52,21 @@ export const LandingPage = () => {
       .catch((error) => console.error("Error fetching products:", error));
   };
 
-  const addToWishlist = (product) => {
-    const token = localStorage.getItem("token");
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.sub.id;
-
-    fetch(`http://localhost:5500/wishlists/${product.id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        buyer_id: userId,
-        product_id: product.id,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Product added to wishlist:", data);
-        navigate("/buyer/wishlist");
-      })
-      .catch((error) => {
-        console.error("Error adding product to wishlist:", error);
-      });
-  };
-
-  const addToCart = (productId) => {
-    const token = localStorage.getItem("token");
-    fetch(`http://localhost:5500/carts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ product_id: productId }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Item added to cart:", data);
-      })
-      .catch((error) => {
-        console.error("Error adding item to cart:", error);
-      });
-  };
 
   const handleCategoryClick = (categoryName) => {
     navigate(`/categories/${encodeURIComponent(categoryName)}`);
   };
 
+  const handleProductClick=(productId) =>{
+    navigate(`/products/${productId}`);
+
+  }
+
   return (
     <div className="bg-Primary text-Text font-body">
       {/* Banner */}
-      <div className="relative">
-        <img src={banner2} alt="Banner" className="w-full h-64 object-cover" />
+      <div className="relative ">
+        <img src={banner2} alt="Banner" className="w-full h-64 object-cover px-none" />
         <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-50 p-4">
           <h2 className="text-3xl text-Primary font-bold">
             Welcome to My Banda
@@ -131,12 +88,13 @@ export const LandingPage = () => {
             <div
               key={category.name}
               className="flex flex-col items-center cursor-pointer"
-              onClick={() => handleCategoryClick(category.name)}
             >
               <img
                 src={category.icon}
                 alt={`${category.name} icon`}
                 className="w-12 h-12"
+              onClick={() => handleCategoryClick(category.name)}
+
               />
               <div className="mt-2">{category.name}</div>
             </div>
@@ -173,32 +131,34 @@ export const LandingPage = () => {
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-Primary p-4 rounded-md shadow-md"
+              className="bg-Primary rounded-md shadow-md relative"
             >
               <img
                 src={
                   product.images && product.images.length > 0
                     ? product.images[0]
                     : ""
+                    
                 }
+              onClick={()=>handleProductClick(product.id)}
+
                 alt={product.name}
-                className="w-full h-48 object-cover mb-4 rounded-md"
+                className="w-full h-48 object-cover mb-4 rounded-t-md"
               />
-              <h4 className="text-lg font-bold">{product.name}</h4>
+              <div className="px-3">
+              <h4 className="text-lg font-bold">{product.title}</h4>
+              <p className="text-Variant2 text-xs mt-2">{product.description}</p>
               <p className="text-Secondary mt-2">{product.price}</p>
-              <div className="mt-4 flex justify-between items-center">
-                <button
-                  className="bg-Secondary text-Primary p-2 rounded-md"
-                  onClick={() => addToWishlist(product)}
+              </div>
+              <button
+                  className="hover:bg-Secondary bg-Secondary bg-opacity-50 absolute top-3 right-3 text-Primary p-2 rounded-md"
+                  onClick={() => handleAddToWishlist(product.id)}
                 >
-                  <MdFavoriteBorder className="inline-block mr-1" />
-                  Add to Wishlist
+                  <MdFavoriteBorder className="inline-block " />
+                  
                 </button>
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  className="text-Secondary cursor-pointer"
-                  onClick={() => addToCart(product.id)}
-                />
+              <div  onClick={() => handleAddToCart(product.id)} className="mt-4 text-center py-1 rounded-b text-white hover:text-Secondary bg-black " >
+               Add to Cart
               </div>
             </div>
           ))}

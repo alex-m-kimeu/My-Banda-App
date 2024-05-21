@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition , DisclosureButton, MenuButton, DisclosurePanel,MenuItems, MenuItem} from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo from "/src/assets/logo.png";
@@ -9,7 +9,9 @@ import { PiUserSoundLight } from "react-icons/pi";
 import { CiLogout } from "react-icons/ci";
 import { IoMdSearch } from "react-icons/io";
 import { NavLink } from 'react-router-dom';
-import { HiOutlineUser } from "react-icons/hi2";
+import { HiOutlineUser } from "react-icons/hi2"
+import BuyerContext from '../../Pages/Buyer/BuyerContext/BuyerContext';
+
 
 
 const navigation = [
@@ -22,6 +24,32 @@ function classNames(...classes) {
 }
 
 export const Navbar = () => {
+  const {cartNum, setCartNum}= useContext(BuyerContext)
+  // const [cartNum, setCartNum] = useState(0)
+
+   // fetch length of cart
+   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    fetch("http://127.0.0.1:5500//carts", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+           setCartNum(data.length)
+
+        // setItemsCost(data[0].items_cost)
+        // setTotal(data[0].total_cost)
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  
+
+
   return (
     <Disclosure as="nav" className="border-b">
       {({ open }) => (
@@ -45,7 +73,7 @@ export const Navbar = () => {
              <NavLink to='/buyer/home'>
              <div className="flex flex-shrink-0 items-center  h-20">
                 <img
-                  className="h-10 w-auto hidden sm:block justify-self-start"
+                  className="h-auto w-auto hidden sm:block justify-self-start lg:h-10"
                   src={logo}
                   alt="Your Company"
                 />
