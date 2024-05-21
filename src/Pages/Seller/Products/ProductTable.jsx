@@ -6,18 +6,18 @@ export const ProductTable = ({ products, onEditProduct, onDeleteProduct }) => {
         <div className="flex h-auto font">
             <div className="relative overflow-x-auto w-full">
                 <table className="w-full mx-auto text-left">
-                    <thead className="text-[18px] text-Text">
+                    <thead className="text-sm md:text-base text-Text">
                         <tr className="border-b">
-                            <th className="p-[10px]" >Products</th>
-                            <th className="p-[10px]" >Category</th>
-                            <th className="p-[10px]" >Inventory</th>
-                            <th className="p-[10px]" >Price</th>
-                            <th className="p-[10px] flex justify-center items-center" >Actions</th>
+                            <th className="p-[10px] font-semibold" >Products</th>
+                            <th className="p-[10px] font-semibold" >Category</th>
+                            <th className="p-[10px] font-semibold" >Inventory</th>
+                            <th className="p-[10px] font-semibold" >Price</th>
+                            <th className="p-[10px] font-semibold flex justify-center items-center" >Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="text-[16px] font-normal text-Variant2">
+                    <tbody className="text-sm md:text-[16px] font-normal text-Variant2">
                         {products.map(product => (
-                            <tr key={product.id} className="border-b">
+                            <tr key={product.id} className="border-b space-y-4">
                                 <td className="p-[10px]">
                                     <img
                                         className="inline-block h-6 w-6 rounded-full object-cover mr-1"
