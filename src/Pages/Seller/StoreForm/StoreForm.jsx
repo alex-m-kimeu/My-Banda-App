@@ -69,11 +69,10 @@ export const StoreForm = () => {
   };
 
   return (
-    <div className="flex justify-center lg:justify-start min-h-screen p-4 ">
+    <div className="flex justify-center lg:justify-start p-[10px]">
       <div className=" max-w-md w-full">
         <form onSubmit={handleSubmit} className="bg-primary">
-          <h3 className="text-lg text-start font-bold mb-4 text-Variant">Edit Store</h3>
-          <h3 className="text-2x1 text-start font-bold text-Variant mb-4">Information</h3>
+        <h3 className="text-Text font-bold text-xl text-center lg:text-left mb-5">Store Information</h3>
           <div className="flex flex-col space-y-6">
             <input
               id="store_name"
@@ -118,16 +117,16 @@ export const StoreForm = () => {
               <img src={preview} alt="Preview" className="w-full h-64 object-cover mt-4" />
             )}
 
-            <div className="flex justify-start space-x-6">
+            <div className="flex justify-center lg:justify-start space-x-6">
               <button
                 type="submit"
-                className="bg-Primary hover:bg-Secondary text-Variant hover:text-Primary font-semibold py-2 px-4"
+                className="bg-Secondary text-sm text-white font-normal py-2 px-4 rounded-md"
               >
                 Save
               </button>
               <button
                 type="button"
-                className="bg-Secondary hover:bg-Primary text-Primary hover:text-Variant font-semibold py-2 px-4  focus:outline-none focus:shadow"
+                className="bg-Secondary text-sm text-white font-normal py-2 px-4 rounded-md"
                 onClick={() => {
                   setFormData({
                     store_name: '',
