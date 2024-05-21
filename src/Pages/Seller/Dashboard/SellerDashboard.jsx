@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import adminImage from '../../../assets/admin.png';
-import { IoStorefrontOutline } from "react-icons/io5";
-import { CiShoppingCart } from "react-icons/ci";
+import { LiaStoreAltSolid } from "react-icons/lia";
+import { LiaShoppingCartSolid } from "react-icons/lia";
 import { useNavigate } from 'react-router-dom';
-
+import { Pie } from 'react-chartjs-2';
+import { Chart, registerables } from 'chart.js';
 
 export const SellerDashboard = () => {
+    Chart.register(...registerables);
     const [storeName, setStoreName] = useState('');
     const [totalProducts, setTotalProducts] = useState([]);
     const [seller, setSeller] = useState('');
+    const [productCategories, setProductCategories] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,56 +34,74 @@ export const SellerDashboard = () => {
                 setSeller(data.username);
                 setStoreName(data.store.store_name);
                 setTotalProducts(data.store.products);
+
+                const categories = data.store.products.reduce((acc, product) => {
+                    acc[product.category_name] = (acc[product.category_name] || 0) + 1;
+                    return acc;
+                }, {});
+                setProductCategories(categories);
             })
             .catch(error => console.error('Error:', error));
     };
+
+    const chartData = {
+        labels: Object.keys(productCategories),
+        datasets: [{
+            data: Object.values(productCategories),
+            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#20b2aa'],
+        }]
+    };
+
     return (
-        <div className="flex flex-col lg:flex-row items-start font-body">
-            <div className="lg:w-2/3">
-                <h1 className="text-2xl font-bold  mb-4 mt-4 text-Text">Dashboard</h1>
-                {storeName ? (
-                    <>
-                        <div className="rounded-sm p-8 shadow-md mb-4 mt-6  lg:w-2/3 md:w-2/3 bg-Primary flex items-center">
-                            <div className="mr-4 flex-grow">
-                                <h1 className="text-2xl font-bold mb-4 text-Variant">Welcome to {storeName}</h1>
-                                <p className="text-lg text-Secondary">{seller}</p>
+        <div className="py-[20px] space-y-4">
+            <h1 className="text-Text font-bold text-xl text-center lg:text-left">Dashboard</h1>
+            <div className="flex flex-col md:flex-row justify-between lg:justify-normal gap-[40px] lg:gap-[200px]">
+                <div className="flex flex-col gap-[40px] md:gap-[80px]">
+                    {storeName ? (
+                        <>
+                            <div className="flex items-center justify-between p-[20px] shadow-md rounded-[5px]">
+                                <div className="flex flex-col gap-[15px]">
+                                    <h1 className="text-center text-Text font-semibold text-base">Welcome to {storeName}</h1>
+                                    <p className="text-center text-Secondary font-normal">{seller}</p>
+                                </div>
+                                <LiaStoreAltSolid className="fill-Secondary w-[100px] md:w-[150px] h-[100px] md:h-[150px]" />
                             </div>
-                            <div className="ml-auto">
-                                <IoStorefrontOutline className="text-8xl text-Secondary" />
-                            </div>
+                            <img src={adminImage} alt='Admin' className="w-auto lg:w-[400px]" />
+                        </>
+                    ) : (
+                        <div className="rounded-md p-6 shadow-md bg-primary flex flex-col gap-4 justify-start items-center max-w-lg mx-auto">
+                            <p className="text-lg text-text font-semibold">You don't have a store yet.</p>
+                            <p className="text-base text-text">Create a store to start selling your products.</p>
+                            <button
+                                onClick={() => navigate('/seller/store')}
+                                className="bg-Secondary text-Primary py-2 px-4 rounded-md text-base font-medium">
+                                Go to Store
+                            </button>
                         </div>
-                        <div className="ml-8 mb-8 mt-10">
-                            <img src={adminImage} alt='Admin' className="sm:w-full md:w-1/2 lg:w-2/3 h-auto" />
-                        </div>
-                    </>
-                ) : (
-                    <div className="rounded-md p-6 shadow-md mb-4 mt-6 ml-8 mr-6 bg-Primary">
-                        <p className="text-base text-Text">You don't have a store yet.</p>
-                        <p className="text-base text-Text">Create a store to start selling your products.</p>
-                        <button
-                            onClick={() => navigate('/seller/store')}
-                            className="bg-Secondary text-Primary py-2 px-4 rounded">
-                            Go to Store
-                        </button>
+                    )}
+                </div>
+                <div className='flex flex-col gap-[30px]'>
+                    <div className="flex justify-center">
+                        {storeName && (
+                            <>
+                                <div className="p-[10px] shadow-md rounded-[5px] flex gap-[10px] w-[200px] h-[90px] justify-center items-center">
+                                    <LiaShoppingCartSolid className="w-[50px] md:w-[80px] h-[50px] md:h-[80px] fill-Text" />
+                                    <div>
+                                        <h2 className="text-center text-Text font-bold text-sm md:text-base">Total Products</h2>
+                                        <p className="text-center text-sm font-normal">
+                                            {totalProducts.length}
+                                        </p>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
-                )}
-            </div>
-            <div className="lg:w-1/4 p-2 mt-20 lg:mt-16">
-                {storeName && (
-                    <div className="rounded-sm p-8 shadow-md mb-4 bg-Primary flex items-center justify-between h-40">
-                        <div className='mr-auto'>
-                        <CiShoppingCart className='text-6xl text-Variant'/>
-
+                    <div className="flex justify-center items-center w-full h-full p-4">
+                        <div style={{ height: '350px', width: '350px' }}>
+                            <Pie data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
                         </div>
-    
-                        <div>
-                            <p className="text-lg text-Text">Total Products</p>
-                            <p className="text-2xl font-bold text-Text">{totalProducts.length}</p>
-                        </div>
-
-
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );
