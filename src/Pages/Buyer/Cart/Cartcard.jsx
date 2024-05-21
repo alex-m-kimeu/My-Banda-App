@@ -4,7 +4,7 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 
-export const Cartcard = ({ product, onDelete , setButtonClicked}) => {
+export const Cartcard = ({ product, onDelete , setButtonClicked, setClicked}) => {
   const [quantity, setQuantity]= useState(product.quantity);
   const [subtotal, setSubtotal]= useState(product.subtotal);
 
@@ -45,6 +45,7 @@ export const Cartcard = ({ product, onDelete , setButtonClicked}) => {
     setQuantity(products.quantity)
     setSubtotal(products.subtotal)
   setButtonClicked(subtotal)
+  setClicked(quantity)
 
 
   })
@@ -70,7 +71,8 @@ const handleDecreaseQuantity =()=>{
   setQuantity(products.quantity)
   setSubtotal(products.subtotal)
   setButtonClicked(subtotal)
-
+  setClicked(quantity)
+  
 })
 .catch(error => console.error('Error:', error));
 };
