@@ -226,8 +226,8 @@ export const AddProduct = () => {
                         <option value="Electronics">Electronics</option>
                         <option value="Clothing">Clothing</option>
                         <option value="Shoes">Shoes</option>
-                        <option value="Personal Care and Beauty">Personal Care and Beauty</option>
-                        <option value="Food and Beverage">Food and Beverage</option>
+                        <option value="Health & beauty">Health & beauty</option>
+                        <option value="Jewelry">Jewelry</option>
                     </select>
                     <input
                         ref={imageInputRef}
