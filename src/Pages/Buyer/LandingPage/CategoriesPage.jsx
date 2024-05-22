@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactStars from "react-rating-stars-component";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useParams } from "react-router-dom";
@@ -49,7 +48,7 @@ export const CategoriesPage = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6">
         {products.map((product) => (
-          <div key={product.id} className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-md relative mb-3 md:mb-0">
+          <div key={product.id} className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0">
             <img
               src={
                 product.images && product.images.length > 0
@@ -60,10 +59,8 @@ export const CategoriesPage = () => {
               alt={product.name}
               className="w-full h-[220px] object-cover"
             />
-            <div className="flex justify-between px-2">
-              <h4 className="text-base font-semibold">{product.title}</h4>
-              <p className="text-Secondary">$ {product.price}</p>
-            </div>
+            <h4 className="text-base font-semibold px-2 ">{product.title}</h4>
+            <p className="text-Secondary px-2 ">$ {product.price}</p>
             <div className="px-2 flex items-center gap-[2px]">
               <ReactStars
                 count={5}
