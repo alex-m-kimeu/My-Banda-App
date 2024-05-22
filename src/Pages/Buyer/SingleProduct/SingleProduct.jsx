@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
-import {jwtDecode} from "jwt-decode"; // Note: jwt-decode is a default export, not a named export
+import { useState, useEffect, useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 import { FaStar } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import BuyerContext from "../BuyerContext/BuyerContext";
 
-
 export const SinglePage = () => {
     const [productData, setProductData] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
-    const [storeData, setStoreData] = useState(null); // State to store store data
+    const [storeData, setStoreData] = useState(null);
     const [productIdInput, setProductIdInput] = useState("");
     const { id } = useParams();
-
 
     useEffect(() => {
         if (id) {
@@ -62,12 +60,11 @@ export const SinglePage = () => {
 
             const relatedData = await relatedResponse.json();
             const filteredRelatedProducts = relatedData.filter((product) => product.id !== productData.id);
-            setRelatedProducts(filteredRelatedProducts); // Update related products state
+            setRelatedProducts(filteredRelatedProducts); 
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     };
-
 
     const handleRelatedProductClick = (product) => {
         setProductData(product);
@@ -77,12 +74,12 @@ export const SinglePage = () => {
         <>
             <section className="max-w-3xl mx-auto mt-10 p-5  border-gray-300 shadow-md rounded-2xl">
                 {/* Button to fetch store details */}
-                {/* <button
+                <button
                     className="bg-black text-white py-2 px-4 rounded-lg mt-2 cursor-pointer"
                     onClick={() => fetchProductData(productData.id)}
                 >
                     Store Details
-                </button> */}
+                </button>
                 <h3 className="text-2xl font-bold mb-5">Product</h3>
                 {productData && (
                     <div className="  rounded-lg  relative flex flex-wrap ">
