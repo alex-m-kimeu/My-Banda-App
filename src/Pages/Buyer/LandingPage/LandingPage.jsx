@@ -48,7 +48,6 @@ export const LandingPage = () => {
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
-
   }
 
   return (
@@ -123,7 +122,7 @@ export const LandingPage = () => {
           <h2 className="text-2xl font-bold mb-[30px]">Explore Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {products.map((product) => (
-              <div key={product.id} className="bg-Primary w-full h-[350px] flex flex-col justify-between shadow-md relative">
+              <div key={product.id} className="bg-Primary w-full h-[350px] flex flex-col justify-between relative shadow-inner">
                 <img
                   src={
                     product.images && product.images.length > 0
@@ -135,10 +134,8 @@ export const LandingPage = () => {
                   alt={product.name}
                   className="w-full h-[220px] object-cover"
                 />
-                <div className="flex justify-between px-2">
-                  <h4 className="text-base font-semibold">{product.title}</h4>
-                  <p className="text-Secondary">$ {product.price}</p>
-                </div>
+                <h4 className="text-base font-semibold px-2 ">{product.title}</h4>
+                <p className="text-Secondary px-2 ">$ {product.price}</p>
                 <div className="px-2 flex items-center gap-[2px]">
                   <ReactStars
                     count={5}
@@ -154,7 +151,7 @@ export const LandingPage = () => {
                   />
                   <p className="text-sm font-normal text-Variant2">({product.reviews.length})</p>
                 </div>
-                <div onClick={() => handleAddToCart(product.id)} className="text-center py-1 text-white cursor-pointer bg-black " >
+                <div onClick={() => handleAddToCart(product.id)} className="text-center py-1 text-white cursor-pointer bg-black" >
                   Add to Cart
                 </div>
                 <button
