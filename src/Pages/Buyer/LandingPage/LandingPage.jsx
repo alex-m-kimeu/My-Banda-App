@@ -49,19 +49,11 @@ export const LandingPage = () => {
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
   }
-
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-    // Filter users
+  
+    // Filter Products
     const filteredProducts = products.filter(product => {
       return product.title.toLowerCase().includes(search.toLowerCase());
   });
-
 
   return (
     <div className="bg-Primary">
@@ -69,11 +61,17 @@ export const LandingPage = () => {
         <div className="relative">
           <img src={img1} alt="Image 1" className="w-full h-[350px] object-fit" />
           <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-20 py-4 px-20">
+            {/* <h2 className="text-4xl text-Secondary font-bold tracking-wider uppercase">Shop the world:</h2>
+            <p className="text-Primary text-xl mt-2">Discover Endless</p>
+            <p className="text-Primary text-xl mt-2">Possibilities</p> */}
           </div>
         </div>
         <div className="relative">
           <img src={img1} alt="Image 2" className="w-full h-[350px] object-fit" />
           <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-20 p-4">
+            {/* <h2 className="text-3xl text-Primary font-bold transform translate-y-[-50%]">Welcome to My Banda</h2>
+            <p className="text-Primary mt-2 text-lg">Find the best products with the best deals!</p>
+            <button className="bg-Secondary text-Variant p-2 rounded-md mt-4 transform hover:scale-105 transition-transform duration-200">Shop Now</button> */}
           </div>
         </div>
       </Carousel>
@@ -128,7 +126,7 @@ export const LandingPage = () => {
           </div>
           <h2 className="text-2xl font-bold mb-[30px]">Explore Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {shuffleArray([...filteredProducts]).map((product) => (
+            {products.map((product) => (
               <div key={product.id} className="bg-Primary w-full h-[350px] flex flex-col justify-between relative shadow-inner">
                 <img
                   src={
