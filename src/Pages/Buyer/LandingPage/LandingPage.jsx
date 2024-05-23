@@ -14,7 +14,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactStars from "react-rating-stars-component";
 
 export const LandingPage = () => {
-  const { handleAddToCart, handleAddToWishlist } = useContext(BuyerContext)
+  const { handleAddToCart, handleAddToWishlist, search } = useContext(BuyerContext)
   const navigate = useNavigate()
 
   const categories = [
@@ -49,6 +49,11 @@ export const LandingPage = () => {
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
   }
+  
+    // Filter Products
+    const filteredProducts = products.filter(product => {
+      return product.title.toLowerCase().includes(search.toLowerCase());
+  });
 
   return (
     <div className="bg-Primary">

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { FaBars, FaTimes } from "react-icons/fa";
 
 export const Layout = ({ Sidebar, Header, Footer, children }) => {
@@ -40,6 +41,10 @@ export const Layout = ({ Sidebar, Header, Footer, children }) => {
                     {children}
                 </div>
             </div>
+            <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
             {Footer && <Footer className="mt-auto" />}
         </div>
     )

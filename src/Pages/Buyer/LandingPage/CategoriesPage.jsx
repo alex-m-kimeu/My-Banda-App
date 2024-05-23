@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const CategoriesPage = () => {
-  const { handleAddToCart, handleAddToWishlist } = useContext(BuyerContext)
+  const { handleAddToCart, handleAddToWishlist, search } = useContext(BuyerContext)
   const navigate = useNavigate()
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);
@@ -22,6 +22,7 @@ export const CategoriesPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         const filteredProducts = data.filter(
           (product) => product.category_name === categoryName
         );
@@ -33,6 +34,10 @@ export const CategoriesPage = () => {
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
   }
+
+  const filteredProducts = products.filter(product => {
+    return product.title.toLowerCase().includes(search.toLowerCase());
+});
 
   return (
     <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
@@ -47,7 +52,7 @@ export const CategoriesPage = () => {
         </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6 mb-4">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <div key={product.id} className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0">
             <img
               src={

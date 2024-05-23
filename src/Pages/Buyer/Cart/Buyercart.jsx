@@ -34,36 +34,35 @@ export const Buyercart = () => {
       .catch((error) => {
         console.error("Error fetching cart items:", error);
       });
-  }, [setProducts]);
+  }, []);
 
-  useEffect(() => {
-    if (buttonClicked) {
-      const token = localStorage.getItem("token");
-
-      fetch("http://127.0.0.1:5500/carts", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setProducts(data);
-          setItemsCost(data[0].items_cost);
-          setTotal(data[0].total_cost);
-        })
-        .catch((error) => console.error("Error fetching cart items:", error));
-    }
-  }, [buttonClicked, clicked, setProducts]);
 
   function handleDelete(id) {
     const newProduct = products.filter((user) => user.id !== id);
     setProducts(newProduct);
+  }
+
+  const handleGetTotal =()=>{
+    const token = localStorage.getItem("token");
+
+    fetch("http://127.0.0.1:5500/carts", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setProducts(data);
+        setItemsCost(data[0].items_cost);
+        setTotal(data[0].total_cost);
+      })
+      .catch((error) => console.error("Error fetching cart items:", error));
   }
 
   return (
@@ -84,14 +83,21 @@ export const Buyercart = () => {
                 <CartsList
                   products={products}
                   onDelete={handleDelete}
-                  setClicked={setClicked}
-                  setButtonClicked={setButtonClicked}
+                  // setClicked={setClicked}
+                  // setButtonClicked={setButtonClicked}
                 />
               </div>
             </div>
+            <div className="flex justify-end">
+                  <div >
+                    <button onClick={()=>handleGetTotal()} className="border px-5 py-2 mr-4 rounded bg-Secondary bg-opacity-40">Get Total Item Cost</button>
+                  </div>
+                </div>
             <div>
               <div className="flex justify-between px-4 ">
+                
                 <div className="hidden md:block ">
+                  
                   <input
                     type="text"
                     placeholder="Coupon Code"
@@ -101,6 +107,7 @@ export const Buyercart = () => {
                     Apply Coupon
                   </button>
                 </div>
+                
                 <div className=" border rounded border-gray-300 p-3 px-5 py-5 md:w-80 divide-y w-full">
                   <h2 className="text-lg font-semibold text-end text-Text">Cart Total:</h2>
                   <div className="flex justify-between py-3">
