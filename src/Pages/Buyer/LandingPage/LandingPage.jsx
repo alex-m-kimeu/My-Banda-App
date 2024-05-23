@@ -22,7 +22,7 @@ export const LandingPage = () => {
     { name: "Clothing", icon: clothingIcon },
     { name: "Shoes", icon: shoes },
     { name: "Health & beauty", icon: beauty },
-    { name: "Apparel & accessories.", icon: jewelry },
+    { name: "Jewelry", icon: jewelry },
   ];
 
   const [products, setProducts] = useState([]);
@@ -132,7 +132,7 @@ export const LandingPage = () => {
                   onClick={() => handleProductClick(product.id)}
 
                   alt={product.name}
-                  className="w-full h-[220px] object-cover"
+                  className="w-full h-[220px] md:h-[180px] lg:h-[220px] object-cover cursor-pointer"
                 />
                 <h4 className="text-base font-semibold px-2 ">{product.title}</h4>
                 <p className="text-Secondary px-2 ">$ {product.price}</p>

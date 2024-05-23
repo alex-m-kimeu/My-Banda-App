@@ -17,6 +17,7 @@ import { Products } from "./Pages/Seller/Products/Products";
 import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
+import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
 
 const routes = [
     {
@@ -150,6 +151,16 @@ const routes = [
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
                 < SinglePage/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+    {
+        path: "/store/:id",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                < StorePage />
             </Layout>
         ),
         isAuthenticated: true,
