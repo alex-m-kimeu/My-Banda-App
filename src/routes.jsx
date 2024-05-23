@@ -19,7 +19,8 @@ import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
 import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
 import { DelivererDashboard } from "./Pages/Deliverer/DelivererDashboard"
-import { DelivererCompany } from "./Pages/Deliverer/DelivererCompany"
+// import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
+import { Orders } from "./Pages/Deliverer/Orders";
 
 const routes = [
     {
@@ -162,7 +163,7 @@ const routes = [
         path: "/deliverer/dashboard",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
-                <DelivererDashboard />
+                {/* <CompanyForm /> */}
             </Layout>
         ),
         isAuthenticated: true,
@@ -172,7 +173,17 @@ const routes = [
         path: "/deliverer/company",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
-                <DelivererCompany />
+                <DelivererDashboard />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
+    },
+    {
+        path: "/deliverer/orders",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <Orders />
             </Layout>
         ),
         isAuthenticated: true,
