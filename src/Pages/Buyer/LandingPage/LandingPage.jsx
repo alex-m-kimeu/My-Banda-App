@@ -14,7 +14,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactStars from "react-rating-stars-component";
 
 export const LandingPage = () => {
-  const { handleAddToCart, handleAddToWishlist } = useContext(BuyerContext)
+  const { handleAddToCart, handleAddToWishlist, search } = useContext(BuyerContext)
   const navigate = useNavigate()
 
   const categories = [
@@ -57,6 +57,11 @@ export const LandingPage = () => {
     }
     return array;
   }
+    // Filter users
+    const filteredProducts = products.filter(product => {
+      return product.title.toLowerCase().includes(search.toLowerCase());
+  });
+
 
   return (
     <div className="bg-Primary">
@@ -123,7 +128,7 @@ export const LandingPage = () => {
           </div>
           <h2 className="text-2xl font-bold mb-[30px]">Explore Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {shuffleArray([...products]).map((product) => (
+            {shuffleArray([...filteredProducts]).map((product) => (
               <div key={product.id} className="bg-Primary w-full h-[350px] flex flex-col justify-between relative shadow-inner">
                 <img
                   src={

@@ -3,7 +3,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-export const Cartcard = ({ product, onDelete, setButtonClicked, setClicked }) => {
+export const Cartcard = ({ product, onDelete, }) => {
   const [quantity, setQuantity] = useState(product.quantity);
   const [subtotal, setSubtotal] = useState(product.subtotal);
 
@@ -42,8 +42,8 @@ export const Cartcard = ({ product, onDelete, setButtonClicked, setClicked }) =>
       .then(products => {
         setQuantity(products.quantity)
         setSubtotal(products.subtotal)
-        setButtonClicked(subtotal)
-        setClicked(quantity)
+        // setButtonClicked(subtotal)
+        // setClicked(quantity)
       })
       .catch(error => console.error('Error:', error));
   };
@@ -63,8 +63,8 @@ export const Cartcard = ({ product, onDelete, setButtonClicked, setClicked }) =>
       .then(products => {
         setQuantity(products.quantity)
         setSubtotal(products.subtotal)
-        setButtonClicked(subtotal)
-        setClicked(quantity)
+        // setButtonClicked(subtotal)
+        // setClicked(quantity)
       })
       .catch(error => console.error('Error:', error));
   };

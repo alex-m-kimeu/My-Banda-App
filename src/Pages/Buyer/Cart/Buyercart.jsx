@@ -6,7 +6,7 @@ import cart from "../../../assets/cart.png";
 import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const Buyercart = () => {
-  const { products, setProducts } = useContext(BuyerContext)
+  const { products, setProducts, search} = useContext(BuyerContext)
   const [itemsCost, setItemsCost] = useState(0);
   const [total, setTotal] = useState(0);
   const [buttonClicked, setButtonClicked] = useState(0);
@@ -34,32 +34,34 @@ export const Buyercart = () => {
       .catch((error) => {
         console.error("Error fetching cart items:", error);
       });
-  }, [setProducts]);
+  }, []);
 
-  useEffect(() => {
-    if (buttonClicked) {
-      const token = localStorage.getItem("token");
 
-      fetch("http://127.0.0.1:5500/carts", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+  const handleGetTotal =()=>{
+       
+    const token = localStorage.getItem("token");
+
+    fetch("http://127.0.0.1:5500/carts", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setProducts(data);
-          setItemsCost(data[0].items_cost);
-          setTotal(data[0].total_cost);
-        })
-        .catch((error) => console.error("Error fetching cart items:", error));
-    }
-  }, [buttonClicked, clicked, setProducts]);
+      .then((data) => {
+        setProducts(data);
+        setItemsCost(data[0].items_cost);
+        setTotal(data[0].total_cost);
+      })
+      .catch((error) => console.error("Error fetching cart items:", error));
+  }
+  
+
 
   function handleDelete(id) {
     const newProduct = products.filter((user) => user.id !== id);
@@ -84,11 +86,14 @@ export const Buyercart = () => {
                 <CartsList
                   products={products}
                   onDelete={handleDelete}
-                  setClicked={setClicked}
-                  setButtonClicked={setButtonClicked}
+                  // setClicked={setClicked}
+                  // setButtonClicked={setButtonClicked}
                 />
               </div>
             </div>
+           {/* <div className="flex justify-end mr-5 rounded ">
+           <button className=" w-48 text-center p-2 flex justify-center bg-Secondary bg-opacity-40 rounded justify-self-end" onClick={handleGetTotal()}> Total Cart Price </button>
+           </div> */}
             <div>
               <div className="flex justify-between px-4 ">
                 <div className="hidden md:block ">
@@ -102,7 +107,7 @@ export const Buyercart = () => {
                   </button>
                 </div>
                 <div className=" border rounded border-gray-300 p-3 px-5 py-5 md:w-80 divide-y w-full">
-                  <h2 className="text-lg font-semibold text-end text-Text">Cart Total:</h2>
+                  <h2 className="text-lg font-semibold text-end text-Text"  onClick={handleGetTotal()}>Cart Total:</h2>
                   <div className="flex justify-between py-3">
                     <p>Subtotal: </p>
                     <span> {itemsCost} </span>
