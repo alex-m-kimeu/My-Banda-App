@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import { jwtDecode } from "jwt-decode";
 import { useParams, useNavigate } from "react-router-dom";
 import BuyerContext from "../BuyerContext/BuyerContext";
 import ReactStars from "react-rating-stars-component";
@@ -26,15 +25,6 @@ export const SinglePage = () => {
                 throw new Error("Token not found in localStorage");
             }
 
-            let userId;
-            try {
-                const decodedToken = jwtDecode(token);
-                userId = decodedToken.sub.id;
-            } catch (error) {
-                console.error("Error decoding token:", error);
-                throw new Error("Failed to decode token");
-            }
-
             const productResponse = await fetch(`http://127.0.0.1:5500/products/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -48,20 +38,19 @@ export const SinglePage = () => {
             const productData = await productResponse.json();
             setProductData(productData);
 
-            const category = productData.category_name;
-            const relatedResponse = await fetch(`http://127.0.0.1:5500/products?userId=${userId}&category=${category}`, {
+            const allProductsResponse = await fetch(`http://127.0.0.1:5500/products`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
-            if (!relatedResponse.ok) {
-                throw new Error("Failed to fetch related products");
+            if (!allProductsResponse.ok) {
+                throw new Error("Failed to fetch all products");
             }
 
-            const relatedData = await relatedResponse.json();
-            const filteredRelatedProducts = relatedData.filter((product) => product.id !== productData.id);
-            setRelatedProducts(filteredRelatedProducts);
+            const allProductsData = await allProductsResponse.json();
+            const relatedProducts = allProductsData.filter((product) => product.category_name === productData.category_name && product.id !== productData.id);
+            setRelatedProducts(relatedProducts);
             setLoading(false);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -150,7 +139,7 @@ export const SinglePage = () => {
                 <div className="flex flex-col gap-[20px] md:gap-[30px] mb-2">
                     <h2 className="text-lg md:text-xl text-Text font-semibold">Related Items</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6">
-                        {relatedProducts.slice(0, 5).map((relatedProduct) => (
+                        {relatedProducts.slice(0, 4).map((relatedProduct) => (
                             <div key={relatedProduct.id} className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0">
                                 <img
                                     src={
