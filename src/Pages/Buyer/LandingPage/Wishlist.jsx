@@ -30,7 +30,7 @@ export const Wishlist = () => {
       .catch((error) => {
         console.error("Error fetching wishlist items:", error);
       });
-  }, []);
+  }, [setWishlistItems]);
 
   const handleDeleteFromWishlist = (productId) => {
     const token = localStorage.getItem("token");
