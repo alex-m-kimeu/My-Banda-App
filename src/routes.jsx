@@ -21,6 +21,8 @@ import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
 import { DelivererDashboard } from "./Pages/Deliverer/DelivererDashboard"
 // import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
 import { Orders } from "./Pages/Deliverer/Orders";
+import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
+
 
 const routes = [
     {
@@ -159,6 +161,16 @@ const routes = [
         isAuthenticated: true,
         role: "buyer",
     },
+    {
+        path: "/store/:id",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                < StorePage />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },  
     {
         path: "/deliverer/dashboard",
         Element: () => (
