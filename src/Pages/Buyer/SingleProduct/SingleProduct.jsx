@@ -128,7 +128,12 @@ export const SinglePage = () => {
                         <h2 className="text-yellow-500 font-bold text-base">${productData ? productData.price : 'Loading...'}</h2>
                         <p className="text-base text-Variant2 text-left"> {productData ? productData.description : 'Loading...'}</p>
                         <div className="border-b-2 mt-4"></div>
-                        <h2 className="text-lg text-Secondary font-bold">{productData ? productData.store.store_name : 'Loading...'}</h2>
+                        <h2
+                            className="text-lg text-Secondary font-bold cursor-pointer"
+                            onClick={() => navigate(`/store/${productData ? productData.store.id : ''}`)}
+                        >
+                            {productData ? productData.store.store_name : 'Loading...'}
+                        </h2>
                         <div className="flex justify-between items-center">
                             <button
                                 className="bg-Secondary py-1 px-4 cursor-pointer text-white text-lg"

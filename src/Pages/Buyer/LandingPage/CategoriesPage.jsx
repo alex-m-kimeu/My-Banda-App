@@ -46,7 +46,7 @@ export const CategoriesPage = () => {
           {categoryName}
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6 mb-4">
         {products.map((product) => (
           <div key={product.id} className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0">
             <img
@@ -56,8 +56,8 @@ export const CategoriesPage = () => {
                   : ""
               }
               onClick={() => handleProductClick(product.id)}
-              alt={product.name}
-              className="w-full h-[220px] object-cover"
+              alt={product.title}
+              className="w-full h-[220px] md:h-[180px] lg:h-[220px] object-cover cursor-pointer"
             />
             <h4 className="text-base font-semibold px-2 ">{product.title}</h4>
             <p className="text-Secondary px-2 ">$ {product.price}</p>
