@@ -139,7 +139,7 @@ export const SignUp = () => {
                             <option value="">Select a role</option>
                             <option value="buyer">Buyer</option>
                             <option value="seller">Seller</option>
-                            {/* <option value="deliverer">Deliverer</option> */}
+                            <option value="deliverer">Deliverer</option> 
                         </select>
                     </div>
                     <div className='relative border p-2 rounded-[8px]'>

@@ -17,6 +17,9 @@ import { Products } from "./Pages/Seller/Products/Products";
 import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
+import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
+import { DelivererDashboard } from "./Pages/Deliverer/DelivererDashboard"
+import { DelivererCompany } from "./Pages/Deliverer/DelivererCompany"
 
 const routes = [
     {
@@ -154,6 +157,26 @@ const routes = [
         ),
         isAuthenticated: true,
         role: "buyer",
+    },
+    {
+        path: "/deliverer/dashboard",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <DelivererDashboard />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
+    },
+    {
+        path: "/deliverer/company",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <DelivererCompany />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
     },
 ];
 
