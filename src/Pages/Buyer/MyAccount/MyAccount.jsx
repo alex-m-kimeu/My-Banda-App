@@ -38,6 +38,33 @@ export const MyAccount = () => {
             console.log(err);
           });
       }, []);
+
+      const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setFormData((prevFormData) => ({ ...prevFormData, image: file }));
+    
+        setPreview(URL.createObjectURL(file));
+      };
+    
+      const handleUsernameChange = (e) => {
+        const { id, value } = e.target;
+        setUsernameData((userNameData) => ({ ...userNameData, [id]: value }));
+      };
+    
+      const handlePasswordChange = (e) => {
+        const { id, value } = e.target;
+        setPassword((passwordData) => ({ ...passwordData, [id]: value }));
+      };
+    
+      const handleContactChange = (e) => {
+        const { id, value } = e.target;
+        setContact((userNameData) => ({ ...userNameData, [id]: value }));
+      };
+    
+      const handleEmailChange = (e) => {
+        const { id, value } = e.target;
+        setEmail((emailData) => ({ ...emailData, [id]: value }));
+      };
     
   
   return (
