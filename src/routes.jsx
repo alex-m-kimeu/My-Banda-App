@@ -23,6 +23,7 @@ import { DelivererDashboard } from "./Pages/Deliverer/DelivererDashboard"
 import { Orders } from "./Pages/Deliverer/Orders";
 import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
 import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
+import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
 
 
 const routes = [
@@ -176,7 +177,7 @@ const routes = [
         path: "/deliverer/dashboard",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
-                {/* <CompanyForm /> */}
+                <DelivererDashboard/>
             </Layout>
         ),
         isAuthenticated: true,
@@ -196,7 +197,7 @@ const routes = [
         path: "/deliverer/company",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
-                <DelivererDashboard />
+                <CompanyForm/>
             </Layout>
         ),
         isAuthenticated: true,
