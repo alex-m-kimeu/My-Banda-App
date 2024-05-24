@@ -182,6 +182,16 @@ const routes = [
         role: "deliverer",
     },
     {
+        path: "/buyer/myaccount",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <MyAccount />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+    {
         path: "/deliverer/company",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
