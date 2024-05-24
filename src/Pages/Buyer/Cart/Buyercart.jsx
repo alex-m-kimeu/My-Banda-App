@@ -65,6 +65,27 @@ export const Buyercart = () => {
       .catch((error) => console.error("Error fetching cart items:", error));
   }
 
+  const handleChooseDelivery = ()=>{
+    const token = localStorage.getItem("token");
+
+    fetch("http://127.0.0.1:5500/orders", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+      navigate('/buyer/deliverer')
+      })
+      .catch((error) => console.error("Error fetching cart items:", error));
+  }
+
   return (
     <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
       <div>
@@ -123,7 +144,7 @@ export const Buyercart = () => {
                     <span> {total}</span>
                   </div>
                   <div className="flex justify-center">
-                    <button className="text-white px-6 py-2 mt-5 bg-Secondary rounded">
+                    <button className="text-white px-6 py-2 mt-5 bg-Secondary rounded" onClick={handleChooseDelivery}>
                       {" "}
                       Proceed to Checkout
                     </button>

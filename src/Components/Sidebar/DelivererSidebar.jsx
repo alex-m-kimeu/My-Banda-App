@@ -57,7 +57,7 @@ export const DelivererSidebar = () => {
                   className={`flex items-center gap-[10px] ${getClassName(companyMatch)}`}
                 >
                   <IoMdCreate className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
-                  <h2 className="text-sm font-medium">Edit Information</h2>
+                  <h2 className="text-sm font-medium">Company</h2>
                 </NavLink>
               </li>
             </ul>
