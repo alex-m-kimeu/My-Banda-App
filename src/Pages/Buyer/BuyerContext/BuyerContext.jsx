@@ -1,77 +1,50 @@
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
 import toast from "react-hot-toast";
+
+
 
 const BuyerContext = createContext({});
 
-export const BuyerProvider = ({ children }) => {
-  const [products, setProducts] = useState([]);
+export const BuyerProvider =({ children })=>{
+    const [products, setProducts]= useState([]);
+    const [loading, setLoading] = useState(true);
   const [wishlistItems, setWishlistItems] = useState([]);
   const [cartNum, setCartNum] = useState(0)
   const [wishlistNum, setWishlistNum] = useState(0)
   const [search, setSearch] = useState("");
 
-  const fetchWishlistItems = useCallback(() => {
-    const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5500/wishlists", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setWishlistItems(data);
-        setWishlistNum(data.length);
-      })
-      .catch((error) => {
-        console.error("Error fetching wishlist items:", error);
-      });
-  }, [setWishlistItems, setWishlistNum]);
 
-  const handleAddToCart = useCallback((id) => {
+
+  // Add to cart function
+  const handleAddToCart=(id)=>{
     const token = localStorage.getItem('token')
+
 
     fetch(`http://127.0.0.1:5500/products/${id}`, {
       method: "POST",
       headers: {
-        'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
       }
-    })
-      .then(response => response.json())
-      .then(product => {
-        setProducts((prev) => [...prev, product])
-        setCartNum((prev) => prev + 1)
-        toast.success(`${product.products.title} successfully added to cart`)
-      })
-      .catch(error => console.error('Error:', error));
-  }, [setProducts, setCartNum]);
+  })
+  .then(response => response.json())
+  .then(product => {setProducts ((prev)=>({...prev, product}))
+  console.log(product)
+ 
+    toast.success(`${product.products.title} succefully added to cart`)
 
-  const handleRemoveFromCart = useCallback((id) => {
-    const token = localStorage.getItem('token')
 
-    fetch(`http://127.0.0.1:5500/products/${id}`, {
-      method: "DELETE",
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(product => {
-        setProducts((prev) => prev.filter(p => p.id !== product.id))
-        setCartNum((prev) => prev - 1)
-        toast.success(`${product.products.title} successfully removed from cart`)
-      })
-      .catch(error => console.error('Error:', error));
-  }, [setProducts, setCartNum]);
 
-  const handleAddToWishlist = useCallback((id) => {
+  })
+  .catch(error => console.error('Error:', error));
+};
+
+   // add to wishlist fuction
+   const handleAddToWishlist = (id) => {
     const token = localStorage.getItem("token");
+
 
     fetch(`http://localhost:5500/wishlists/${id}`, {
       method: "POST",
@@ -85,84 +58,74 @@ export const BuyerProvider = ({ children }) => {
         }
         return response.json();
       })
-      .then(product => {
-        setWishlistItems((prev) => [...prev, product])
-        setWishlistNum((prev) => prev + 1)
-        if (product.message) {
-          toast.error(`${product.message} `)
-        } else {
-          toast.success(`${product.products.title} successfully added to wishlist`)
-        }
-      })
+      .then(product => { 
+        setWishlistItems((prev)=>({...prev,product}))
+        console.log(product)
+        console.log(product.message)
+       if (product.message){
+        toast.error(`${product.message} `)
+ 
+       }else (
+        toast.success(`${product.products.title} succefully added to wishlist`)
+
+       )
+      
+        
+
+
+})
       .catch((error) => {
         console.error("Error adding product to wishlist:", error);
       });
-  }, [setWishlistItems, setWishlistNum]);
+  };
 
-  const handleRemoveFromWishlist = useCallback((id) => {
-    const token = localStorage.getItem("token");
+    // fetch length of cart
+    useEffect(() => {
+      const token = localStorage.getItem("token");
   
-    fetch(`http://localhost:5500/wishlists/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
+      fetch("http://127.0.0.1:5500//carts", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       })
-      .then(() => {
-        fetchWishlistItems();
-        toast.success(`Product successfully removed from wishlist`)
+        .then((response) => response.json())
+        .then((data) => {
+          // getTotalCartItems(data)
+             setCartNum(data.length)
+  
+
+        })
+        .catch((error) => console.error(error));
+    }, [handleAddToCart]);
+
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+  
+      fetch(`http://localhost:5500/wishlists`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.error("Error removing product from wishlist:", error);
-        fetchWishlistItems();
-      });
-  }, [fetchWishlistItems]);
+        .then((response) => response.json())
+        .then((data) => {
+          // getTotalCartItems(data)
+             setWishlistNum(data.length)
+  
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+        })
+        .catch((error) => console.error(error));
+    }, [handleAddToWishlist]);
 
-    fetch("http://127.0.0.1:5500/carts", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.length === 0) {
-          setCartNum(0);
-        } else {
-          setCartNum(data.length);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        setCartNum(0);
-      });
-  }, []);
 
-  useEffect(() => {
-    fetchWishlistItems();
-  }, [fetchWishlistItems]);
 
-  return (
-    <BuyerContext.Provider value={{
-      handleAddToCart, handleRemoveFromCart, wishlistItems, setWishlistItems, search, setSearch, handleAddToWishlist, handleRemoveFromWishlist, wishlistNum, setWishlistNum, setCartNum, cartNum, products, setProducts
-    }}>
-      {children}
-    </BuyerContext.Provider>
-  )
+    return (
+        <BuyerContext.Provider value={{
+             handleAddToCart,wishlistItems, setWishlistItems,search, setSearch, handleAddToWishlist, wishlistNum, setWishlistNum, setCartNum,cartNum, products, setProducts
+         }}>
+            {children}
+        </BuyerContext.Provider>
+    )
 }
 
 export default BuyerContext;

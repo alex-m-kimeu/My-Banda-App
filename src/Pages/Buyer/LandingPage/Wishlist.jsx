@@ -8,7 +8,7 @@ import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const Wishlist = () => {
   const navigate = useNavigate()
-  const { handleAddToCart, wishlistItems, setWishlistItems, handleRemoveFromWishlist } = useContext(BuyerContext)
+  const { handleAddToCart, wishlistItems,search, setWishlistItems } = useContext(BuyerContext)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,12 +44,17 @@ export const Wishlist = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        handleRemoveFromWishlist(productId);
+        handleDelete(productId);
       })
       .catch((error) => {
         console.error("Error deleting item from wishlist:", error);
       });
   };
+
+  function handleDelete(id) {
+    const newProduct = wishlistItems.filter((item) => item.products.id !== id);
+    setWishlistItems(newProduct);
+  }
 
   const handleAddAllToCart = () => {
     const productIds = wishlistItems.map(item => item.product_id);
@@ -70,6 +75,11 @@ export const Wishlist = () => {
       }))
       .catch(error => console.error("Error adding all items to cart:", error));
   };
+
+
+
+
+
 
   return (
     <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
