@@ -89,6 +89,8 @@ export const MyAccount = () => {
             setUser(data);
             setShowNameModal(false);
             setUsernameData({ username: "" });
+            toast.success("Username sucessfully Changed")
+
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -118,6 +120,8 @@ export const MyAccount = () => {
             setUser(data);
             setShowContactModal(false);
             setContact({ contact: "" });
+            toast.success("Contact sucessfully Changed")
+
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -147,6 +151,8 @@ export const MyAccount = () => {
             setUser(data);
             setShowEmailModal(false);
             setEmail({ email: "" });
+            toast.success("Email sucessfully Changed")
+
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -176,6 +182,8 @@ export const MyAccount = () => {
             setUser(data);
             setShowImageModal(false);
             setImage({ email: "" });
+            toast.success("New image sucessfully uploaded")
+
           })
           .catch((error) => {
             console.error("Error:", error);
