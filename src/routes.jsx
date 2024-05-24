@@ -24,6 +24,7 @@ import { Orders } from "./Pages/Deliverer/Orders";
 import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
 import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
 import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
+import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
 
 
 const routes = [
@@ -153,6 +154,27 @@ const routes = [
         isAuthenticated: true,
         role: "buyer",
     },
+    {
+        path: "/buyer/deliverer",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <ChooseCompany />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+    {
+        path:  '/orderconfirmation',
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <ChooseCompany />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+   
     {
         path: "/products/:id",
         Element: () => (
