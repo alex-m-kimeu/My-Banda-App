@@ -3,7 +3,7 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 
-export const CartTable = ({ product, onDelete}) => {
+export const CartTable = ({ product, onDelete }) => {
   const [quantity, setQuantity] = useState(product.quantity);
   const [subtotal, setSubtotal] = useState(product.subtotal);
 
@@ -30,8 +30,6 @@ export const CartTable = ({ product, onDelete}) => {
   const handleIncreaseQuantity = () => {
     const token = localStorage.getItem('token')
 
-    console.log(product.products.id)
-
     fetch(`http://127.0.0.1:5500/productinc/${product.products.id}`, {
       method: "POST",
       headers: {
@@ -52,8 +50,6 @@ export const CartTable = ({ product, onDelete}) => {
 
   const handleDecreaseQuantity = () => {
     const token = localStorage.getItem('token')
-
-    console.log(product.products.id)
 
     fetch(`http://127.0.0.1:5500/productdec/${product.products.id}`, {
       method: "POST",
