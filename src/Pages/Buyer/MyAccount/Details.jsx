@@ -1,7 +1,7 @@
 import React from 'react'
 import { CiEdit } from "react-icons/ci";
 
-export const Details = () => {
+export const Details = ({user, setShowNameModal,setShowPasswordModal, setShowContactModal,  setShowImageModal,  setShowEmailModal}) => {
   return (
     <div className="px-5 ">
     <div className=" mb-5">Edit Your Profile</div>

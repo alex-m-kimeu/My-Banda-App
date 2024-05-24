@@ -22,6 +22,7 @@ import { DelivererDashboard } from "./Pages/Deliverer/DelivererDashboard"
 // import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
 import { Orders } from "./Pages/Deliverer/Orders";
 import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
+import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
 
 
 const routes = [

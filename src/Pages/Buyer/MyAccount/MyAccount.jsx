@@ -41,7 +41,7 @@ export const MyAccount = () => {
 
       const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setFormData((prevFormData) => ({ ...prevFormData, image: file }));
+        setImage((prevFormData) => ({ ...prevFormData, image: file }));
     
         setPreview(URL.createObjectURL(file));
       };
