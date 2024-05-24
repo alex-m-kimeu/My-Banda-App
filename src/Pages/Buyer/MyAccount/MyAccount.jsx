@@ -18,6 +18,27 @@ export const MyAccount = () => {
     const [password, setPassword] = useState({ current: "", newpassword: "", confirmpassword: "" });
     const [preview, setPreview] = useState(null);
     const imageInputRef = useRef();
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.sub.id;
+    
+        fetch(`http://127.0.0.1:5500/user/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((resp) => resp.json())
+          .then((data) => {
+            console.log(data);
+            setUser(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []);
+    
   
   return (
     <div>
