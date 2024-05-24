@@ -6,12 +6,12 @@ import cart from "../../../assets/cart.png";
 import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const Buyercart = () => {
-  const { products, setProducts } = useContext(BuyerContext);
+  const { products, setProducts } = useContext(BuyerContext)
   const [itemsCost, setItemsCost] = useState(0);
   const [total, setTotal] = useState(0);
   const [buttonClicked, setButtonClicked] = useState(0);
   const [clicked, setClicked] = useState(0);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,12 +36,13 @@ export const Buyercart = () => {
       });
   }, []);
 
+
   function handleDelete(id) {
     const newProduct = products.filter((user) => user.id !== id);
     setProducts(newProduct);
   }
 
-  const handleGetTotal = () => {
+  const handleGetTotal =()=>{
     const token = localStorage.getItem("token");
 
     fetch("http://127.0.0.1:5500/carts", {
@@ -62,7 +63,7 @@ export const Buyercart = () => {
         setTotal(data[0].total_cost);
       })
       .catch((error) => console.error("Error fetching cart items:", error));
-  };
+  }
 
   return (
     <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
@@ -88,13 +89,15 @@ export const Buyercart = () => {
               </div>
             </div>
             <div className="flex justify-end">
-              <div>
-                <button onClick={() => handleGetTotal()} className="border px-5 py-2 mr-4 rounded bg-Secondary bg-opacity-40">Get Total Item Cost</button>
-              </div>
-            </div>
+                  <div >
+                    <button onClick={()=>handleGetTotal()} className="border px-5 py-2 mr-4 rounded bg-Secondary bg-opacity-40">Get Total Item Cost</button>
+                  </div>
+                </div>
             <div>
-              <div className="flex justify-between px-4">
-                <div className="hidden md:block">
+              <div className="flex justify-between px-4 ">
+                
+                <div className="hidden md:block ">
+                  
                   <input
                     type="text"
                     placeholder="Coupon Code"
@@ -104,7 +107,8 @@ export const Buyercart = () => {
                     Apply Coupon
                   </button>
                 </div>
-                <div className="border rounded border-gray-300 p-3 px-5 py-5 md:w-80 divide-y w-full">
+                
+                <div className=" border rounded border-gray-300 p-3 px-5 py-5 md:w-80 divide-y w-full">
                   <h2 className="text-lg font-semibold text-end text-Text">Cart Total:</h2>
                   <div className="flex justify-between py-3">
                     <p>Subtotal: </p>
@@ -119,11 +123,9 @@ export const Buyercart = () => {
                     <span> {total}</span>
                   </div>
                   <div className="flex justify-center">
-                    <button
-                      className="text-white px-6 py-2 mt-5 bg-Secondary rounded"
-                      onClick={() => navigate('/buyer/cart/choosecompany')}
-                    >
-                      Choose a Delivery Company
+                    <button className="text-white px-6 py-2 mt-5 bg-Secondary rounded">
+                      {" "}
+                      Proceed to Checkout
                     </button>
                   </div>
                 </div>
@@ -132,7 +134,7 @@ export const Buyercart = () => {
           </div>
         ) : (
           <div>
-            <div className="flex justify-between">
+            <div className="flex justify-between ">
               <h1 className="text-xl md:text-2xl font-bold text-Text">
                 Cart
               </h1>
@@ -146,7 +148,7 @@ export const Buyercart = () => {
               <img
                 src={cart}
                 alt="cart"
-                className="w-full lg:h-80 lg:w-80 mt-5"
+                className=" w-full lg:h-80 lg:w-80 mt-5 "
               />
             </div>
           </div>
