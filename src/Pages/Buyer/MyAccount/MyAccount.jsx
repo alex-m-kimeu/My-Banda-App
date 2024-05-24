@@ -385,9 +385,30 @@ if (showNameModal){
 }
   
   return (
-    <div>
-      
+    <div className="lg:px-32 md:px-20 sm:px-10  py-5 ">
+    <div className="">
+      {/* heading */}
+      <div className="text-2xl font-bold mb-7 font-body ">Account</div>
+      <div className="flex flex-wrap justify ">
+        <div className=" lg:w-1/4 flex lg:flex-col  items-center w-full justify-center ">
+          <div className="pl-5  ">
+            <div className="text-Secondary font-body text-center">Welcome!</div>
+            <div className="text-center">{user.username}</div>
+          </div>
+          <div className="rounded-full  border lg:w-52 lg:h-52 mt-5  ml-3">
+            <img
+              className="rounded-full object-cover lg:h-52 lg:w-52 w-32 h-32 "
+              src={user.image}
+              alt=""
+            />
+          </div>
+        </div>
+        <div className="lg:w-3/4 mb-4 py-4 w-full ">
+        {content}
+        </div>
+      </div>
     </div>
+  </div>
   )
 }
 
