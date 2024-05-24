@@ -221,6 +221,168 @@ export const MyAccount = () => {
         
         
       };
+
+      let content;
+
+if (showNameModal){
+  content = (
+    <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
+                <div className="bg-white dark:bg-variant1-dark p-4 rounded shadow-lg max-w-full w-[350px] lg:w-[500px]">
+                  <h2 className="mb-2 text-2xl  text-center text-Heading dark:text-primary-light">
+                    Change Username
+                  </h2>
+                  <form onSubmit={handleSubmitUsername}>
+                    <textarea  id="username" value={userNameData.username} onChange={handleUsernameChange}  className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></textarea>
+                    <div className="flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowNameModal(false)}
+                        className="bg-variant1-light px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="bg-Secondary text-white px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+  )
+}else  if (showContactModal){
+  content = (
+    <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
+                <div className="bg-white dark:bg-variant1-dark p-4 rounded shadow-lg max-w-full w-[350px] lg:w-[500px]">
+                  <h2 className="mb-2 text-2xl  text-center text-Heading dark:text-primary-light">
+                    Change Contact
+                  </h2>
+                  <form onSubmit={handleSubmitContact}>
+                    <textarea  id="contact" value={contact.contact} onChange={handleContactChange}  className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></textarea>
+                    <div className="flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowContactModal(false)}
+                        className="bg-variant1-light px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="bg-Secondary text-white px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+  )
+
+}else if (showEmailModal){
+       content =(
+        <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
+                <div className="bg-white dark:bg-variant1-dark p-4 rounded shadow-lg max-w-full w-[350px] lg:w-[500px]">
+                  <h2 className="mb-2 text-2xl  text-center text-Heading dark:text-primary-light">
+                    Change Email
+                  </h2>
+                  <form onSubmit={handleSubmitEmail}>
+                    <textarea  id="email" value={email.email} onChange={handleEmailChange}  className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></textarea>
+                    <div className="flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowEmailModal(false)}
+                        className="bg-variant1-light px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="bg-Secondary text-white px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+       )
+}else if (showImageModal){
+  content= (
+    <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
+                <div className="bg-white dark:bg-variant1-dark p-4 rounded shadow-lg max-w-full w-[350px] lg:w-[500px]">
+                  <h2 className="mb-2 text-2xl  text-center text-Heading dark:text-primary-light">
+                    Change image
+                  </h2>
+                  <form onSubmit={handleSubmitImage}>
+                  <input ref={imageInputRef} id="image" type="file"name="image" onChange={handleImageChange} className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
+            />
+             {preview && (
+              <img src={preview} alt="Preview" className="w-full h-64 object-cover mt-4" />
+            )}
+
+                    <div className="flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowImageModal(false)}
+                        className="bg-variant1-light px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="bg-Secondary text-white px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+  )
+}else if(showPasswordModal){
+ content=(
+  <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
+                <div className="bg-white dark:bg-variant1-dark p-4 rounded shadow-lg max-w-full w-[350px] lg:w-[500px]">
+                  <h2 className="mb-2 text-2xl  text-center text-Heading dark:text-primary-light">
+                    Change Password
+                  </h2>
+                  <form onSubmit={handleSubmitPassword}>
+                 <label htmlFor="">Current Password
+                 <input  id="current" value={password.current} onChange={handlePasswordChange}  className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></input>
+                 </label>
+                  <label htmlFor="">New Password
+                  <input  id="newpassword" value={password.newpassword} onChange={handlePasswordChange}  className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></input>
+                  </label>
+                <label htmlFor="">Confirm Password
+                <input  id="confirmpassword" value={password.confirmpassword} onChange={handlePasswordChange}  className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></input>
+                </label>
+            
+                    <div className="flex justify-end gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowPasswordModal(false)}
+                        className="bg-variant1-light px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="bg-Secondary text-white px-4 py-2 rounded hover:cursor-pointer"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+ )
+}else{
+  content =(<Details user={user} setShowNameModal={setShowNameModal} setShowPasswordModal={setShowPasswordModal} setShowImageModal={ setShowImageModal} setShowEmailModal={setShowEmailModal} setShowContactModal={setShowContactModal}/>)
+
+}
   
   return (
     <div>
