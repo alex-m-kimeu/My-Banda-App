@@ -15,7 +15,6 @@ import { Wishlist } from "./Pages/Buyer/LandingPage/Wishlist";
 import { CategoriesPage } from "./Pages/Buyer/LandingPage/CategoriesPage";
 import { Products } from "./Pages/Seller/Products/Products";
 import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
-import { ChooseCompany } from "./Pages/Buyer/SingleProduct/ChooseCompany";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
 import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
@@ -145,16 +144,6 @@ const routes = [
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
                 <Buyercart />
-            </Layout>
-        ),
-        isAuthenticated: true,
-        role: "buyer",
-    },
-    {
-        path: "/buyer/cart/choosecompany",
-        Element: () => (
-            <Layout Header={Navbar} Footer={Footer}>
-                <ChooseCompany />
             </Layout>
         ),
         isAuthenticated: true,

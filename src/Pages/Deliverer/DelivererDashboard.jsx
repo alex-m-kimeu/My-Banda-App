@@ -37,11 +37,11 @@ export const DelivererDashboard = () => {
         .then(response => response.json())
         .then(data => {
             setDeliverer(data.username);
-            if (data.deliverycompany) {
-                setCompanyName(data.deliverycompany.name);
-                setTotalDeliveries(data.deliverycompany.deliveries);
+            if (data.delivery_company) {
+                setCompanyName(data.delivery_company.name);
+                setTotalDeliveries(data.delivery_company.deliveries);
 
-                const statuses = data.deliverycompany.deliveries.reduce((acc, delivery) => {
+                const statuses = data.delivery_company.deliveries.reduce((acc, delivery) => {
                     acc[delivery.status] = (acc[delivery.status] || 0) + 1;
                     return acc;
                 }, {});
