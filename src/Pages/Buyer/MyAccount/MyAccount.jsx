@@ -123,6 +123,35 @@ export const MyAccount = () => {
             console.error("Error:", error);
           });
       };
+
+      const handleSubmitEmail = (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem("token");
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.sub.id;
+    
+        const userData = new FormData();
+        userData.append("email", email.email);
+    
+        fetch(`http://127.0.0.1:5500/user/${userId}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+    
+          body: userData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            setUser(data);
+            setShowEmailModal(false);
+            setEmail({ email: "" });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      };
   
   return (
     <div>
