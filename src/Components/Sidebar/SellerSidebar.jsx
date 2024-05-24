@@ -37,7 +37,7 @@ export const SellerSidebar = () => {
         </div>
         <div className="flex flex-col p-[10px]">
           <nav>
-            <ul className="flex flex-col gap-[30px]">
+            <ul className="flex flex-col gap-[20px]">
               <li>
                 <NavLink
                   to="/seller/dashboard"
