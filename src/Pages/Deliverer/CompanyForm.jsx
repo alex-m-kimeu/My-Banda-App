@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useState, useRef, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 export const CompanyForm = () => {
   const [formData, setFormData] = useState({
@@ -17,32 +18,10 @@ export const CompanyForm = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.sub.id;
-
-    fetchCompany(token, userId);
-  }, []);
-
-  const fetchCompany = (token, userId) => {
-    fetch(`http://127.0.0.1:5500/user/${userId}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.delivery_company) {
-          setFormData({
-            name: data.delivery_company.name,
-            location: data.delivery_company.location,
-            description: data.delivery_company.description,
-            contact: data.delivery_company.contact,
-            logo: ''
-          });
-        }
-      })
-      .catch(error => console.error('Error:', error));
-  };
+    if (!token) {
+      navigate('/signin');
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -74,122 +53,95 @@ export const CompanyForm = () => {
     fetch("http://127.0.0.1:5500/companies", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       },
-      body: companyData,
+      body: companyData
     })
-      .then((resp) => {
-        if (!resp.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return resp.json();
-      })
-      .then((data) => {
-        console.log("Company created/updated successfully:", data);
-        navigate('/deliverer/dashboard');
-      })
-      .catch((error) => {
-        console.error('There has been a problem with your post operation:', error);
-      });
-
-    setFormData({
-      name: '',
-      location: '',
-      description: '',
-      contact: '',
-      logo: ''
-    });
-    imageInputRef.current.value = '';
-    setPreview(null);
+    .then(response => response.json())
+    .then(data => {
+      navigate('/deliverer/dashboard');
+    })
+    .catch(error => console.error('Error:', error));
   };
 
   return (
-    <div className="flex justify-center lg:justify-start p-[10px]">
-      <div className=" max-w-md w-full">
-        <form onSubmit={handleSubmit} className="bg-primary">
-        <h3 className="text-Text font-bold text-xl text-center lg:text-left mb-5">Company Information</h3>
-          <div className="flex flex-col space-y-6">
+    <div className="flex justify-center items-center min-h-screen bg-Variant3 p-6">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg bg-Primary shadow-md rounded-lg p-8 space-y-6 font-body">
+        <h1 className="text-2xl font-bold text-center text-Text">Create Company</h1>
+
+        <div className="space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="text-Variant2 font-medium">Company Name</label>
             <input
-              id="name"
               type="text"
-              name="name"
-              placeholder="Company Name"
+              id="name"
+              className="p-2 mt-1 border border-Variant2 rounded-md focus:outline-none focus:ring-2 focus:ring-Secondary"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
               required
             />
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Company Description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
-              required
-            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="location" className="text-Variant2 font-medium">Location</label>
             <input
-              id="location"
               type="text"
-              name="location"
-              placeholder="Location"
+              id="location"
+              className="p-2 mt-1 border border-Variant2 rounded-md focus:outline-none focus:ring-2 focus:ring-Secondary"
               value={formData.location}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
               required
             />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="description" className="text-Variant2 font-medium">Description</label>
+            <textarea
+              id="description"
+              className="p-2 mt-1 border border-Variant2 rounded-md focus:outline-none focus:ring-2 focus:ring-Secondary"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="contact" className="text-Variant2 font-medium">Contact Information</label>
             <input
-              id="contact"
               type="text"
-              name="contact"
-              placeholder="Contact"
+              id="contact"
+              className="p-2 mt-1 border border-Variant2 rounded-md focus:outline-none focus:ring-2 focus:ring-Secondary"
               value={formData.contact}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
               required
             />
-            <input
-              ref={imageInputRef}
-              id="logo"
-              type="file"
-              name="logo"
-              onChange={handleImageChange}
-              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
-              required
-            />
-
-            {preview && (
-              <img src={preview} alt="Preview" className="w-full h-64 object-cover mt-4" />
-            )}
-
-            <div className="flex justify-center lg:justify-start space-x-6">
-              <button
-                type="submit"
-                className="bg-Secondary text-sm text-white font-normal py-2 px-4 rounded-md"
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                className="bg-Secondary text-sm text-white font-normal py-2 px-4 rounded-md"
-                onClick={() => {
-                  setFormData({
-                    name: '',
-                    location: '',
-                    description: '',
-                    contact: '',
-                    logo: ''
-                  });
-                  imageInputRef.current.value = '';
-                  setPreview(null);
-                }}
-              >
-                Cancel
-              </button>
-            </div>
           </div>
-        </form>
-      </div>
+
+          <div className="flex flex-col">
+            <label htmlFor="logo" className="text-Variant2 font-medium">Company Logo</label>
+            <input
+              type="file"
+              id="logo"
+              className="p-2 mt-1 border border-Variant2 rounded-md focus:outline-none focus:ring-2 focus:ring-Secondary"
+              ref={imageInputRef}
+              onChange={handleImageChange}
+              required
+            />
+          </div>
+
+          {preview && (
+            <div className="flex justify-center mt-4">
+              <img src={preview} alt="Logo Preview" className="h-32 w-32 object-contain rounded-md shadow-md" />
+            </div>
+          )}
+
+          <div className="flex justify-center mt-6">
+            <button type="submit" className="bg-Secondary text-Primary py-2 px-6 rounded-md shadow-md hover:bg-Variant2 transition duration-200">
+              Create Company
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
