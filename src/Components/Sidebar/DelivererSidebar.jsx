@@ -36,7 +36,7 @@ export const DelivererSidebar = () => {
                   to="/deliverer/dashboard"
                   className={`flex items-center gap-[10px] ${getClassName(dashboardMatch)}`}
                 >
-                  <LiaHomeSolid className="w-[25px] md:w-[30px] h-[25px] md:h/[30px]" />
+                  <LiaHomeSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
                   <h2 className="text-sm font-medium">Dashboard</h2>
                 </NavLink>
               </li>
@@ -46,7 +46,7 @@ export const DelivererSidebar = () => {
                   to="/deliverer/orders"
                   className={`flex items-center gap-[10px] ${getClassName(ordersMatch)}`}
                 >
-                  <LiaBoxSolid className="w/[25px] md:w/[30px] h/[25px] md:h/[30px]" />
+                  <LiaBoxSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
                   <h2 className="text-sm font-medium">Orders</h2>
                 </NavLink>
               </li>
@@ -54,9 +54,9 @@ export const DelivererSidebar = () => {
               <li>
                 <NavLink
                   to="/deliverer/company"
-                  className={`flex items-center gap/[10px] ${getClassName(companyMatch)}`}
+                  className={`flex items-center gap-[10px] ${getClassName(companyMatch)}`}
                 >
-                  <IoMdCreate className="w/[25px] md:w/[30px] h/[25px] md:h/[30px]" />
+                  <IoMdCreate className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
                   <h2 className="text-sm font-medium">Edit Information</h2>
                 </NavLink>
               </li>
@@ -65,10 +65,10 @@ export const DelivererSidebar = () => {
         </div>
       </div>
       <div
-        className="flex gap/[10px] p/[10px] items-center cursor-pointer text-Text hover:text-Secondary"
+        className="flex gap-[10px] p-[10px] items-center cursor-pointer text-Text hover:text-Secondary"
         onClick={handleLogout}
       >
-        <BiLogOut className="w/[25px] md:w/[30px] h/[25px] md:h/[30px]" />
+        <BiLogOut className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
         <h1 className="text-sm font-medium">Logout</h1>
       </div>
     </div>
