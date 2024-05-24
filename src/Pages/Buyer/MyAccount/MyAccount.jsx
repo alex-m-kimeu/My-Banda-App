@@ -181,6 +181,46 @@ export const MyAccount = () => {
             console.error("Error:", error);
           });
       };
+
+      const handleSubmitPassword = (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem("token");
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.sub.id;
+    
+     
+          console.log(password.newpassword, password.confirmpassword)
+          if (password.newpassword == password.confirmpassword && password.newpassword !== '') {
+            const userData = new FormData();
+        userData.append("newpassword", password.newpassword);
+    
+        fetch(`http://127.0.0.1:5500/user/${userId}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+    
+          body: userData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            setUser(data);
+            setShowPasswordModal(false);
+            setPassword({ password: "" });
+            toast.success("Password successfully changed")
+    
+            
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+          }else{
+            toast.error("Confirmed password does not match")
+          }
+        
+        
+      };
   
   return (
     <div>
