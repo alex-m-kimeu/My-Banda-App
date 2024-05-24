@@ -49,10 +49,10 @@ export const LandingPage = () => {
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
   }
-
-  // Filter Products
-  const filteredProducts = products.filter(product => {
-    return product.title.toLowerCase().includes(search.toLowerCase());
+  
+    // Filter Products
+    const filteredProducts = products.filter(product => {
+      return product.title.toLowerCase().includes(search.toLowerCase());
   });
 
   return (
