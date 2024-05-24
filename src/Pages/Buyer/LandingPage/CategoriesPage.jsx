@@ -22,7 +22,6 @@ export const CategoriesPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         const filteredProducts = data.filter(
           (product) => product.category_name === categoryName
         );
