@@ -31,7 +31,7 @@ export const Layout = ({ Sidebar, Header, Footer, children }) => {
                             {isSidebarOpen ? <FaTimes className='fill-Secondary' /> : <FaBars className='fill-Secondary' />}
                         </button>
                         {(isSidebarOpen || isLargeScreen) && (
-                            <div className={`z-10 w-full lg:w-64 bg-white ${isLargeScreen ? 'relative' : 'absolute'}`}>
+                            <div className={`z-10 w-full lg:w-60 bg-white ${isLargeScreen ? 'relative' : 'absolute'}`}>
                                 <Sidebar />
                             </div>
                         )}
