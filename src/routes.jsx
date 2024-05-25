@@ -23,7 +23,7 @@ import { DelivererDashboard } from "./Pages/Deliverer/Dashboard/DelivererDashboa
 import { Orders } from "./Pages/Deliverer/Orders";
 import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
 import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
-import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
+import { CompanyForm } from "./Pages/Deliverer/Dashboard/CompanyForm/CompanyForm";
 import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
 
 
