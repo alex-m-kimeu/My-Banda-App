@@ -14,10 +14,10 @@ export const OrdersTable = ({ orders, token, onUpdate, onDeclineOrder }) => {
             <table className="min-w-full bg-white border-collapse">
                 <thead>
                     <tr>
-                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Order ID</th>
-                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Quantity</th>
-                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Status</th>
-                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Actions</th>
+                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-Variant2">Order ID</th>
+                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-Variant2">Quantity</th>
+                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-Variant2">Status</th>
+                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-Variant2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
