@@ -8,7 +8,7 @@ export const OrdersDetails = ({ token }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5500/order/${orderId}/buyer`, {
+        fetch(`http://127.0.0.1:5500/orderByID/${orderId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
