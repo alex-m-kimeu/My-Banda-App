@@ -17,8 +17,21 @@ import { Products } from "./Pages/Seller/Products/Products";
 import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
+
 import OrderComponent from "./Pages/Seller/Orders/Orders";
 import OrderForm from "./Pages/Seller/Orders/form";
+
+import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
+import { DelivererDashboard } from "./Pages/Deliverer/Dashboard/DelivererDashboard"
+// import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
+import { Orders } from "./Pages/Deliverer/Orders/Orders";
+import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
+import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
+import { CompanyForm } from "./Pages/Deliverer/CompanyForm/CompanyForm";
+import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
+import { OrdersDetails } from "./Pages/Deliverer/Orders/OrdersDetails";
+
+
 
 const routes = [
     {
@@ -168,6 +181,27 @@ const routes = [
         role: "buyer",
     },
     {
+        path: "/buyer/deliverer",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <ChooseCompany />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+    {
+        path:  '/orderconfirmation',
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <ChooseCompany />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+   
+    {
         path: "/products/:id",
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
@@ -176,6 +210,66 @@ const routes = [
         ),
         isAuthenticated: true,
         role: "buyer",
+    },
+    {
+        path: "/store/:id",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                < StorePage />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },  
+    {
+        path: "/deliverer/dashboard",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <DelivererDashboard/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
+    },
+    {
+        path: "/deliveryorderByID/<int:id>",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <OrdersDetails/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
+    },
+    {
+        path: "/buyer/myaccount",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                <MyAccount />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+    {
+        path: "/deliverer/company",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <CompanyForm/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
+    },
+    {
+        path: "/deliverer/orders",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <Orders/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
     },
 ];
 

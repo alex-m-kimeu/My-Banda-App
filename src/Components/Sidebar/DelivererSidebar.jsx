@@ -1,12 +1,10 @@
-import logo from '/src/assets/logo.png'
-import { LiaHomeSolid } from "react-icons/lia";
-import { LiaTagSolid } from "react-icons/lia";
-import { LiaBoxSolid } from "react-icons/lia";
-import { LiaStoreAltSolid } from "react-icons/lia";
+import logo from "/src/assets/logo.png";
+import { LiaHomeSolid, LiaBoxSolid } from "react-icons/lia";
+import { IoMdCreate } from 'react-icons/io';
 import { BiLogOut } from "react-icons/bi";
-import { NavLink, useNavigate, useMatch } from 'react-router-dom'
+import { NavLink, useNavigate, useMatch } from "react-router-dom";
 
-export const SellerSidebar = () => {
+export const DelivererSidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -16,31 +14,26 @@ export const SellerSidebar = () => {
     navigate("/signin");
   };
 
-  const dashboardMatch = useMatch("/seller/dashboard");
-  const productsMatch = useMatch("/seller/products");
-  const ordersMatch = useMatch("/seller/orders");
-  const storeMatch = useMatch("/seller/store");
+  const dashboardMatch = useMatch("/deliverer/dashboard");
+  const ordersMatch = useMatch("/deliverer/orders");
+  const companyMatch = useMatch("/deliverer/company");
 
   const getClassName = (match) => {
     return match ? "text-Secondary" : "text-Text";
-  }
+  };
 
   return (
     <div className="flex flex-col p-[25px] lg:p-[20px] justify-between h-screen shadow-md items-center lg:items-start">
       <div className="flex flex-col gap-[20px] md:gap-[25px]">
         <div className="flex flex-col px-[10px]">
-          <img
-            src={logo}
-            alt="logo"
-            className="w-[100px] h-auto max-w-full"
-          />
+          <img src={logo} alt="logo" className="w-[100px] h-auto max-w-full" />
         </div>
         <div className="flex flex-col p-[10px]">
           <nav>
             <ul className="flex flex-col gap-[20px]">
               <li>
                 <NavLink
-                  to="/seller/dashboard"
+                  to="/deliverer/dashboard"
                   className={`flex items-center gap-[10px] ${getClassName(dashboardMatch)}`}
                 >
                   <LiaHomeSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
@@ -50,17 +43,7 @@ export const SellerSidebar = () => {
 
               <li>
                 <NavLink
-                  to="/seller/products"
-                  className={`flex items-center gap-[10px] ${getClassName(productsMatch)}`}
-                >
-                  <LiaTagSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
-                  <h2 className="text-sm font-medium">Products</h2>
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/seller/orders"
+                  to="/deliverer/orders"
                   className={`flex items-center gap-[10px] ${getClassName(ordersMatch)}`}
                 >
                   <LiaBoxSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
@@ -70,11 +53,11 @@ export const SellerSidebar = () => {
 
               <li>
                 <NavLink
-                  to="/seller/store"
-                  className={`flex items-center gap-[10px] ${getClassName(storeMatch)}`}
+                  to="/deliverer/company"
+                  className={`flex items-center gap-[10px] ${getClassName(companyMatch)}`}
                 >
-                  <LiaStoreAltSolid className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
-                  <h2 className="text-sm font-medium">Store</h2>
+                  <IoMdCreate className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
+                  <h2 className="text-sm font-medium">Company</h2>
                 </NavLink>
               </li>
             </ul>
@@ -83,12 +66,11 @@ export const SellerSidebar = () => {
       </div>
       <div
         className="flex gap-[10px] p-[10px] items-center cursor-pointer text-Text hover:text-Secondary"
-        onClick={handleLogout}>
+        onClick={handleLogout}
+      >
         <BiLogOut className="w-[25px] md:w-[30px] h-[25px] md:h-[30px]" />
         <h1 className="text-sm font-medium">Logout</h1>
       </div>
     </div>
-  )
-}
-
-
+  );
+};

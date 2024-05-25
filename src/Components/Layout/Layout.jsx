@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { FaBars, FaTimes } from "react-icons/fa";
 
 export const Layout = ({ Sidebar, Header, Footer, children }) => {
@@ -30,7 +31,7 @@ export const Layout = ({ Sidebar, Header, Footer, children }) => {
                             {isSidebarOpen ? <FaTimes className='fill-Secondary' /> : <FaBars className='fill-Secondary' />}
                         </button>
                         {(isSidebarOpen || isLargeScreen) && (
-                            <div className={`z-10 w-full lg:w-64 bg-white ${isLargeScreen ? 'relative' : 'absolute'}`}>
+                            <div className={`z-10 w-full lg:w-60 bg-white ${isLargeScreen ? 'relative' : 'absolute'}`}>
                                 <Sidebar />
                             </div>
                         )}
@@ -40,6 +41,10 @@ export const Layout = ({ Sidebar, Header, Footer, children }) => {
                     {children}
                 </div>
             </div>
+            <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
             {Footer && <Footer className="mt-auto" />}
         </div>
     )

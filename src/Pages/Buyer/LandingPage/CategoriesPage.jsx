@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const CategoriesPage = () => {
-  const { handleAddToCart, handleAddToWishlist } = useContext(BuyerContext)
+  const { handleAddToCart, handleAddToWishlist, search } = useContext(BuyerContext)
   const navigate = useNavigate()
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);
@@ -34,6 +34,10 @@ export const CategoriesPage = () => {
     navigate(`/products/${productId}`);
   }
 
+  const filteredProducts = products.filter(product => {
+    return product.title.toLowerCase().includes(search.toLowerCase());
+});
+
   return (
     <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
       <div className="flex items-center justify-normal md:justify-between">
@@ -46,8 +50,8 @@ export const CategoriesPage = () => {
           {categoryName}
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6">
-        {products.map((product) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6 mb-4">
+        {filteredProducts.map((product) => (
           <div key={product.id} className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0">
             <img
               src={
@@ -56,8 +60,8 @@ export const CategoriesPage = () => {
                   : ""
               }
               onClick={() => handleProductClick(product.id)}
-              alt={product.name}
-              className="w-full h-[220px] object-cover"
+              alt={product.title}
+              className="w-full h-[220px] md:h-[180px] lg:h-[220px] object-cover cursor-pointer"
             />
             <h4 className="text-base font-semibold px-2 ">{product.title}</h4>
             <p className="text-Secondary px-2 ">$ {product.price}</p>
