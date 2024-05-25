@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaPlus } from 'react-icons/fa';
 import { OrdersTable } from './OrdersTable';
 
 export const Orders = () => {
@@ -12,7 +11,7 @@ export const Orders = () => {
             try {
                 const token = localStorage.getItem('token');
 
-                const response = await fetch('http://127.0.0.1:5500/orders', {
+                const response = await fetch('http://127.0.0.1:5500/delivererorders', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -23,7 +22,6 @@ export const Orders = () => {
                 }
 
                 const data = await response.json();
-                console.log(data)
                 setOrders(data);
             } catch (error) {
                 console.error('Error fetching orders:', error);
@@ -36,12 +34,13 @@ export const Orders = () => {
     const handleAcceptOrder = async (orderId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5500/order/${orderId}/accept`, {
+            const response = await fetch(`http://127.0.0.1:5500/deliveryorderByID/${orderId}`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({ delivery_status: 'Accepted' })
             });
 
             if (!response.ok) {
@@ -63,12 +62,13 @@ export const Orders = () => {
     const handleDeclineOrder = async (orderId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5500/order/${orderId}/decline`, {
+            const response = await fetch(`http://127.0.0.1:5500/deliveryorderByID/${orderId}`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({ delivery_status: 'Declined' })
             });
 
             if (!response.ok) {
@@ -91,15 +91,10 @@ export const Orders = () => {
         navigate(`/order-details/${orderId}`);
     };
 
-    const handleAddOrderClick = () => {
-        navigate('/add-order');
-    };
-
     return (
         <div className="py-[20px] space-y-4">
             <div className="flex justify-between">
                 <h1 className="text-Text font-bold text-xl text-center lg:text-left">Orders</h1>
-               
             </div>
             <OrdersTable
                 orders={orders}

@@ -9,6 +9,11 @@ export const OrdersTable = ({ orders, token, onUpdate, onDeclineOrder }) => {
         navigate(`/order/${orderId}`);
     };
 
+
+    if (!Array.isArray(orders)) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full bg-white border-collapse">
@@ -53,4 +58,3 @@ export const OrdersTable = ({ orders, token, onUpdate, onDeclineOrder }) => {
         </div>
     );
 };
-
