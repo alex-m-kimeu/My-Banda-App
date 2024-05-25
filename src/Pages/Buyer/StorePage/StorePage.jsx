@@ -3,13 +3,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import BuyerContext from "../BuyerContext/BuyerContext";
 import { MdFavoriteBorder } from "react-icons/md";
+import { jwtDecode } from 'jwt-decode';
+import { ComplaintModal } from "./ComplaintModal";
 
 export const StorePage = () => {
     const { handleAddToCart, handleAddToWishlist } = useContext(BuyerContext)
     const { id } = useParams();
     const [storeData, setStoreData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate()
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const buyerId = decodedToken.sub.id;
 
     useEffect(() => {
         const fetchStoreData = async () => {
@@ -51,6 +57,14 @@ export const StorePage = () => {
                 </div>
             </div>
             <div className="flex flex-col gap-[8px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
+                <div>
+                    <button
+                        className="bg-Secondary text-white py-1 px-2 mb-1"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        File Complaint
+                    </button>
+                </div>
                 <p className="text-base text-Text font-semibold">Location:
                     <span
                         className="ml-2 text-base text-Text font-normal">
@@ -101,6 +115,7 @@ export const StorePage = () => {
                     ))}
                 </div>
             </div>
+            <ComplaintModal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)} storeId={id} buyerId={buyerId} />
         </div>
     );
 };

@@ -118,7 +118,7 @@ export const SinglePage = () => {
                         <p className="text-base text-Variant2 text-left"> {productData ? productData.description : 'Loading...'}</p>
                         <div className="border-b-2 mt-4"></div>
                         <h2
-                            className="text-lg text-Secondary font-bold cursor-pointer"
+                            className="text-base text-Secondary font-bold cursor-pointer"
                             onClick={() => navigate(`/store/${productData ? productData.store.id : ''}`)}
                         >
                             {productData ? productData.store.store_name : 'Loading...'}
