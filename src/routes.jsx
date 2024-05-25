@@ -18,7 +18,7 @@ import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
 import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
-import { DelivererDashboard } from "./Pages/Deliverer/DelivererDashboard"
+import { DelivererDashboard } from "./Pages/Deliverer/Dashboard/DelivererDashboard"
 // import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
 import { Orders } from "./Pages/Deliverer/Orders";
 import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
