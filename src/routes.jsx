@@ -25,6 +25,7 @@ import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
 import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
 import { CompanyForm } from "./Pages/Deliverer/CompanyForm/CompanyForm";
 import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
+import { OrdersDetails } from "./Pages/Deliverer/Orders/OrdersDetails";
 
 
 const routes = [
@@ -200,6 +201,16 @@ const routes = [
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
                 <DelivererDashboard/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
+    },
+    {
+        path: "/deliverer/OrderDetais",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <OrdersDetails/>
             </Layout>
         ),
         isAuthenticated: true,
