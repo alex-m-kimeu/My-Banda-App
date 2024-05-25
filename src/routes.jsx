@@ -20,7 +20,7 @@ import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
 import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
 import { DelivererDashboard } from "./Pages/Deliverer/Dashboard/DelivererDashboard"
 // import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
-import { Orders } from "./Pages/Deliverer/Orders";
+import { Orders } from "./Pages/Deliverer/Orders/Orders";
 import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
 import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
 import { CompanyForm } from "./Pages/Deliverer/CompanyForm/CompanyForm";
@@ -229,7 +229,7 @@ const routes = [
         path: "/deliverer/orders",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
-                <Orders />
+                <Orders/>
             </Layout>
         ),
         isAuthenticated: true,
