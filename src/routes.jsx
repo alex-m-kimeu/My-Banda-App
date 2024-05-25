@@ -17,6 +17,10 @@ import { Products } from "./Pages/Seller/Products/Products";
 import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
+
+import OrderComponent from "./Pages/Seller/Orders/Orders";
+import OrderForm from "./Pages/Seller/Orders/form";
+
 import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
 import { DelivererDashboard } from "./Pages/Deliverer/Dashboard/DelivererDashboard"
 // import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
@@ -26,6 +30,7 @@ import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
 import { CompanyForm } from "./Pages/Deliverer/CompanyForm/CompanyForm";
 import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
 import { OrdersDetails } from "./Pages/Deliverer/Orders/OrdersDetails";
+
 
 
 const routes = [
@@ -110,6 +115,26 @@ const routes = [
         Element: () => (
             <Layout Sidebar={SellerSidebar}>
                 <AddProduct />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "seller",
+    },
+    {
+        path: "/seller/Orders",
+        Element: () => (
+            <Layout Sidebar={SellerSidebar}>
+                <OrderComponent />
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "seller",
+    },
+    {
+        path: "/seller/form/:orderId",
+        Element: () => (
+            <Layout Sidebar={SellerSidebar}>
+                <OrderForm />
             </Layout>
         ),
         isAuthenticated: true,
