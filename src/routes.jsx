@@ -207,7 +207,7 @@ const routes = [
         role: "deliverer",
     },
     {
-        path: "/deliverer/OrderDetais",
+        path: "/deliverer//orderByID/:id",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
                 <OrdersDetails/>

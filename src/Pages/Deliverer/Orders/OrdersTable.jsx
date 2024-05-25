@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaCheck, FaTrash } from 'react-icons/fa';
 
-export const OrdersTable = ({ orders, onAcceptOrder, onDeclineOrder }) => {
+export const OrdersTable = ({ orders, token, onUpdate, onDeclineOrder }) => {
+    const navigate = useNavigate();
+
+    const handleDetailsClick = (orderId) => {
+        navigate(`/order/${orderId}`);
+    };
+
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full bg-white border-collapse">
@@ -9,7 +17,6 @@ export const OrdersTable = ({ orders, onAcceptOrder, onDeclineOrder }) => {
                         <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Order ID</th>
                         <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Quantity</th>
                         <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Status</th>
-                        <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Buyer Name</th>
                         <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Actions</th>
                     </tr>
                 </thead>
@@ -19,12 +26,23 @@ export const OrdersTable = ({ orders, onAcceptOrder, onDeclineOrder }) => {
                             <td className="py-3 px-6 text-left whitespace-nowrap">{order.id}</td>
                             <td className="py-3 px-6 text-left">{order.quantity}</td>
                             <td className="py-3 px-6 text-left">{order.status}</td>
-                            <td className="py-3 px-6 text-left">{order.buyer_name}</td>
                             <td className="py-3 px-6 text-left">
-                                <button className="text-Variant hover:text-Secondary mr-2" onClick={() => onAcceptOrder(order.id)}>
+                                <button
+                                    className="text-Variant hover:text-Secondary mr-2"
+                                    onClick={() => handleDetailsClick(order.id)}
+                                >
+                                    Details
+                                </button>
+                                <button
+                                    className="text-Variant hover:text-Secondary mr-2"
+                                    onClick={() => onUpdate(order.id, 'Accepted')}
+                                >
                                     <FaCheck />
                                 </button>
-                                <button className="text-Variant hover:text-Secondary" onClick={() => onDeclineOrder(order.id)}>
+                                <button
+                                    className="text-Variant hover:text-Secondary"
+                                    onClick={() => onDeclineOrder(order.id)}
+                                >
                                     <FaTrash />
                                 </button>
                             </td>
@@ -35,3 +53,4 @@ export const OrdersTable = ({ orders, onAcceptOrder, onDeclineOrder }) => {
         </div>
     );
 };
+
