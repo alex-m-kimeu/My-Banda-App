@@ -18,13 +18,14 @@ import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
 import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
-import { DelivererDashboard } from "./Pages/Deliverer/DelivererDashboard"
+import { DelivererDashboard } from "./Pages/Deliverer/Dashboard/DelivererDashboard"
 // import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
-import { Orders } from "./Pages/Deliverer/Orders";
+import { Orders } from "./Pages/Deliverer/Orders/Orders";
 import { StorePage } from "./Pages/Buyer/StorePage/StorePage";
 import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
-import { CompanyForm } from "./Pages/Deliverer/CompanyForm";
+import { CompanyForm } from "./Pages/Deliverer/CompanyForm/CompanyForm";
 import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
+import { OrdersDetails } from "./Pages/Deliverer/Orders/OrdersDetails";
 
 
 const routes = [
@@ -206,6 +207,16 @@ const routes = [
         role: "deliverer",
     },
     {
+        path: "/deliveryorderByID/<int:id>",
+        Element: () => (
+            <Layout Sidebar={DelivererSidebar}>
+                <OrdersDetails/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "deliverer",
+    },
+    {
         path: "/buyer/myaccount",
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
@@ -229,7 +240,7 @@ const routes = [
         path: "/deliverer/orders",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
-                <Orders />
+                <Orders/>
             </Layout>
         ),
         isAuthenticated: true,
