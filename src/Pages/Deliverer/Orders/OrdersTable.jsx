@@ -3,7 +3,7 @@ import React from 'react';
 export const OrdersTable = ({ orders, onAcceptOrder, onDeclineOrder }) => {
     return (
         <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white border-collapse">
+            <table className="min-w-full bg-white border-collapse">
                 <thead>
                     <tr>
                         <th className="py-3 px-6 text-left border-b border-gray-200 bg-gray-100 text-sm text-gray-600">Order ID</th>
@@ -21,14 +21,17 @@ export const OrdersTable = ({ orders, onAcceptOrder, onDeclineOrder }) => {
                             <td className="py-3 px-6 text-left">{order.status}</td>
                             <td className="py-3 px-6 text-left">{order.buyer_name}</td>
                             <td className="py-3 px-6 text-left">
-                                <button className="text-Variant hover:text-Secondary mr-2" onClick={() => onAcceptOrder(order.id)}>Accept</button>
-                                <button className="text-Variant hover:text-Secondary" onClick={() => onDeclineOrder(order.id)}>Decline</button>
+                                <button className="text-Variant hover:text-Secondary mr-2" onClick={() => onAcceptOrder(order.id)}>
+                                    <FaCheck />
+                                </button>
+                                <button className="text-Variant hover:text-Secondary" onClick={() => onDeclineOrder(order.id)}>
+                                    <FaTrash />
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
         </div>
     );
 };
