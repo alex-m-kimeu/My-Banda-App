@@ -244,7 +244,7 @@ const routes = [
         role: "deliverer",
     },
     {
-        path: "/deliveryorderByID/<int:id>",
+        path: "/orderByID/:orderId",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
                 <OrdersDetails/>
