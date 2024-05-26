@@ -13,7 +13,7 @@ export const Confirmation = () => {
               />
             </div >
             <div className='text-center'>
-               <h1 className="font-bold ">Order has successfully been</h1>
+               <h1 className="font-bold ">Order has successfully been created</h1>
             </div>
             <div className='flex justify-center'>
                 <div className='w-72 mb-5 mt-3 flex justify-between '>
