@@ -141,7 +141,7 @@ export const Navbar = () => {
                     </MenuItem>
                     <MenuItem>
                       <NavLink
-                        href="/buyer/order"
+                        to="/buyer/myOrders"
                         className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                       >
                         <div className='flex space-x-2'>
