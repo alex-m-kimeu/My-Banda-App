@@ -8,59 +8,32 @@ const OrderComponent = () => {
   const [filter, setFilter] = useState('All');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserAndOrders = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No token found');
-        }
 
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken.sub.id;
-
-        const userResponse = await fetch(`http://127.0.0.1:5500/user/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
+    // get orders
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+  
+      fetch("http://127.0.0.1:5500/storeorders", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
           }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data)
+          setOrders(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching orders", error);
         });
+    }, []);
 
-        if (!userResponse.ok) {
-          throw new Error('Failed to fetch user data');
-        }
-
-        const userData = await userResponse.json();
-        const storeId = userData.store.id;
-
-        const ordersResponse = await fetch(`http://127.0.0.1:5500/orderByID/${userId}?store_id=${storeId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-        });
-
-        if (!ordersResponse.ok) {
-          throw new Error('Failed to fetch orders');
-        }
-
-        const ordersData = await ordersResponse.json();
-        console.log('Fetched orders data:', ordersData);
-
-        if (Array.isArray(ordersData)) {
-          setOrders(ordersData);
-        } else if (ordersData && typeof ordersData === 'object') {
-          setOrders([ordersData]);
-        } else {
-          console.error('Unexpected orders data format:', ordersData);
-          throw new Error('Orders data is not an array or object');
-        }
-
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      }
-    };
-
-    fetchUserAndOrders();
-  }, []);
 
   useEffect(() => {
     filterOrders();
@@ -153,6 +126,7 @@ const OrderComponent = () => {
                   >
                     Order Details
                   </button>
+                  
                 </td>
               </tr>
             ))}
