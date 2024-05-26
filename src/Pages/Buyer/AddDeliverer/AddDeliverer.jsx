@@ -106,11 +106,14 @@ export const ChooseCompany = () => {
   };
 
   const handleMakeOrder =()=>{
-    if(companies[0].location === 'Current'){
-       if(companies[0]. deliverycompany_id === 0){
-        toast.error("Give location to be delivered to and choose delivery company")
-       }
-    } 
+   
+    // if(companies[0].location === 'Current'){
+    //    if(companies[0].deliverycompany_id === 0){
+
+    //     toast.error("Give location to be delivered to and choose delivery company")
+    //    }
+    // } 
+    console.log('yey')
         navigate('/orderconfirmation')
     
   }
@@ -151,7 +154,7 @@ export const ChooseCompany = () => {
            <h2 className="text-xl font-semibold text-Variant2 mb-2">
               {company.name}
             </h2>
-            <p className="text-sm text-Variant2">{company.description}</p>
+           <div className="max-w-96 "> <p className="text-sm text-Variant2 ">{company.description}</p></div>
            </div>
            <div className="flex mt-7">
            <FaLocationDot className="mr-2" />

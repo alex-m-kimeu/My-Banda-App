@@ -30,6 +30,8 @@ import { MyAccount } from "./Pages/Buyer/MyAccount/MyAccount";
 import { CompanyForm } from "./Pages/Deliverer/CompanyForm/CompanyForm";
 import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
 import { OrdersDetails } from "./Pages/Deliverer/Orders/OrdersDetails";
+import { MyOrders } from "./Pages/Buyer/MyOrders/MyOrders";
+import { Confirmation } from "./Pages/Buyer/Confirmation/Confirmation";
 
 
 
@@ -181,6 +183,16 @@ const routes = [
         role: "buyer",
     },
     {
+        path: "/buyer/myOrders",
+        Element: () => (
+            <Layout Header={Navbar} Footer={Footer}>
+                  <MyOrders/>
+            </Layout>
+        ),
+        isAuthenticated: true,
+        role: "buyer",
+    },
+    {
         path: "/buyer/deliverer",
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
@@ -194,7 +206,7 @@ const routes = [
         path:  '/orderconfirmation',
         Element: () => (
             <Layout Header={Navbar} Footer={Footer}>
-                <ChooseCompany />
+                <Confirmation/>
             </Layout>
         ),
         isAuthenticated: true,
