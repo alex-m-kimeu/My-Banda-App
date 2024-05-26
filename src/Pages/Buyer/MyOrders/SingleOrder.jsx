@@ -68,6 +68,35 @@ export const SingleOrder = ({order, handleDelete}) => {
                 </div>
     )
 
+let progress;
+
+if (order.status == "Pending"){
+progress = (
+    <div className='w-full h-1 bg-gray-100 rounded-full overflow-hidded mx-2'>
+  <div className='bg-red-200 h-1 rounded-full shadow shadow-red-200' role="progressbar" style={{ width: '10%' }}></div>
+
+  </div>
+) 
+}else if (order.status=='Processed' ){
+    progress = (
+        <div className='w-full h-1 bg-gray-100 rounded-full overflow-hidded mx-2'>
+      <div className='bg-orange-200 h-1 rounded-full shadow  shadow-orange-200' role="progressbar" style={{ width: '33%' }}></div>
+    
+      </div>
+    )
+}else if (order.status=='Shipped' ){
+    progress = (
+        <div className='w-full h-1 bg-gray-100 rounded-full overflow-hidded mx-2'>
+      <div className='bg-lime-200 h-1 rounded-full shadow shadow-lime-200' role="progressbar" style={{ width: '66%' }}></div>
+      </div>
+    )
+}else if (order.status=='Completed' ){
+    progress = (
+        <div className='w-full h-1 bg-gray-100 rounded-full overflow-hidded mx-2'>
+      <div className='bg-green-200 h-1 rounded-full shadow shadow-green-200' role="progressbar" style={{ width: '100%' }}></div>
+      </div>
+    )
+}
 
 
   return (
@@ -89,7 +118,7 @@ export const SingleOrder = ({order, handleDelete}) => {
   </div>
   <p className='text-sm'>Status:  {order.status}</p>
 
-  <div className='border mx-2 h-1 mt-3 rounded-full'></div>
+  {progress}
 
   <div className='absolute right-3 top-3 text-[8px] bg-Secondary bg-opacity-30 cursor-pointer hover:bg-opacity-50 px-2 py-1 rounded'  onClick={()=>handleCancleOrder(order.id)}> Cancel order</div>
 </div>
