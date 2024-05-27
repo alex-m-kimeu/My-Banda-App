@@ -9,7 +9,7 @@ import { UsersAdmin } from "./Pages/Admin/Users/UsersAdmin";
 import { Navbar } from "./Components/Navbar/Navbar";
 import { Footer } from "./Components/Footer/Footer";
 import { LandingPage } from "./Pages/Buyer/LandingPage/LandingPage";
-import { SellerDashboard } from "./Pages/Seller/Dashboard/SellerDashboard";
+// import { SellerDashboard } from "./Pages/Seller/Dashboard/SellerDashboard";
 import { StoreForm } from "./Pages/Seller/StoreForm/StoreForm";
 import { Wishlist } from "./Pages/Buyer/LandingPage/Wishlist";
 import { CategoriesPage } from "./Pages/Buyer/LandingPage/CategoriesPage";
@@ -17,6 +17,13 @@ import { Products } from "./Pages/Seller/Products/Products";
 import { Buyercart } from "./Pages/Buyer/Cart/Buyercart";
 import { AddProduct } from "./Pages/Seller/Products/AddProduct";
 import { SinglePage } from "./Pages/Buyer/SingleProduct/SingleProduct";
+import OrderComponent from "./Pages/Seller/Orders/Orders";
+import OrderForm from "./Pages/Seller/Orders/form";
+// import { SellerDash } from "./Pages/Seller/Dashboard/dash";
+import { SellerDash2 } from "./Pages/Seller/Dashboard/dash2/maindash";
+import { SellerDash } from "./Pages/Seller/Dashboard/dash";
+
+
 
 import OrderComponent from "./Pages/Seller/Orders/Orders";
 import OrderForm from "./Pages/Seller/Orders/form";
@@ -82,16 +89,31 @@ const routes = [
         isAuthenticated: true,
         role: "admin",
     },
+    // {
+    //     path: "/seller/dashboard",
+    //     Element: () => (
+    //         <Layout Sidebar={SellerSidebar}>
+    //             <SellerDashboard />
+    //         </Layout>
+    //     ),
+    //     isAuthenticated: true,
+    //     role: "seller",
+    // },
+
+
     {
         path: "/seller/dashboard",
         Element: () => (
             <Layout Sidebar={SellerSidebar}>
-                <SellerDashboard />
+                <SellerDash2 />
             </Layout>
         ),
         isAuthenticated: true,
         role: "seller",
     },
+
+
+
     {
         path: "/seller/store",
         Element: () => (
