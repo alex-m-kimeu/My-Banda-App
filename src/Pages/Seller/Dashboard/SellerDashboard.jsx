@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import adminImage from '../../../assets/admin.png';
 import { LiaStoreAltSolid } from "react-icons/lia";
 import { LiaShoppingCartSolid } from "react-icons/lia";
 import { useNavigate } from 'react-router-dom';
@@ -47,10 +46,11 @@ export const SellerDashboard = () => {
     const chartData = {
         labels: Object.keys(productCategories),
         datasets: [{
-            data: Object.values(productCategories),
-            backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#20b2aa'],
+          data: Object.values(productCategories),
+          backgroundColor: ['#FFD700', '#FFFFFF', '#000000', '#FFD700', '#FFFFFF'], 
         }]
-    };
+      };
+      
 
     return (
         <div className="py-[20px] space-y-4">
@@ -59,14 +59,14 @@ export const SellerDashboard = () => {
                 <div className="flex flex-col gap-[40px] md:gap-[80px]">
                     {storeName ? (
                         <>
-                            <div className="flex items-center justify-between p-[20px] shadow-md rounded-[5px]">
+                            <div className="flex items-center justify-between p-[20px] ml-4 shadow-md rounded-[5px] bg-yellow-500">
                                 <div className="flex flex-col gap-[15px]">
                                     <h1 className="text-center text-Text font-semibold text-base">Welcome to {storeName}</h1>
-                                    <p className="text-center text-Secondary font-normal">{seller}</p>
+                                    <p className="text-center text-black  font-semibold ">{seller}</p>
                                 </div>
-                                <LiaStoreAltSolid className="fill-Secondary w-[100px] md:w-[150px] h-[100px] md:h-[150px]" />
+                                {/* <LiaStoreAltSolid className="fill-Secondary w-[100px] md:w-[150px] h-[100px] md:h-[150px]" /> */}
                             </div>
-                            <img src={adminImage} alt='Admin' className="w-auto lg:w-[400px]" />
+
                         </>
                     ) : (
                         <div className="rounded-md p-6 shadow-md bg-primary flex flex-col gap-4 justify-start items-center max-w-lg mx-auto">
@@ -80,7 +80,7 @@ export const SellerDashboard = () => {
                         </div>
                     )}
                 </div>
-                <div className='flex flex-col gap-[30px]'>
+                {/* <div className='flex flex-col gap-[30px]'>
                     <div className="flex justify-center">
                         {storeName && (
                             <>
@@ -101,7 +101,7 @@ export const SellerDashboard = () => {
                             <Pie data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

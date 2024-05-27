@@ -1,0 +1,61 @@
+.home {
+  display: flex;
+
+  .homeContainer {
+    flex: 6;
+
+    .widgets,
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .widgets {
+      .widget {
+        flex: 1;
+        min-width: 200px; // Set a minimum width for the widgets
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        word-wrap: break-word; // Allow text to wrap onto the next line
+      }
+    }
+
+    .charts {
+      padding: 5px 20px;
+
+      .chartContainer {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .listContainer {
+      padding: 20px;
+      margin: 20px;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .homeContainer {
+      flex-direction: column;
+
+      .widgets,
+      .charts,
+      .listContainer {
+        padding: 10px;
+        margin: 10px;
+      }
+
+      .charts {
+        flex-direction: column;
+      }
+    }
+  }
+}

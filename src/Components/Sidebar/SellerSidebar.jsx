@@ -3,6 +3,11 @@ import { LiaHomeSolid } from "react-icons/lia";
 import { LiaTagSolid } from "react-icons/lia";
 import { LiaBoxSolid } from "react-icons/lia";
 import { LiaStoreAltSolid } from "react-icons/lia";
+import { FaCalendarAlt } from "react-icons/fa";
+import { BiSolidReport } from "react-icons/bi";
+import { MdMessage } from "react-icons/md";
+import { FaQuora } from "react-icons/fa6";
+import { CiSettings } from "react-icons/ci";
 import { BiLogOut } from "react-icons/bi";
 import { NavLink, useNavigate, useMatch } from 'react-router-dom'
 
@@ -27,7 +32,7 @@ export const SellerSidebar = () => {
 
   return (
     <div className="flex flex-col p-[25px] lg:p-[20px] justify-between h-screen shadow-md items-center lg:items-start">
-      <div className="flex flex-col gap-[20px] md:gap-[25px]">
+      <div className="flex flex-col gap-[20px] md:gap-[25px] mt-10 ">
         <div className="flex flex-col px-[10px]">
           <img
             src={logo}
@@ -77,6 +82,7 @@ export const SellerSidebar = () => {
                   <h2 className="text-sm font-medium">Store</h2>
                 </NavLink>
               </li>
+
             </ul>
           </nav>
         </div>
