@@ -10,7 +10,7 @@ export const OrdersTable = ({ orders }) => {
                 return 'bg-red-100 text-red-800';
             case 'Accepted':
                 return 'bg-yellow-100 text-yellow-800';
-            case 'Shipped':
+            case 'Cancelled':
                 return 'bg-blue-100 text-blue-800';
             case 'Completed':
                 return 'bg-green-100 text-green-800';
@@ -55,7 +55,7 @@ export const OrdersTable = ({ orders }) => {
                                     {order.delivery_status}
                                 </span>
                             </td>
-                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left">{order.price}</td>
+                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left text-green-800">$ {order.price}</td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left">
                                 <button
                                     className="text-white bg-Secondary py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:bg-transparent hover:text-Variant md:text-lg"
@@ -77,6 +77,7 @@ export const OrdersTable = ({ orders }) => {
                             <span className="font-bold text-gray-600">Order ID</span>
                             <span>{order.id}</span>
                         </div>
+                        
                         <div className="flex justify-between py-2 px-4 border-b border-gray-200">
                             <span className="font-bold text-gray-600">Created at</span>
                             <span>{order.created_at}</span>
@@ -97,7 +98,7 @@ export const OrdersTable = ({ orders }) => {
                         </div>
                         <div className="flex justify-between py-2 px-4 border-b border-gray-200">
                             <span className="font-bold text-gray-600">Price</span>
-                            <span>{order.price}</span>
+                            <span>$ {order.price}</span>
                         </div>
                         <div className="flex justify-between py-2 px-4">
                             <button

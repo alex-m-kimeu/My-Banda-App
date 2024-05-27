@@ -56,13 +56,11 @@ const Featured1 = () => {
   };
 
   const calculateShippedTotal = (orders) => {
-    console.log('Calculating total for shipped orders:', orders);
-    const shippedOrders = orders.filter(order => order.status === "Shipped");
+    const shippedOrders = orders.length > 0 ? orders.filter(order => order.status === "Shipped") : [];
+
     const total = shippedOrders.reduce((sum, order) => {
-      console.log(`Adding order price ${order.price} to total`);
       return sum + order.price;
     }, 0);
-    console.log('Total price of shipped orders:', total);
     setShippedTotal(total);
   };
 

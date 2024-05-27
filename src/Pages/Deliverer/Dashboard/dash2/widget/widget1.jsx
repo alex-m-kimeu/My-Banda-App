@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const Widget1 = ({ type }) => {
   const [customersCount, setCustomersCount] = useState(0);
-  const [ordersCount, setOrdersCount] = useState(0);
+  const [ordersCount, setOrdersCount] = useState([0]);
   const [amount, setAmount] = useState(0);
   const [diff, setDiff] = useState(0);
   // const [productsCount, setProductsCount] = useState(0); 
@@ -34,7 +34,6 @@ const Widget1 = ({ type }) => {
         
 
         const ordersData = await response.json();
-        console.log("Fetched orders data:", ordersData);
         setOrdersCount(ordersData.length);
 
       } catch (error) {
