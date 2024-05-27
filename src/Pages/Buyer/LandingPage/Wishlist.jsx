@@ -13,7 +13,7 @@ export const Wishlist = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`http://localhost:5500/wishlists`, {
+    fetch(`https://my-banda.onrender.com/wishlists`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -34,7 +34,7 @@ export const Wishlist = () => {
 
   const handleDeleteFromWishlist = (productId) => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:5500/wishlists/${productId}`, {
+    fetch(`https://my-banda.onrender.com/wishlists/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export const Wishlist = () => {
     const productIds = wishlistItems.map(item => item.product_id);
     const token = localStorage.getItem("token");
     const requests = productIds.map(productId =>
-      fetch(`http://localhost:5500/products/${productId}`, {
+      fetch(`https://my-banda.onrender.com/products/${productId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -20,7 +20,7 @@ export const StorePage = () => {
     useEffect(() => {
         const fetchStoreData = async () => {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5500/store/${id}`, {
+            const response = await fetch(`https://my-banda.onrender.com/store/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

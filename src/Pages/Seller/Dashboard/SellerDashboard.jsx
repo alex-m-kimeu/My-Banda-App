@@ -23,7 +23,7 @@ export const SellerDashboard = () => {
     }, []);
 
     const fetchSeller = (token, userId) => {
-        fetch(`http://127.0.0.1:5500/user/${userId}`, {
+        fetch(`https://my-banda.onrender.com/user/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

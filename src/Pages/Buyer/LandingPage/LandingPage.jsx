@@ -30,7 +30,7 @@ export const LandingPage = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5500/products", {
+    fetch("https://my-banda.onrender.com/products", {
       headers: {
         'Authorization': 'Bearer ' + token,
       },

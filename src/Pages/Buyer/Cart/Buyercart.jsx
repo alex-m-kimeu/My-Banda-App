@@ -16,7 +16,7 @@ export const Buyercart = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500/carts", {
+    fetch("https://my-banda.onrender.com/carts", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -45,7 +45,7 @@ export const Buyercart = () => {
   const handleGetTotal =()=>{
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500/carts", {
+    fetch("https://my-banda.onrender.com/carts", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -68,7 +68,7 @@ export const Buyercart = () => {
   const handleChooseDelivery = ()=>{
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500/orders", {
+    fetch("https://my-banda.onrender.com/orders", {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,

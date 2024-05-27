@@ -27,7 +27,7 @@ const Widget = ({ type }) => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.sub.id;
 
-        const userResponse = await fetch(`http://127.0.0.1:5500/user/${userId}`, {
+        const userResponse = await fetch(`https://my-banda.onrender.com/user/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -41,7 +41,7 @@ const Widget = ({ type }) => {
         const storeId = userData.store.id;
 
         const ordersResponse = await fetch(
-          `http://127.0.0.1:5500/orderByID/${userId}?store_id=${storeId}`,
+          `https://my-banda.onrender.com/orderByID/${userId}?store_id=${storeId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ const Widget = ({ type }) => {
         setOrdersCount(ordersArray.length);
 
         const customersResponse = await fetch(
-          `http://127.0.0.1:5500/users?store_id=${storeId}`,
+          `https://my-banda.onrender.com/users?store_id=${storeId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ const Widget = ({ type }) => {
         setCustomersCount(customersData.length);
 
    
-        const productsResponse = await fetch(`http://127.0.0.1:5500/products?store_id=${storeId}`, {
+        const productsResponse = await fetch(`https://my-banda.onrender.com/products?store_id=${storeId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

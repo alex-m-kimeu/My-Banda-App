@@ -89,7 +89,7 @@ export const AddProduct = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.sub.id;
 
-        const userResponse = await fetch(`http://127.0.0.1:5500/user/${userId}`, {
+        const userResponse = await fetch(`https://my-banda.onrender.com/user/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -113,7 +113,7 @@ export const AddProduct = () => {
         storeData.append('category_name', formData.category_name);
 
         if (editingProduct) {
-            fetch(`http://127.0.0.1:5500/products/${editingProduct.id}`, {
+            fetch(`https://my-banda.onrender.com/products/${editingProduct.id}`, {
                 method: "PATCH",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -133,7 +133,7 @@ export const AddProduct = () => {
                     console.error('There has been a problem with your patch operation:', error);
                 });
         } else {
-            fetch("http://127.0.0.1:5500/products", {
+            fetch("https://my-banda.onrender.com/products", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`

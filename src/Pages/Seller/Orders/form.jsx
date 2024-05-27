@@ -22,7 +22,7 @@ const OrderForm = () => {
       if (order && order.product_id) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://127.0.0.1:5500/products/${order.product_id}`, {
+          const response = await fetch(`https://my-banda.onrender.com/products/${order.product_id}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },
@@ -56,7 +56,7 @@ const OrderForm = () => {
     formData.append('status', orderStatus);
 
     try {
-      const response = await fetch(`http://127.0.0.1:5500/orderByID/${order.id}`, {
+      const response = await fetch(`https://my-banda.onrender.com/orderByID/${order.id}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
