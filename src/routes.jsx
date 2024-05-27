@@ -39,6 +39,7 @@ import { ChooseCompany } from "./Pages/Buyer/AddDeliverer/AddDeliverer";
 import { OrdersDetails } from "./Pages/Deliverer/Orders/OrdersDetails";
 import { MyOrders } from "./Pages/Buyer/MyOrders/MyOrders";
 import { Confirmation } from "./Pages/Buyer/Confirmation/Confirmation";
+import { DelivererDash2 } from "./Pages/Deliverer/Dashboard/dash2/maindash1";
 
 
 
@@ -259,7 +260,7 @@ const routes = [
         path: "/deliverer/dashboard",
         Element: () => (
             <Layout Sidebar={DelivererSidebar}>
-                <DelivererDashboard/>
+                <DelivererDash2/>
             </Layout>
         ),
         isAuthenticated: true,
