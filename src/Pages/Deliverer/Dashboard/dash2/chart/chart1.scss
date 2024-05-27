@@ -14,10 +14,11 @@
     cursor: pointer;
   }
 
-  .recharts-cartesian-axis-tick {
-    fill: black;
+  
+  .recharts-tooltip-wrapper {
+    background-color: #f59e0b;
+    border: none;
+    color: black;
     cursor: pointer;
   }
-
- 
 }
