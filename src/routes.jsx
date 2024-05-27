@@ -25,8 +25,8 @@ import { SellerDash } from "./Pages/Seller/Dashboard/dash";
 
 
 
-import OrderComponent from "./Pages/Seller/Orders/Orders";
-import OrderForm from "./Pages/Seller/Orders/form";
+// import OrderComponent from "./Pages/Seller/Orders/Orders";
+// import OrderForm from "./Pages/Seller/Orders/form";
 
 import { DelivererSidebar } from "./Components/Sidebar/DelivererSidebar";
 import { DelivererDashboard } from "./Pages/Deliverer/Dashboard/DelivererDashboard"
