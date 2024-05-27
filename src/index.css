@@ -4,14 +4,27 @@
 @tailwind utilities;
 
 /* Custom styles */
+.spinner {
+  border: 4px solid #f3f3f3; 
+  border-top: 4px solid #F3C82E;
+  border-radius: 50%;
+  width: 60px; 
+  height: 60px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 .table-responsive {
     overflow-x: auto;
-  }
+}
   
-  @media screen and (max-width: 640px) {
-    .subject-body {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+@media screen and (max-width: 640px) {
+  .subject-body {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-  }
+}

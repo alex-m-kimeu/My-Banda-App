@@ -153,6 +153,7 @@ const OrderComponent = () => {
                   >
                     Order Details
                   </button>
+
                 </td>
               </tr>
             ))}
