@@ -173,20 +173,20 @@ export const DashboardAdmin = () => {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-4 w-full max-w-2xl mx-auto">
-            <div className="w-full lg:w-1/3 h-48 lg:h-64">
+            <div className="w-full lg:w-1/3 h-48 mt-5 lg:h-64">
               <Pie
                 data={userChartData}
                 options={{ responsive: true, maintainAspectRatio: false }}
               />
             </div>
-            <div className="w-full lg:w-1/3 h-48 lg:h-64">
+            <div className="w-full lg:w-1/3 h-48 mt-5 lg:h-64">
               <Pie
                 data={complaintChartData}
                 options={{ responsive: true, maintainAspectRatio: false }}
               />
             </div>
-            <div className="w-full lg:w-1/3 h-48 lg:h-64">
-              <Doughnut
+            <div className="w-full lg:w-1/3 h-48 mt-5 lg:h-64">
+              <Pie
                 data={customerChartData}
                 options={{ responsive: true, maintainAspectRatio: false }}
               />
@@ -197,3 +197,5 @@ export const DashboardAdmin = () => {
     </div>
   );
 };
+
+
