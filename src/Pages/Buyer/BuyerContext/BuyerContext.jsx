@@ -14,7 +14,7 @@ export const BuyerProvider = ({ children }) => {
   const handleAddToCart = (id) => {
     const token = localStorage.getItem('token')
 
-    fetch(`http://127.0.0.1:5500/products/${id}`, {
+    fetch(`https://my-banda.onrender.com/products/${id}`, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${token}`
@@ -31,7 +31,7 @@ export const BuyerProvider = ({ children }) => {
   // add to wishlist function
   const handleAddToWishlist = (id) => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:5500/wishlists/${id}`, {
+    fetch(`https://my-banda.onrender.com/wishlists/${id}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export const BuyerProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500//carts", {
+    fetch("https://my-banda.onrender.com//carts", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -77,7 +77,7 @@ export const BuyerProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`http://localhost:5500/wishlists`, {
+    fetch(`https://my-banda.onrender.com/wishlists`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -20,7 +20,7 @@ export const Products = () => {
                 const decodedToken = jwtDecode(token);
                 const userId = decodedToken.sub.id;
 
-                const userResponse = await fetch(`http://127.0.0.1:5500/user/${userId}`, {
+                const userResponse = await fetch(`https://my-banda.onrender.com/user/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -28,7 +28,7 @@ export const Products = () => {
                 const userData = await userResponse.json();
                 const storeId = userData.store.id;
 
-                const response = await fetch(`http://127.0.0.1:5500/products`, {
+                const response = await fetch(`https://my-banda.onrender.com/products`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     },
@@ -61,7 +61,7 @@ export const Products = () => {
     const handleEditProduct = async (productId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5500/products/${productId}`, {
+            const response = await fetch(`https://my-banda.onrender.com/products/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -80,7 +80,7 @@ export const Products = () => {
     const handleDeleteProduct = async (productId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://127.0.0.1:5500/products/${productId}`, {
+            const response = await fetch(`https://my-banda.onrender.com/products/${productId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`

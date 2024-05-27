@@ -38,7 +38,7 @@ export const StoreForm = () => {
     storeData.append('seller_id', userId);
     storeData.append('image', formData.image);
 
-    fetch("http://127.0.0.1:5500/stores", {
+    fetch("https://my-banda.onrender.com/stores", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`

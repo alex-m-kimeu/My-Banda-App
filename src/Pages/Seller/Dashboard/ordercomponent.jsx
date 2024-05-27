@@ -19,7 +19,7 @@ const OrderComponent1 = () => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.sub.id;
 
-        const userResponse = await fetch(`http://127.0.0.1:5500/user/${userId}`, {
+        const userResponse = await fetch(`https://my-banda.onrender.com/user/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -32,7 +32,7 @@ const OrderComponent1 = () => {
         const userData = await userResponse.json();
         const storeId = userData.store.id;
 
-        const ordersResponse = await fetch(`http://127.0.0.1:5500/orderByID/${userId}?store_id=${storeId}`, {
+        const ordersResponse = await fetch(`https://my-banda.onrender.com/orderByID/${userId}?store_id=${storeId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           },

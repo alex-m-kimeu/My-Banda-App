@@ -10,7 +10,7 @@ export const CartTable = ({ product, onDelete}) => {
   function handleDelete() {
     const token = localStorage.getItem('token')
 
-    fetch(`http://127.0.0.1:5500/productdec/${product.products.id}`, {
+    fetch(`https://my-banda.onrender.com/productdec/${product.products.id}`, {
       method: "DELETE",
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -32,7 +32,7 @@ export const CartTable = ({ product, onDelete}) => {
 
     console.log(product.products.id)
 
-    fetch(`http://127.0.0.1:5500/productinc/${product.products.id}`, {
+    fetch(`https://my-banda.onrender.com/productinc/${product.products.id}`, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${token}`
@@ -55,7 +55,7 @@ export const CartTable = ({ product, onDelete}) => {
 
     console.log(product.products.id)
 
-    fetch(`http://127.0.0.1:5500/productdec/${product.products.id}`, {
+    fetch(`https://my-banda.onrender.com/productdec/${product.products.id}`, {
       method: "POST",
       headers: {
         'Authorization': `Bearer ${token}`

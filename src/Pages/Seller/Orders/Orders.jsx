@@ -12,7 +12,7 @@ const OrderComponent = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500/storeorders", {
+    fetch("https://my-banda.onrender.com/storeorders", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,

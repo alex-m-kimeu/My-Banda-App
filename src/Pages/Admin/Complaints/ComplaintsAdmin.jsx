@@ -12,7 +12,7 @@ export const ComplaintsAdmin = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500/complaints", {
+    fetch("https://my-banda.onrender.com/complaints", {
       headers: {
         'Authorization': 'Bearer ' + token,
       },

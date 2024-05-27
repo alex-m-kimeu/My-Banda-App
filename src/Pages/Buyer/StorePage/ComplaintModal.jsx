@@ -6,7 +6,7 @@ export const ComplaintModal = ({ isOpen, onRequestClose, storeId, buyerId }) => 
     const handleComplaintSubmit = async (event) => {
         event.preventDefault();
         const token = localStorage.getItem('token');
-        const response = await fetch('http://127.0.0.1:5500/complaints', {
+        const response = await fetch('https://my-banda.onrender.com/complaints', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

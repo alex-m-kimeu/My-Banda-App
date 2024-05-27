@@ -24,7 +24,7 @@ export const CompanyForm = () => {
   }, []);
 
   const fetchCompany = (token, userId) => {
-    fetch(`http://127.0.0.1:5500/user/${userId}`, {
+    fetch(`https://my-banda.onrender.com/user/${userId}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -71,7 +71,7 @@ export const CompanyForm = () => {
     companyData.append('deliverer_id', userId);
     companyData.append('logo', formData.logo);
 
-    fetch("http://127.0.0.1:5500/companies", {
+    fetch("https://my-banda.onrender.com/companies", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`

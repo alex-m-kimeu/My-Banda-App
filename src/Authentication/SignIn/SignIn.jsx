@@ -21,7 +21,7 @@ export const SignIn = () => {
     const refreshToken = localStorage.getItem('refreshToken');
 
     try {
-      const response = await fetch('http://127.0.0.1:5500/refresh-token', {
+      const response = await fetch('https://my-banda.onrender.com', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${refreshToken}`
@@ -61,7 +61,7 @@ export const SignIn = () => {
     setPasswordError('');
 
     try {
-      const response = await fetch('http://127.0.0.1:5500/signin', {
+      const response = await fetch('https://my-banda.onrender.com/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

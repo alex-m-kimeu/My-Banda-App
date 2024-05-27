@@ -25,7 +25,7 @@ export const SinglePage = () => {
                 throw new Error("Token not found in localStorage");
             }
 
-            const productResponse = await fetch(`http://127.0.0.1:5500/products/${productId}`, {
+            const productResponse = await fetch(`https://my-banda.onrender.com/products/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -38,7 +38,7 @@ export const SinglePage = () => {
             const productData = await productResponse.json();
             setProductData(productData);
 
-            const allProductsResponse = await fetch(`http://127.0.0.1:5500/products`, {
+            const allProductsResponse = await fetch(`https://my-banda.onrender.com/products`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
