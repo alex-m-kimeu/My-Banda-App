@@ -15,7 +15,7 @@ export const CategoriesPage = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500/products", {
+    fetch("https://my-banda.onrender.com/products", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

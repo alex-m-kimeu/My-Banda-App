@@ -4,7 +4,7 @@ export const UserCard = ({ user, onDelete }) => {
   function handleDelete() {
     const token = localStorage.getItem('token')
 
-    fetch(`http://127.0.0.1:5500/user/${user.id}`, {
+    fetch(`https://my-banda.onrender.com/user/${user.id}`, {
       method: "DELETE",
       headers: {
         'Authorization': 'Bearer ' + token,

@@ -33,7 +33,7 @@ export const SinglePage = () => {
                 throw new Error("Failed to decode token");
             }
 
-            const productResponse = await fetch(`http://127.0.0.1:5500/products/${productId}`, {
+            const productResponse = await fetch(`https://my-banda.onrender.com/products/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -47,7 +47,7 @@ export const SinglePage = () => {
             setProductData(productData);
 
             const category = productData.category_name;
-            const relatedResponse = await fetch(`http://127.0.0.1:5500/products?userId=${userId}&category=${category}`, {
+            const relatedResponse = await fetch(`https://my-banda.onrender.com/products?userId=${userId}&category=${category}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -72,7 +72,7 @@ export const SinglePage = () => {
                 throw new Error("Token not found in localStorage");
             }
 
-            const response = await fetch("http://127.0.0.1:5500/carts", {
+            const response = await fetch("https://my-banda.onrender.com/carts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

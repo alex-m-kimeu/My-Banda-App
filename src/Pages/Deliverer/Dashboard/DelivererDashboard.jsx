@@ -29,28 +29,28 @@ export const DelivererDashboard = () => {
     }, [navigate]);
 
     const fetchDeliverer = (token, userId) => {
-        fetch(`http://127.0.0.1:5500/user/${userId}`, {
+        fetch(`https://my-banda.onrender.com/user/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            setDeliverer(data.username);
-            if (data.deliverycompany) {
-                setCompanyName(data.deliverycompany.name);
-                setTotalDeliveries(data.deliverycompany.deliveries);
+            .then(response => response.json())
+            .then(data => {
+                setDeliverer(data.username);
+                if (data.deliverycompany) {
+                    setCompanyName(data.deliverycompany.name);
+                    setTotalDeliveries(data.deliverycompany.deliveries);
 
-                const statuses = data.deliverycompany.deliveries.reduce((acc, delivery) => {
-                    acc[delivery.status] = (acc[delivery.status] || 0) + 1;
-                    return acc;
-                }, {});
-                setDeliveryStatuses(statuses);
-            } else {
-                navigate('/deliverer/company');
-            }
-        })
-        .catch(error => console.error('Error:', error));
+                    const statuses = data.deliverycompany.deliveries.reduce((acc, delivery) => {
+                        acc[delivery.status] = (acc[delivery.status] || 0) + 1;
+                        return acc;
+                    }, {});
+                    setDeliveryStatuses(statuses);
+                } else {
+                    navigate('/deliverer/company');
+                }
+            })
+            .catch(error => console.error('Error:', error));
     };
 
     const chartData = {

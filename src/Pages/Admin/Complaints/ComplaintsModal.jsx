@@ -8,7 +8,7 @@ export const ComplaintsModal = ({ complaint, onClose, onUpdate }) => {
 
         const token = localStorage.getItem("token");
 
-        fetch(`http://127.0.0.1:5500/complaint/${complaint.id}`, {
+        fetch(`https://my-banda.onrender.com/complaint/${complaint.id}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': 'Bearer ' + token,
