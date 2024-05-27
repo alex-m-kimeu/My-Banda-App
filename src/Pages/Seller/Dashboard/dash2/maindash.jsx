@@ -2,7 +2,7 @@ import "./maindash.scss";
 import Chart from './chart/chart';
 import Featured from "./Featured/Featured";
 import Widget from "./widget/widget";
-import OrderComponent1 from '../ordercomponent';
+import OrderComponent from '../../Orders/Orders';
 
 export const SellerDash2 = ({ title, aspect }) => {
   return (
@@ -23,7 +23,7 @@ export const SellerDash2 = ({ title, aspect }) => {
           </div>
         </div>
         <div className="listContainer">
-          <OrderComponent1 />
+          <OrderComponent />
         </div>
       </div>
     </div>
