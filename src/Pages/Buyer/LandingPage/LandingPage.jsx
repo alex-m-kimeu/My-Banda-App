@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from "react";
-import img1 from "../../../assets/img1.png";
+import banner1 from "../../../assets/banner1.png";
+import banner2 from "../../../assets/banner2.png";
+import banner3 from "../../../assets/banner3.png";
 import electronics from "../../../assets/electronics.png";
 import clothingIcon from "../../../assets/clothing.svg";
 import shoes from "../../../assets/shoes.png";
 import beauty from "../../../assets/beauty.png";
 import jewelry from "../../../assets/jewelry.png";
-import jbl from "../../../assets/jbl.jpg";
+import headphones from "../../../assets/headphones.png";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import BuyerContext from "../BuyerContext/BuyerContext";
@@ -14,9 +16,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactStars from "react-rating-stars-component";
 
 export const LandingPage = () => {
-  const { handleAddToCart, handleAddToWishlist, search } =
-    useContext(BuyerContext);
-  const navigate = useNavigate();
+
+  const { handleAddToCart, handleAddToWishlist } = useContext(BuyerContext)
+  const navigate = useNavigate()
+
 
   const categories = [
     { name: "Electronics", icon: electronics },
@@ -49,36 +52,33 @@ export const LandingPage = () => {
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
-  };
 
-  const filteredProducts = products.filter((product) => {
-    return product.title.toLowerCase().includes(search.toLowerCase());
-  });
+  }
 
   return (
     <div className="bg-Primary">
-      <Carousel
-        autoPlay
-        infiniteLoop
-        showThumbs={false}
-        interval={8000}
-        showStatus={false}
-      >
+      <Carousel autoPlay infiniteLoop showThumbs={false} interval={5000} showStatus={false}>
         <div className="relative">
-          <img
-            src={img1}
-            alt="Image 1"
-            className="w-full h-[350px] object-fit"
-          />
-          <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-20 py-4 px-20"></div>
+          <img src={banner1} alt="Image 1" className="w-full h-[150px] md:h-[300px] lg:h-[400px]" />
+          <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-10 py-4 px-[60px] lg:px-[150px]">
+            <h2 className="text-lg md:text-3xl lg:text-4xl text-Text font-bold tracking-wider uppercase">Shop the Latest Trends</h2>
+            <p className="text-Primary text-sm md:text-xl mt-2">Discover Endless Possibilities</p>
+          </div>
         </div>
         <div className="relative">
-          <img
-            src={img1}
-            alt="Image 2"
-            className="w-full h-[350px] object-fit"
-          />
-          <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-20 p-4"></div>
+          <img src={banner2} alt="Image 1" className="w-full h-[150px] md:h-[300px] lg:h-[400px]" />
+          <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-10 py-4 px-[60px] lg:px-[150px]">
+            <h2 className="text-lg md:text-3xl lg:text-4xl text-Text font-bold tracking-wider uppercase">Like IT!</h2>
+            <p className="text-Primary text-sm md:text-xl mt-2">Order it!!!!</p>
+          </div>
+        </div>
+        <div className="relative">
+          <img src={banner3} alt="Image 1" className="w-full h-[150px] md:h-[300px] lg:h-[400px]" />
+          <div className="absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-10 py-4 px-[60px] lg:px-[150px]">
+            <h2 className="text-lg md:text-3xl lg:text-4xl text-Text font-bold tracking-wider uppercase">TImely Deliveries</h2>
+            <p className="text-Primary text-sm md:text-xl mt-2">Order, Relax, Wait, Enjoy!</p>
+          </div>
+
         </div>
       </Carousel>
       <div className="flex flex-col gap-[50px] px-[20px] md:px-[60px] lg:px-[120px]">
@@ -109,24 +109,12 @@ export const LandingPage = () => {
             ))}
           </div>
         </div>
-        <div>
-          <div className="bg-black text-Primary p-4 rounded-md shadow-md flex flex-col sm:flex-row items-center">
-            <img
-              src={jbl}
-              alt="Promotion"
-              className="w-full sm:w-1/3 rounded-md mb-4 sm:mb-0"
-            />
-            <div className="ml-0 sm:ml-4">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">
-                Enhance Your Music Experience
-              </h3>
-              <p className="mt-2">
-                Get the best sound quality with JBL speakers and headphones
-              </p>
-              <button className="bg-Secondary text-Primary p-2 rounded-md mt-4">
-                Shop Now
-              </button>
-            </div>
+        <div className="bg-white w-full h-auto shadow-lg relative">
+          <img src={headphones} alt="headphones" className="w-full h-[220px] md:h-[400px] lg:h-[550px]" />
+          <div className="absolute inset-0 flex flex-col justify-center items-start p-2 md:px-10 lg:px-20">
+            <h2 className="text-base md:text-2xl lg:text-4xl text-Text font-bold tracking-wider uppercase">Best Technology</h2>
+            <p className="text-Text text-sm md:text-lg lg:text-xl mt-2 font-medium">Headphones</p>
+            <button className="px-2 py-1 md:px-4 md:py-2 bg-Secondary text-white text-sm font-normal rounded-[50px] mt-2">Buy Now</button>
           </div>
         </div>
         <div className="mb-[50px]">
