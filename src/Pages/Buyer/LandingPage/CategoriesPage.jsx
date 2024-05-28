@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const CategoriesPage = () => {
-  const { handleAddToCart, handleAddToWishlist, search } = useContext(BuyerContext)
-  const navigate = useNavigate()
+  const { handleAddToCart, handleAddToWishlist, search } =
+    useContext(BuyerContext);
+  const navigate = useNavigate();
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);
 
@@ -32,16 +33,19 @@ export const CategoriesPage = () => {
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
-  }
+  };
 
-  const filteredProducts = products.filter(product => {
+  const filteredProducts = products.filter((product) => {
     return product.title.toLowerCase().includes(search.toLowerCase());
-});
+  });
 
   return (
     <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
       <div className="flex items-center justify-normal md:justify-between">
-        <div className="flex gap-2 items-center cursor-pointer" onClick={() => navigate('/buyer/home')}>
+        <div
+          className="flex gap-2 items-center cursor-pointer"
+          onClick={() => navigate("/buyer/home")}
+        >
           <LiaArrowLeftSolid className="fill-Secondary" />
           <p className="text-normal text-Secondary text-base">Back</p>
         </div>
@@ -52,7 +56,10 @@ export const CategoriesPage = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6 mb-4">
         {filteredProducts.map((product) => (
-          <div key={product.id} className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0">
+          <div
+            key={product.id}
+            className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0"
+          >
             <img
               src={
                 product.images && product.images.length > 0
@@ -70,7 +77,10 @@ export const CategoriesPage = () => {
                 count={5}
                 value={
                   product.reviews.length > 0
-                    ? product.reviews.reduce((total, review) => total + review.rating, 0) / product.reviews.length
+                    ? product.reviews.reduce(
+                        (total, review) => total + review.rating,
+                        0
+                      ) / product.reviews.length
                     : 0
                 }
                 size={20}
@@ -78,9 +88,14 @@ export const CategoriesPage = () => {
                 isHalf={true}
                 edit={false}
               />
-              <p className="text-sm font-normal text-Variant2">({product.reviews.length})</p>
+              <p className="text-sm font-normal text-Variant2">
+                ({product.reviews.length})
+              </p>
             </div>
-            <div onClick={() => handleAddToCart(product.id)} className="text-center py-1 text-white cursor-pointer bg-black " >
+            <div
+              onClick={() => handleAddToCart(product.id)}
+              className="text-center py-1 text-white cursor-pointer bg-black "
+            >
               Add to Cart
             </div>
             <button

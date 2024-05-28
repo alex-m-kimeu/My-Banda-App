@@ -23,7 +23,6 @@ export const MyOrders = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data)
         setOrders(data);
       })
       .catch((error) => {

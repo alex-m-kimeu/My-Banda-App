@@ -6,26 +6,26 @@ const BuyerContext = createContext({});
 export const BuyerProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [wishlistItems, setWishlistItems] = useState([]);
-  const [cartNum, setCartNum] = useState(0)
-  const [wishlistNum, setWishlistNum] = useState(0)
+  const [cartNum, setCartNum] = useState(0);
+  const [wishlistNum, setWishlistNum] = useState(0);
   const [search, setSearch] = useState("");
 
   // Add to cart function
   const handleAddToCart = (id) => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
 
     fetch(`https://my-banda.onrender.com/products/${id}`, {
       method: "POST",
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(response => response.json())
-      .then(product => {
-        setProducts((prev) => ({ ...prev, product }))
-        toast.success(`${product.products.title} succefully added to cart`)
+      .then((response) => response.json())
+      .then((product) => {
+        setProducts((prev) => ({ ...prev, product }));
+        toast.success(`${product.products.title} succefully added to cart`);
       })
-      .catch(error => console.error('Error:', error));
+      .catch((error) => console.error("Error:", error));
   };
 
   // add to wishlist function
@@ -43,13 +43,14 @@ export const BuyerProvider = ({ children }) => {
         }
         return response.json();
       })
-      .then(product => {
-        setWishlistItems((prev) => ({ ...prev, product }))
+      .then((product) => {
+        setWishlistItems((prev) => ({ ...prev, product }));
         if (product.message) {
-          toast.error(`${product.message} `)
-        } else (
-          toast.success(`${product.products.title} succefully added to wishlist`)
-        )
+          toast.error(`${product.message} `);
+        } else
+          toast.success(
+            `${product.products.title} succefully added to wishlist`
+          );
       })
       .catch((error) => {
         console.error("Error adding product to wishlist:", error);
@@ -69,7 +70,7 @@ export const BuyerProvider = ({ children }) => {
       .then((response) => response.json())
       .then((data) => {
         // getTotalCartItems(data)
-        setCartNum(data.length)
+        setCartNum(data.length);
       })
       .catch((error) => console.error(error));
   }, [handleAddToCart]);
@@ -85,18 +86,31 @@ export const BuyerProvider = ({ children }) => {
       .then((response) => response.json())
       .then((data) => {
         // getTotalCartItems(data)
-        setWishlistNum(data.length)
+        setWishlistNum(data.length);
       })
       .catch((error) => console.error(error));
   }, [handleAddToWishlist]);
 
   return (
-    <BuyerContext.Provider value={{
-      handleAddToCart, wishlistItems, setWishlistItems, search, setSearch, handleAddToWishlist, wishlistNum, setWishlistNum, setCartNum, cartNum, products, setProducts
-    }}>
+    <BuyerContext.Provider
+      value={{
+        handleAddToCart,
+        wishlistItems,
+        setWishlistItems,
+        search,
+        setSearch,
+        handleAddToWishlist,
+        wishlistNum,
+        setWishlistNum,
+        setCartNum,
+        cartNum,
+        products,
+        setProducts,
+      }}
+    >
       {children}
     </BuyerContext.Provider>
-  )
-}
+  );
+};
 
 export default BuyerContext;

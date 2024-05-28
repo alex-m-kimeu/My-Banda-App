@@ -3,7 +3,6 @@ import { Details } from "./Details";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 
-
 export const MyAccount = () => {
   const [user, setUser] = useState({});
   const [showNameModal, setShowNameModal] = useState(false);
@@ -15,7 +14,11 @@ export const MyAccount = () => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [image, setImage] = useState({ image: "" });
   const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const [password, setPassword] = useState({ current: "", newpassword: "", confirmpassword: "" });
+  const [password, setPassword] = useState({
+    current: "",
+    newpassword: "",
+    confirmpassword: "",
+  });
   const [preview, setPreview] = useState(null);
   const imageInputRef = useRef();
 
@@ -31,7 +34,6 @@ export const MyAccount = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         setUser(data);
       })
       .catch((err) => {
@@ -85,12 +87,10 @@ export const MyAccount = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         setUser(data);
         setShowNameModal(false);
         setUsernameData({ username: "" });
-        toast.success("Username successfully Changed")
-
+        toast.success("Username successfully Changed");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -116,12 +116,10 @@ export const MyAccount = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         setUser(data);
         setShowContactModal(false);
         setContact({ contact: "" });
-        toast.success("Contact successfully Changed")
-
+        toast.success("Contact successfully Changed");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -147,12 +145,10 @@ export const MyAccount = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         setUser(data);
         setShowEmailModal(false);
         setEmail({ email: "" });
-        toast.success("Email successfully Changed")
-
+        toast.success("Email successfully Changed");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -178,12 +174,10 @@ export const MyAccount = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         setUser(data);
         setShowImageModal(false);
         setImage({ email: "" });
-        toast.success("New image successfully uploaded")
-
+        toast.success("New image successfully uploaded");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -196,9 +190,10 @@ export const MyAccount = () => {
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.sub.id;
 
-
-    console.log(password.newpassword, password.confirmpassword)
-    if (password.newpassword == password.confirmpassword && password.newpassword !== '') {
+    if (
+      password.newpassword == password.confirmpassword &&
+      password.newpassword !== ""
+    ) {
       const userData = new FormData();
       userData.append("newpassword", password.newpassword);
 
@@ -212,22 +207,17 @@ export const MyAccount = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           setUser(data);
           setShowPasswordModal(false);
           setPassword({ password: "" });
-          toast.success("Password successfully changed")
-
-
+          toast.success("Password successfully changed");
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     } else {
-      toast.error("Confirmed password does not match")
+      toast.error("Confirmed password does not match");
     }
-
-
   };
 
   let content;
@@ -240,7 +230,12 @@ export const MyAccount = () => {
             Change Username
           </h2>
           <form onSubmit={handleSubmitUsername}>
-            <textarea id="username" value={userNameData.username} onChange={handleUsernameChange} className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></textarea>
+            <textarea
+              id="username"
+              value={userNameData.username}
+              onChange={handleUsernameChange}
+              className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "
+            ></textarea>
             <div className="flex justify-end gap-2">
               <button
                 type="button"
@@ -259,7 +254,7 @@ export const MyAccount = () => {
           </form>
         </div>
       </div>
-    )
+    );
   } else if (showContactModal) {
     content = (
       <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
@@ -268,7 +263,12 @@ export const MyAccount = () => {
             Change Contact
           </h2>
           <form onSubmit={handleSubmitContact}>
-            <textarea id="contact" value={contact.contact} onChange={handleContactChange} className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></textarea>
+            <textarea
+              id="contact"
+              value={contact.contact}
+              onChange={handleContactChange}
+              className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "
+            ></textarea>
             <div className="flex justify-end gap-2">
               <button
                 type="button"
@@ -287,8 +287,7 @@ export const MyAccount = () => {
           </form>
         </div>
       </div>
-    )
-
+    );
   } else if (showEmailModal) {
     content = (
       <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
@@ -297,7 +296,12 @@ export const MyAccount = () => {
             Change Email
           </h2>
           <form onSubmit={handleSubmitEmail}>
-            <textarea id="email" value={email.email} onChange={handleEmailChange} className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></textarea>
+            <textarea
+              id="email"
+              value={email.email}
+              onChange={handleEmailChange}
+              className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "
+            ></textarea>
             <div className="flex justify-end gap-2">
               <button
                 type="button"
@@ -316,7 +320,7 @@ export const MyAccount = () => {
           </form>
         </div>
       </div>
-    )
+    );
   } else if (showImageModal) {
     content = (
       <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
@@ -325,10 +329,20 @@ export const MyAccount = () => {
             Change image
           </h2>
           <form onSubmit={handleSubmitImage}>
-            <input ref={imageInputRef} id="image" type="file" name="image" onChange={handleImageChange} className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
+            <input
+              ref={imageInputRef}
+              id="image"
+              type="file"
+              name="image"
+              onChange={handleImageChange}
+              className="w-full px-4 py-2 bg-Primary rounded-md text-sm border text-Variant2 outline-none"
             />
             {preview && (
-              <img src={preview} alt="Preview" className="w-full h-64 object-cover mt-4" />
+              <img
+                src={preview}
+                alt="Preview"
+                className="w-full h-64 object-cover mt-4"
+              />
             )}
 
             <div className="flex justify-end gap-2">
@@ -349,7 +363,7 @@ export const MyAccount = () => {
           </form>
         </div>
       </div>
-    )
+    );
   } else if (showPasswordModal) {
     content = (
       <div className="fixed backdrop-blur bg-black bg-opacity-50 bg-blur top-0 left-0 w-full h-full flex items-center justify-center">
@@ -358,14 +372,32 @@ export const MyAccount = () => {
             Change Password
           </h2>
           <form onSubmit={handleSubmitPassword}>
-            <label htmlFor="">Current Password
-              <input id="current" value={password.current} onChange={handlePasswordChange} className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></input>
+            <label htmlFor="">
+              Current Password
+              <input
+                id="current"
+                value={password.current}
+                onChange={handlePasswordChange}
+                className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "
+              ></input>
             </label>
-            <label htmlFor="">New Password
-              <input id="newpassword" value={password.newpassword} onChange={handlePasswordChange} className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></input>
+            <label htmlFor="">
+              New Password
+              <input
+                id="newpassword"
+                value={password.newpassword}
+                onChange={handlePasswordChange}
+                className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "
+              ></input>
             </label>
-            <label htmlFor="">Confirm Password
-              <input id="confirmpassword" value={password.confirmpassword} onChange={handlePasswordChange} className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "  ></input>
+            <label htmlFor="">
+              Confirm Password
+              <input
+                id="confirmpassword"
+                value={password.confirmpassword}
+                onChange={handlePasswordChange}
+                className="w-full mb-2 p-2 border dark:border-none rounded focus:outline-none dark:bg-primary-dark text-Heading dark:text-primary-light "
+              ></input>
             </label>
 
             <div className="flex justify-end gap-2">
@@ -386,10 +418,18 @@ export const MyAccount = () => {
           </form>
         </div>
       </div>
-    )
+    );
   } else {
-    content = (<Details user={user} setShowNameModal={setShowNameModal} setShowPasswordModal={setShowPasswordModal} setShowImageModal={setShowImageModal} setShowEmailModal={setShowEmailModal} setShowContactModal={setShowContactModal} />)
-
+    content = (
+      <Details
+        user={user}
+        setShowNameModal={setShowNameModal}
+        setShowPasswordModal={setShowPasswordModal}
+        setShowImageModal={setShowImageModal}
+        setShowEmailModal={setShowEmailModal}
+        setShowContactModal={setShowContactModal}
+      />
+    );
   }
 
   return (
@@ -400,7 +440,9 @@ export const MyAccount = () => {
         <div className="flex flex-wrap justify ">
           <div className=" lg:w-1/4 flex lg:flex-col  items-center w-full justify-center ">
             <div className="pl-5  ">
-              <div className="text-Secondary font-body text-center">Welcome!</div>
+              <div className="text-Secondary font-body text-center">
+                Welcome!
+              </div>
               <div className="text-center">{user.username}</div>
             </div>
             <div className="rounded-full  border lg:w-52 lg:h-52 mt-5  ml-3">
@@ -411,12 +453,9 @@ export const MyAccount = () => {
               />
             </div>
           </div>
-          <div className="lg:w-3/4 mb-4 py-4 w-full ">
-            {content}
-          </div>
+          <div className="lg:w-3/4 mb-4 py-4 w-full ">{content}</div>
         </div>
       </div>
     </div>
-  )
-}
-
+  );
+};
