@@ -83,7 +83,9 @@ export const OrdersDetails = () => {
                         <h1 className='font-medium text-lg'>Customer</h1>
                         <div><span className='text-gray-500 mr-1'>Name:</span>{orderData.buyer.username}</div>
                         <div><span className='text-gray-500 mr-1'>Email:</span>{orderData.buyer.email}</div>
+
                         <div><span className='text-gray-500 mr-1'>Phon:</span>{orderData.buyer.contact}</div>
+
                     </div>
                     </div>
 

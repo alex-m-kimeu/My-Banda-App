@@ -85,11 +85,9 @@ export const CompanyForm = () => {
         return resp.json();
       })
       .then((data) => {
-        console.log("Company created/updated successfully:", data);
         navigate('/deliverer/dashboard');
       })
       .catch((error) => {
-        console.error('There has been a problem with your post operation:', error);
       });
 
     setFormData({

@@ -35,9 +35,9 @@ export const OrdersTable = ({ orders }) => {
                 <thead>
                     <tr>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Order ID</th>
+                        <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Product Name</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Created at</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Quantity</th>
-                        <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Company Status</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Delivery Status</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Price</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Actions</th>
@@ -47,9 +47,12 @@ export const OrdersTable = ({ orders }) => {
                     {orders.map(order => (
                         <tr key={order.id} className="hover:bg-gray-100 border-b border-gray-200">
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left whitespace-nowrap">{order.id}</td>
+                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left whitespace-nowrap flex space-x-2">
+                                <img src={order.products.images[0]} alt=""  className='h-10 w-10 rounded-full mr-3'/>
+                                {order.products.title}
+                                </td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left whitespace-nowrap">{order.created_at}</td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left">{order.quantity}</td>
-                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left">{order.status}</td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left">
                                 <span className={`px-1 py-1 rounded ${getStatusClass(order.delivery_status)}`}>
                                     {order.delivery_status}

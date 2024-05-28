@@ -6,12 +6,12 @@ import "react-circular-progressbar/dist/styles.css";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import { useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const Featured = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
-  const [filter, setFilter] = useState('All');
+  const [filter, setFilter] = useState("All");
   const [shippedTotal, setShippedTotal] = useState(0);
   const navigate = useNavigate();
 
@@ -20,51 +20,55 @@ const Featured = () => {
   useEffect(() => {
     const fetchUserAndOrders = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          throw new Error('No token found');
+          throw new Error("No token found");
         }
 
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.sub.id;
 
-        const userResponse = await fetch(`https://my-banda.onrender.com/user/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
+        const userResponse = await fetch(
+          `https://my-banda.onrender.com/user/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        });
+        );
 
         if (!userResponse.ok) {
-          throw new Error('Failed to fetch user data');
+          throw new Error("Failed to fetch user data");
         }
 
         const userData = await userResponse.json();
         const storeId = userData.store.id;
 
-        const ordersResponse = await fetch(`https://my-banda.onrender.com/orderByID/${userId}?store_id=${storeId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-        });
+        const ordersResponse = await fetch(
+          `https://my-banda.onrender.com/orderByID/${userId}?store_id=${storeId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!ordersResponse.ok) {
-          throw new Error('Failed to fetch orders');
+          throw new Error("Failed to fetch orders");
         }
 
         const ordersData = await ordersResponse.json();
-        console.log('Fetched orders data:', ordersData);
 
         if (Array.isArray(ordersData)) {
           setOrders(ordersData);
-        } else if (ordersData && typeof ordersData === 'object') {
+        } else if (ordersData && typeof ordersData === "object") {
           setOrders([ordersData]);
         } else {
-          console.error('Unexpected orders data format:', ordersData);
-          throw new Error('Orders data is not an array or object');
+          console.error("Unexpected orders data format:", ordersData);
+          throw new Error("Orders data is not an array or object");
         }
-
       } catch (error) {
-        console.error('Error fetching orders:', error);
+        console.error("Error fetching orders:", error);
       }
     };
 
@@ -77,21 +81,18 @@ const Featured = () => {
 
   const filterOrders = () => {
     let filtered = orders;
-    if (filter !== 'All') {
-      filtered = orders.filter(order => order.status === filter);
+    if (filter !== "All") {
+      filtered = orders.filter((order) => order.status === filter);
     }
     setFilteredOrders(filtered);
     calculateShippedTotal(filtered);
   };
 
   const calculateShippedTotal = (orders) => {
-    console.log('Calculating total for shipped orders:', orders);
-    const shippedOrders = orders.filter(order => order.status === "Shipped");
+    const shippedOrders = orders.filter((order) => order.status === "Shipped");
     const total = shippedOrders.reduce((sum, order) => {
-      console.log(`Adding order price ${order.price} to total`);
       return sum + order.price;
     }, 0);
-    console.log('Total price of shipped orders:', total);
     setShippedTotal(total);
   };
 
@@ -111,7 +112,12 @@ const Featured = () => {
       </div>
       <div className="bottom">
         <div className="featuredChart">
-          <CircularProgressbar value={percentage} text={`${percentage.toFixed(2)}%`} strokeWidth={5} styles={customStyles} />
+          <CircularProgressbar
+            value={percentage}
+            text={`${percentage.toFixed(2)}%`}
+            strokeWidth={5}
+            styles={customStyles}
+          />
         </div>
         <p className="title">Total sales made today</p>
         <p className="amount">${shippedTotal.toFixed(2)}</p>
