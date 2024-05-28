@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { FaBars, FaTimes } from "react-icons/fa";
 
 export const Layout = ({ Sidebar, Header, Footer, children }) => {
@@ -21,26 +22,30 @@ export const Layout = ({ Sidebar, Header, Footer, children }) => {
     }, []);
 
     return (
-        <div className={`relative h-screen overflow-auto ${Sidebar && isLargeScreen ? 'flex' : ''}`}>
+        <div className={`relative h-screen overflow-auto flex flex-col ${Sidebar && isLargeScreen ? 'flex' : ''}`}>
             {Header && <Header />}
-            {Sidebar && (
-                <>
-                    <button onClick={handleSidebarToggle} className="absolute right-0 z-20 p-3 lg:hidden">
-                        {isSidebarOpen ? <FaTimes className='fill-Secondary' /> : <FaBars className='fill-Secondary' />}
-                    </button>
-                    {(isSidebarOpen || isLargeScreen) && (
-                        <div className={`z-10 w-full lg:w-64 bg-white ${isLargeScreen ? 'relative' : 'absolute'}`}>
-                            <Sidebar />
-                        </div>
-                    )}
-                </>
-            )}
-            <div className="flex flex-col flex-grow">
-                <div className={`px-4 lg:px-[50px] py-4 lg:py-[20px] ${Sidebar ? '' : 'px-4 py-4'}`}>
+            <div className="flex flex-grow">
+                {Sidebar && (
+                    <>
+                        <button onClick={handleSidebarToggle} className="absolute right-0 z-20 p-3 lg:hidden">
+                            {isSidebarOpen ? <FaTimes className='fill-Secondary' /> : <FaBars className='fill-Secondary' />}
+                        </button>
+                        {(isSidebarOpen || isLargeScreen) && (
+                            <div className={`z-10 w-full lg:w-60 bg-white ${isLargeScreen ? 'relative' : 'absolute'}`}>
+                                <Sidebar />
+                            </div>
+                        )}
+                    </>
+                )}
+                <div className={`flex flex-col flex-grow px-0 ${Header ? '' : 'px-4 lg:px-[40px] py-4 lg:py-[20px]'} ${Sidebar ? '' : 'px-0 py-0'}`}>
                     {children}
                 </div>
-                {Footer && <Footer />}
             </div>
+            <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
+            {Footer && <Footer className="mt-auto" />}
         </div>
     )
 }

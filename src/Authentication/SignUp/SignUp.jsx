@@ -21,7 +21,7 @@ export const SignUp = () => {
         const refreshToken = localStorage.getItem('refreshToken');
 
         try {
-            const response = await fetch('http://127.0.0.1:5500/refresh-token', {
+            const response = await fetch('hhttps://my-banda.onrender.com/refresh-token', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${refreshToken}`
@@ -59,7 +59,7 @@ export const SignUp = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://127.0.0.1:5500/signup', {
+            const response = await fetch('https://my-banda.onrender.com/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ export const SignUp = () => {
                             <option value="">Select a role</option>
                             <option value="buyer">Buyer</option>
                             <option value="seller">Seller</option>
-                            {/* <option value="deliverer">Deliverer</option> */}
+                            <option value="deliverer">Deliverer</option> 
                         </select>
                     </div>
                     <div className='relative border p-2 rounded-[8px]'>

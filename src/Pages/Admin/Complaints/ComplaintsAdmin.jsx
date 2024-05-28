@@ -12,7 +12,7 @@ export const ComplaintsAdmin = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:5500/complaints", {
+    fetch("https://my-banda.onrender.com/complaints", {
       headers: {
         'Authorization': 'Bearer ' + token,
       },
@@ -93,10 +93,10 @@ export const ComplaintsAdmin = () => {
 
                 return (
                   <tr key={complaint.id} className="bg-white border-[6px] border-white">
-                    <td className="p-[10px]">#{complaint.buyer_id}</td>
+                    <td className="p-[10px]">{complaint.buyer_id}</td>
                     <td className="p-[10px] subject-body">{complaint.subject.split(' ').length > 3 ? subject + '...' : subject}</td>
                     <td className="p-[10px] subject-body">{complaint.body.split(' ').length > 3 ? body + '...' : body}</td>
-                    <td className="p-[10px]">#{complaint.store_id}</td>
+                    <td className="p-[10px]">{complaint.store_id}</td>
                     <td className="p-[10px]">{complaint.status}</td>
                     <td className="p-[10px] flex justify-center items-center">
                       <button onClick={() => handleView(complaint)} className="p-[5px] bg-Variant3 text-Text rounded-[5px]">view</button>

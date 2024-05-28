@@ -1,33 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import ReactStars from "react-rating-stars-component";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import BuyerContext from "../BuyerContext/BuyerContext";
 import { useNavigate } from "react-router-dom";
-
+import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const CategoriesPage = () => {
-  const{ handleAddToCart, handleAddToWishlist}=useContext(BuyerContext)
-  const navigate = useNavigate()
-
-
+  const { handleAddToCart, handleAddToWishlist, search } =
+    useContext(BuyerContext);
+  const navigate = useNavigate();
   const { categoryName } = useParams();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.sub.id;
 
-    fetchProducts(token);
-  }, [categoryName]);
-
-  const fetchProducts = (token) => {
-    fetch("http://127.0.0.1:5500/products", {
+    fetch("https://my-banda.onrender.com/products", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -40,70 +29,84 @@ export const CategoriesPage = () => {
         setProducts(filteredProducts);
       })
       .catch((error) => console.error("Error:", error));
-  };
-  const handleProductClick=(productId) =>{
-    navigate(`/products/${productId}`);
+  }, [categoryName]);
 
-  }
+  const handleProductClick = (productId) => {
+    navigate(`/products/${productId}`);
+  };
+
+  const filteredProducts = products.filter((product) => {
+    return product.title.toLowerCase().includes(search.toLowerCase());
+  });
 
   return (
-    <div className="bg-Primary font-body text-Text min-h-screen">
-      <main className="p-4 md:p-8 lg:p-12">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-center mb-8">
+    <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
+      <div className="flex items-center justify-normal md:justify-between">
+        <div
+          className="flex gap-2 items-center cursor-pointer"
+          onClick={() => navigate("/buyer/home")}
+        >
+          <LiaArrowLeftSolid className="fill-Secondary" />
+          <p className="text-normal text-Secondary text-base">Back</p>
+        </div>
+        <div className="text-Secondary mx-1 md:hidden">/</div>
+        <h1 className="text-2xl font-bold text-Text text-center flex-none md:flex-grow">
           {categoryName}
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6 mb-4">
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            className="bg-Primary w-full h-[320px] lg:h-[350px] flex flex-col justify-between shadow-inner relative mb-3 md:mb-0"
+          >
+            <img
+              src={
+                product.images && product.images.length > 0
+                  ? product.images[0]
+                  : ""
+              }
               onClick={() => handleProductClick(product.id)}
-            >
-              <img
-                src={
-                  product.images && product.images.length > 0
-                    ? product.images[0]
-                    : ""
+              alt={product.title}
+              className="w-full h-[220px] md:h-[180px] lg:h-[220px] object-cover cursor-pointer"
+            />
+            <h4 className="text-base font-semibold px-2 ">{product.title}</h4>
+            <p className="text-Secondary px-2 ">$ {product.price}</p>
+            <div className="px-2 flex items-center gap-[2px]">
+              <ReactStars
+                count={5}
+                value={
+                  product.reviews.length > 0
+                    ? product.reviews.reduce(
+                        (total, review) => total + review.rating,
+                        0
+                      ) / product.reviews.length
+                    : 0
                 }
-
-                alt={product.title}
-                className="w-full h-48 object-cover"
+                size={20}
+                activeColor="#ffd700"
+                isHalf={true}
+                edit={false}
               />
-              <div className="p-4 flex flex-col justify-between flex-grow">
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">
-                    {product.title}
-                  </h3>
-                  <p className="text-Green text-sm mb-2">
-                    By {product.store ? product.store.name : "Unknown"}
-                  </p>
-                  <p className="text-Green text-lg font-bold">
-                    ${product.price}
-                  </p>
-                </div>
-                <div className="mt-4 flex justify-between items-center">
-                  <button
-                    className="bg-Secondary text-Primary p-2 rounded-lg flex items-center"
-                    onClick={() => handleAddToWishlist(product.id)}
-                  >
-                    <MdFavoriteBorder className="mr-1" />
-                    Wishlist
-                  </button>
-                  <button
-                    className="bg-Secondary text-Primary p-2 rounded-lg flex items-center"
-                    onClick={() => handleAddToCart(product.id)}
-                  >
-                    <FontAwesomeIcon icon={faShoppingCart} className="mr-1" />
-                    Add
-                  </button>
-                </div>
-              </div>
+              <p className="text-sm font-normal text-Variant2">
+                ({product.reviews.length})
+              </p>
             </div>
-          ))}
-        </div>
-      </main>
+            <div
+              onClick={() => handleAddToCart(product.id)}
+              className="text-center py-1 text-white cursor-pointer bg-black "
+            >
+              Add to Cart
+            </div>
+            <button
+              className="absolute top-2 right-2 bg-Secondary p-1 rounded-full bg-opacity-50 hover:bg-opacity-100 transition-opacity duration-200"
+              onClick={() => handleAddToWishlist(product.id)}
+            >
+              <MdFavoriteBorder className="fill-Primary" />
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
-
-export default CategoriesPage;

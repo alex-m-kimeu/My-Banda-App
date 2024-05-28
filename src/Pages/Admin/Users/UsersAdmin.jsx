@@ -9,7 +9,7 @@ export const UsersAdmin = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        fetch('http://127.0.0.1:5500/users', {
+        fetch('https://my-banda.onrender.com/users', {
             method: "GET",
             headers: {
                 'Authorization': 'Bearer ' + token,
