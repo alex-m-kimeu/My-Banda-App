@@ -15,7 +15,6 @@ export const ComplaintModal = ({ isOpen, onRequestClose, storeId, buyerId }) => 
             body: JSON.stringify({ ...complaintData, store_id: storeId, buyer_id: buyerId })
         });
         const data = await response.json();
-        console.log(data);
         onRequestClose();
     }
 

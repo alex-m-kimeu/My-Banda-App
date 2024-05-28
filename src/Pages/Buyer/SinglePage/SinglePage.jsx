@@ -87,7 +87,6 @@ export const SinglePage = () => {
 
             const data = await response.json();
             alert("Product added to cart");
-            console.log("Product added to cart:", data);
         } catch (error) {
             console.error("Error adding product to cart:", error);
             alert("Failed to add product to cart");

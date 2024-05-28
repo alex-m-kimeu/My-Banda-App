@@ -77,7 +77,7 @@ export const SingleOrder = ({ order, handleDelete }) => {
 
       </div>
     )
-  } else if (order.status == 'Processing') {
+  } else if (order.status == 'Processed') {
     progress = (
       <div className='w-full h-1 bg-gray-100 rounded-full overflow-hidded mx-2 mt-3'>
         <div className='bg-orange-200 h-1 rounded-full shadow  shadow-orange-200' role="progressbar" style={{ width: '33%' }}></div>

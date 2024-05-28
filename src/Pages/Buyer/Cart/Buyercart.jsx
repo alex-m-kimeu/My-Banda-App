@@ -6,12 +6,12 @@ import cart from "../../../assets/cart.png";
 import { LiaArrowLeftSolid } from "react-icons/lia";
 
 export const Buyercart = () => {
-  const { products, setProducts } = useContext(BuyerContext)
+  const { products, setProducts } = useContext(BuyerContext);
   const [itemsCost, setItemsCost] = useState(0);
   const [total, setTotal] = useState(0);
   const [buttonClicked, setButtonClicked] = useState(0);
   const [clicked, setClicked] = useState(0);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,13 +36,12 @@ export const Buyercart = () => {
       });
   }, []);
 
-
   function handleDelete(id) {
     const newProduct = products.filter((user) => user.id !== id);
     setProducts(newProduct);
   }
 
-  const handleGetTotal =()=>{
+  const handleGetTotal = () => {
     const token = localStorage.getItem("token");
 
     fetch("https://my-banda.onrender.com/carts", {
@@ -63,9 +62,9 @@ export const Buyercart = () => {
         setTotal(data[0].total_cost);
       })
       .catch((error) => console.error("Error fetching cart items:", error));
-  }
+  };
 
-  const handleChooseDelivery = ()=>{
+  const handleChooseDelivery = () => {
     const token = localStorage.getItem("token");
 
     fetch("https://my-banda.onrender.com/orders", {
@@ -81,10 +80,10 @@ export const Buyercart = () => {
         return response.json();
       })
       .then((data) => {
-      navigate('/buyer/deliverer')
+        navigate("/buyer/deliverer");
       })
       .catch((error) => console.error("Error fetching cart items:", error));
-  }
+  };
 
   return (
     <div className="flex flex-col gap-[20px] px-[20px] md:px-[40px] lg:px-[120px] py-[20px]">
@@ -94,31 +93,34 @@ export const Buyercart = () => {
             <div className="flex h-auto">
               <div className="relative overflow-x-auto w-full">
                 <div className="flex items-center gap-[2px]">
-                  <div className="flex gap-2 items-center cursor-pointer" onClick={() => navigate('/buyer/home')}>
+                  <div
+                    className="flex gap-2 items-center cursor-pointer"
+                    onClick={() => navigate("/buyer/home")}
+                  >
                     <LiaArrowLeftSolid className="fill-Secondary" />
                     <p className="text-normal text-Secondary text-base">Back</p>
                   </div>
                   <div className="text-Secondary mx-1">/</div>
-                  <h1 className="text-xl md:text-2xl font-bold text-Text">Cart</h1>
+                  <h1 className="text-xl md:text-2xl font-bold text-Text">
+                    Cart
+                  </h1>
                 </div>
-                <CartsList
-                  products={products}
-                  onDelete={handleDelete}
-                  // setClicked={setClicked}
-                  // setButtonClicked={setButtonClicked}
-                />
+                <CartsList products={products} onDelete={handleDelete} />
               </div>
             </div>
             <div className="flex justify-end">
-                  <div >
-                    <button onClick={()=>handleGetTotal()} className="border px-5 py-2 mr-4 rounded bg-Secondary bg-opacity-40">Get Total Item Cost</button>
-                  </div>
-                </div>
+              <div>
+                <button
+                  onClick={() => handleGetTotal()}
+                  className="border px-5 py-2 mr-4 rounded bg-Secondary bg-opacity-40"
+                >
+                  Get Total Item Cost
+                </button>
+              </div>
+            </div>
             <div>
               <div className="flex justify-between px-4 ">
-                
                 <div className="hidden md:block ">
-                  
                   <input
                     type="text"
                     placeholder="Coupon Code"
@@ -128,9 +130,11 @@ export const Buyercart = () => {
                     Apply Coupon
                   </button>
                 </div>
-                
+
                 <div className=" border rounded border-gray-300 p-3 px-5 py-5 md:w-80 divide-y w-full">
-                  <h2 className="text-lg font-semibold text-end text-Text">Cart Total:</h2>
+                  <h2 className="text-lg font-semibold text-end text-Text">
+                    Cart Total:
+                  </h2>
                   <div className="flex justify-between py-3">
                     <p>Subtotal: </p>
                     <span> {itemsCost} </span>
@@ -144,7 +148,10 @@ export const Buyercart = () => {
                     <span> {total}</span>
                   </div>
                   <div className="flex justify-center">
-                    <button className="text-white px-6 py-2 mt-5 bg-Secondary rounded" onClick={handleChooseDelivery}>
+                    <button
+                      className="text-white px-6 py-2 mt-5 bg-Secondary rounded"
+                      onClick={handleChooseDelivery}
+                    >
                       {" "}
                       Proceed to Checkout
                     </button>
@@ -156,9 +163,7 @@ export const Buyercart = () => {
         ) : (
           <div>
             <div className="flex justify-between ">
-              <h1 className="text-xl md:text-2xl font-bold text-Text">
-                Cart
-              </h1>
+              <h1 className="text-xl md:text-2xl font-bold text-Text">Cart</h1>
               <NavLink to="/buyer/home">
                 <button className="border text-sm md:text-base border-gray-300 p-1 md:p-2 rounded hover:bg-Secondary hover:text-white">
                   Explore Shop
