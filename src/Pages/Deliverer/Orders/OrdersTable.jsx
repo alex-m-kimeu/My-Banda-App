@@ -10,7 +10,7 @@ export const OrdersTable = ({ orders }) => {
                 return 'bg-red-100 text-red-800';
             case 'Accepted':
                 return 'bg-yellow-100 text-yellow-800';
-            case 'Shipped':
+            case 'Cancelled':
                 return 'bg-blue-100 text-blue-800';
             case 'Completed':
                 return 'bg-green-100 text-green-800';
@@ -35,9 +35,9 @@ export const OrdersTable = ({ orders }) => {
                 <thead>
                     <tr>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Order ID</th>
+                        <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Product Name</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Created at</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Quantity</th>
-                        <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Company Status</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Delivery Status</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Price</th>
                         <th className="py-2 px-2 md:px-3 lg:px-2 text-left border-b border-gray-200 bg-gray-100 text-sm lg:text-lg text-Variant2">Actions</th>
@@ -47,15 +47,18 @@ export const OrdersTable = ({ orders }) => {
                     {orders.map(order => (
                         <tr key={order.id} className="hover:bg-gray-100 border-b border-gray-200">
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left whitespace-nowrap">{order.id}</td>
+                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left whitespace-nowrap flex space-x-2">
+                                <img src={order.products.images[0]} alt=""  className='h-10 w-10 rounded-full mr-3'/>
+                                {order.products.title}
+                                </td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left whitespace-nowrap">{order.created_at}</td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left">{order.quantity}</td>
-                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left">{order.status}</td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left">
                                 <span className={`px-1 py-1 rounded ${getStatusClass(order.delivery_status)}`}>
                                     {order.delivery_status}
                                 </span>
                             </td>
-                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left">{order.price}</td>
+                            <td className="py-2 px-2 md:px-3 lg:px-2 text-left text-green-800">$ {order.price}</td>
                             <td className="py-2 px-2 md:px-3 lg:px-2 text-left">
                                 <button
                                     className="text-white bg-Secondary py-1 px-2 md:py-2 md:px-4 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:bg-transparent hover:text-Variant md:text-lg"
@@ -77,6 +80,7 @@ export const OrdersTable = ({ orders }) => {
                             <span className="font-bold text-gray-600">Order ID</span>
                             <span>{order.id}</span>
                         </div>
+                        
                         <div className="flex justify-between py-2 px-4 border-b border-gray-200">
                             <span className="font-bold text-gray-600">Created at</span>
                             <span>{order.created_at}</span>
@@ -97,7 +101,7 @@ export const OrdersTable = ({ orders }) => {
                         </div>
                         <div className="flex justify-between py-2 px-4 border-b border-gray-200">
                             <span className="font-bold text-gray-600">Price</span>
-                            <span>{order.price}</span>
+                            <span>$ {order.price}</span>
                         </div>
                         <div className="flex justify-between py-2 px-4">
                             <button

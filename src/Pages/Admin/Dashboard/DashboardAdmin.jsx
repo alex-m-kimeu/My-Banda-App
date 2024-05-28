@@ -1,8 +1,4 @@
 
-import { useEffect, useState } from "react";
-import { LiaShoppingCartSolid, LiaUsersSolid, LiaFileAltSolid, LiaHandHoldingUsdSolid } from "react-icons/lia";
-import { Pie } from 'react-chartjs-2';
-import { Chart, registerables } from 'chart.js';
 
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
@@ -98,6 +94,7 @@ export const DashboardAdmin = () => {
   };
 
     return (
+      <div>
         <div className="p-4 space-y-4">
             <h1 className="text-Text font-bold text-xl text-center lg:text-left">Dashboard</h1>
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
