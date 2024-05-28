@@ -5,7 +5,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-import {jwtDecode} from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const Widget = ({ type }) => {
@@ -13,7 +13,7 @@ const Widget = ({ type }) => {
   const [ordersCount, setOrdersCount] = useState(0);
   const [amount, setAmount] = useState(0);
   const [diff, setDiff] = useState(0);
-  const [productsCount, setProductsCount] = useState(0); 
+  const [productsCount, setProductsCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,11 +27,14 @@ const Widget = ({ type }) => {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.sub.id;
 
-        const userResponse = await fetch(`https://my-banda.onrender.com/user/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const userResponse = await fetch(
+          `https://my-banda.onrender.com/user/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!userResponse.ok) {
           throw new Error("Failed to fetch user data");
@@ -39,6 +42,44 @@ const Widget = ({ type }) => {
 
         const userData = await userResponse.json();
         const storeId = userData.store.id;
+
+        fetch("https://my-banda.onrender.com/storeorders", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setOrdersCount(data.length);
+          })
+          .catch((error) => {
+            console.error("Error fetching orders", error);
+          });
+
+        fetch(`https://my-banda.onrender.com/store/${storeId}`, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setProductsCount(data.products.length);
+          })
+          .catch((error) => {
+            console.error("Error fetching orders", error);
+          });
 
         const ordersResponse = await fetch(
           `https://my-banda.onrender.com/orderByID/${userId}?store_id=${storeId}`,
@@ -54,10 +95,10 @@ const Widget = ({ type }) => {
         }
 
         const ordersData = await ordersResponse.json();
-        console.log("Fetched orders data:", ordersData);
 
-        const ordersArray = Array.isArray(ordersData) ? ordersData : [ordersData];
-        setOrdersCount(ordersArray.length);
+        const ordersArray = Array.isArray(ordersData)
+          ? ordersData
+          : [ordersData];
 
         const customersResponse = await fetch(
           `https://my-banda.onrender.com/users?store_id=${storeId}`,
@@ -75,21 +116,20 @@ const Widget = ({ type }) => {
         const customersData = await customersResponse.json();
         setCustomersCount(customersData.length);
 
-   
-        const productsResponse = await fetch(`https://my-banda.onrender.com/products?store_id=${storeId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const productsResponse = await fetch(
+          `https://my-banda.onrender.com/products?store_id=${storeId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!productsResponse.ok) {
           throw new Error("Failed to fetch products");
         }
 
         const productsData = await productsResponse.json();
-        console.log("Fetched products data:", productsData);
-        setProductsCount(productsData.length);
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -104,7 +144,7 @@ const Widget = ({ type }) => {
     case "Products":
       data = {
         title: "Products",
-        count: productsCount, 
+        count: productsCount,
         isMoney: false,
         link: "See all products",
         icon: (

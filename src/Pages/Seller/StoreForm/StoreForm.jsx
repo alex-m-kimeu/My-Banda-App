@@ -1,12 +1,16 @@
-import { useState, useRef } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import { useState, useRef } from "react";
+import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const StoreForm = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    store_name: '',
-    description: '',
-    location: '',
-    image: ''
+    store_name: "",
+    description: "",
+    location: "",
+    image: "",
   });
 
   const [preview, setPreview] = useState(null);
@@ -27,52 +31,61 @@ export const StoreForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.sub.id;
 
     const storeData = new FormData();
-    storeData.append('store_name', formData.store_name);
-    storeData.append('description', formData.description);
-    storeData.append('location', formData.location);
-    storeData.append('seller_id', userId);
-    storeData.append('image', formData.image);
+    storeData.append("store_name", formData.store_name);
+    storeData.append("description", formData.description);
+    storeData.append("location", formData.location);
+    storeData.append("seller_id", userId);
+    storeData.append("image", formData.image);
 
     fetch("https://my-banda.onrender.com/stores", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: storeData,
     })
       .then((resp) => {
         if (!resp.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return resp.json();
       })
       .then((data) => {
-        console.log("Store created successfully:", data);
+        toast.success("Your store has been created successfullly");
+
+        setTimeout(() => {
+          navigate("/seller/dashboard");
+        }, 2000);
       })
       .catch((error) => {
-        console.error('There has been a problem with your post operation:', error);
+        console.error(
+          "There has been a problem with your post operation:",
+          error
+        );
       });
 
     setFormData({
-      store_name: '',
-      description: '',
-      image: '',
-      location: ''
+      store_name: "",
+      description: "",
+      image: "",
+      location: "",
     });
-    imageInputRef.current.value = '';
+    imageInputRef.current.value = "";
     setPreview(null);
   };
 
   return (
-    <div className="flex justify-center lg:justify-start p-[10px]">
-      <div className=" max-w-md w-full">
+    <div className="flex justify-center  p-[10px] ">
+      <div className=" max-w-md w-full p-3 py-10 rounded shadow shadow-boxShadow">
         <form onSubmit={handleSubmit} className="bg-primary">
-        <h3 className="text-Text font-bold text-xl text-center lg:text-left mb-5">Store Information</h3>
+          <h3 className="text-Text font-bold text-xl text-center lg:text-left mb-5">
+            Store Information
+          </h3>
           <div className="flex flex-col space-y-6">
             <input
               id="store_name"
@@ -114,7 +127,11 @@ export const StoreForm = () => {
             />
 
             {preview && (
-              <img src={preview} alt="Preview" className="w-full h-64 object-cover mt-4" />
+              <img
+                src={preview}
+                alt="Preview"
+                className="w-full h-64 object-cover mt-4"
+              />
             )}
 
             <div className="flex justify-center lg:justify-start space-x-6">
@@ -129,12 +146,12 @@ export const StoreForm = () => {
                 className="bg-Secondary text-sm text-white font-normal py-2 px-4 rounded-md"
                 onClick={() => {
                   setFormData({
-                    store_name: '',
-                    description: '',
-                    location: '',
-                    image: ''
+                    store_name: "",
+                    description: "",
+                    location: "",
+                    image: "",
                   });
-                  imageInputRef.current.value = '';
+                  imageInputRef.current.value = "";
                   setPreview(null);
                 }}
               >
