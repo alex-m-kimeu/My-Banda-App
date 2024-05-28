@@ -1,7 +1,7 @@
 
 
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LiaStoreAltSolid,
   LiaShoppingCartSolid,
@@ -14,31 +14,22 @@ import {
 import bg from "../../../assets/admin.png";
 import { Pie, Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
+import { FaLongArrowAltRight } from "react-icons/fa"
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { UsersAdmin } from "../Users/UsersAdmin";
 
 
 Chart.register(...registerables);
 
 export const DashboardAdmin = () => {
-  const [users, setUsers] = useState([
-    { role: "buyer" },
-    { role: "buyer" },
-    { role: "seller" },
-    { role: "buyer" },
-    { role: "deliverer" },
-    { role: "seller" },
-  ]);
-  const [complaints, setComplaints] = useState([
-    { status: "resolved" },
-    { status: "rejected" },
-    { status: "resolved" },
-    { status: "rejected" },
-  ]);
+  const [users, setUsers] = useState([  ]);
+  const [complaints, setComplaints] = useState([ ]);
   const [customersByCountry, setCustomersByCountry] = useState({
-    USA: 10,
-    UK: 5,
-    Canada: 3,
-    Australia: 2,
-    India: 8,
+    Nairobi: 10,
+    Nakuru: 5,
+    Kisumu: 3,
+    Moambasa: 2,
+    Eldoret: 8,
   });
 
   const totalSales = 120;
@@ -62,7 +53,7 @@ export const DashboardAdmin = () => {
     datasets: [
       {
         data: [buyers.length, sellers.length, deliverers.length],
-        backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe"],
+        backgroundColor: ["#E9D66B", "#FFBA00", "#CCA01D"],
       },
     ],
   };
@@ -83,113 +74,213 @@ export const DashboardAdmin = () => {
       {
         data: Object.values(customersByCountry),
         backgroundColor: [
-          "#ff6384",
-          "#36a2eb",
-          "#cc65fe",
-          "#ffce56",
-          "#36a2eb",
+          "#CCA01D",
+          "#FFE4B5",
+          "#FFBA00",
+          "#F5F5DC",
+          "#E9D66B",
         ],
       },
     ],
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    fetch("https://my-banda.onrender.com/users", {
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
+    })
+        .then(res => res.json())
+        .then(data => {
+            setUsers(data);
+        });
+},[]);
+
+useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    fetch("https://my-banda.onrender.com/complaints", {
+          headers: {
+            'Authorization': 'Bearer ' + token,
+          }
+    })
+        .then(res => res.json())
+        .then(data => {
+            setComplaints(data);
+        });
+},[]);
+
+
+
+
     return (
       <div>
         <div className="p-4 space-y-4">
-            <h1 className="text-Text font-bold text-xl text-center lg:text-left">Dashboard</h1>
+            <h1 className="text-Text font-bold text-xl text-center lg:text-left">Admin Dashboard</h1>
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-4 space-y-4 md:space-y-0">
-                    <div className="p-4 shadow-md rounded-md flex gap-4 justify-center items-center bg-Primary">
-                        <LiaUsersSolid className="w-10 h-10 fill-Text" />
+                <div className="grid  w-full h-32 md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-4 space-y-4 md:space-y-0">
+                    <div className="p-4 shadow-boxShadow shadow rounded-md  gap-4 justify-center items-center bg-Primary">
+                       <div className="flex gap-3">
+                       <LiaUsersSolid className="w-10 h-10 fill-Text" />
                         <div>
-                            <h2 className="text-center text-Text font-semibold text-sm md:text-base">Users</h2>
-                            <p className="text-center">{nonAdminUsers.length}</p>
+                            <h2 className="text-center text-Text font-semibold text-sm md:text-base "> Total Users</h2>
+                            <p className="text-center text-2xl font-semibold">{nonAdminUsers.length}</p>
                         </div>
+
+                       </div>
+                   
+                         <div className="flex space-x-1">
+                         <FaArrowTrendUp  className="mr-1 text-green-500"/> 
+                         <div  className=" text-green-500">36.9%</div>
+                          <div className="font-light text-xs mt-1 text-gray-600">+5 today</div>
+                         </div>
+                      
+                       <div className="border mt-3 "></div>
+                       <div className="mt-3 text-xs flex "> Veiw All Users <FaLongArrowAltRight className="ml-2 text-Secondary" /></div>
+
                     </div>
-                    <div className="p-4 shadow-md rounded-md flex gap-4 justify-center items-center bg-Primary">
-                        <LiaFileAltSolid className="w-10 h-10 fill-Text" />
+                    <div className="p-4 shadow-boxShadow shadow rounded-md  gap-4 justify-center items-center bg-Primary">
+                       <div className="flex gap-3">
+                       <LiaUsersSolid className="w-10 h-10 fill-Text" />
                         <div>
-                            <h2 className="text-center text-Text font-semibold text-sm md:text-base">Complaints</h2>
-                            <p className="text-center">{complaints.length}</p>
+                            <h2 className="text-center text-Text font-semibold text-sm md:text-base "> Deliverers</h2>
+                            <p className="text-center text-2xl font-semibold">{deliverers.length}</p>
                         </div>
+
+                       </div>
+                   
+                         <div className="flex space-x-1">
+                         <FaArrowTrendUp  className="mr-1 text-green-500"/> 
+                         <div  className=" text-green-500">17.9%</div>
+                          <div className="font-light text-xs mt-1 text-gray-600">+1 today</div>
+                         </div>
+                      
+                       <div className="border mt-3 "></div>
+                       <div className="mt-3 text-xs flex "> Veiw All deliverers <FaLongArrowAltRight className="ml-2 text-Secondary" /></div>
+
                     </div>
-                    <div className="p-4 shadow-md rounded-md flex gap-4 justify-center items-center bg-Primary">
-                        <LiaShoppingCartSolid className="w-10 h-10 fill-Text" />
+
+
+                    <div className="p-4 shadow-boxShadow shadow rounded-md  gap-4 justify-center items-center bg-Primary">
+                       <div className="flex gap-3">
+                       <LiaUsersSolid className="w-10 h-10 fill-Text" />
                         <div>
-                            <h2 className="text-center text-Text font-semibold text-sm md:text-base">Buyers</h2>
-                            <p className="text-center">{buyers.length}</p>
+                            <h2 className="text-center text-Text font-semibold text-sm md:text-base "> Buyers</h2>
+                            <p className="text-center text-2xl font-semibold">{buyers.length}</p>
                         </div>
+
+                       </div>
+                   
+                         <div className="flex space-x-1">
+                         <FaArrowTrendUp  className="mr-1 text-green-500"/> 
+                         <div  className=" text-green-500">100%</div>
+                          <div className="font-light text-xs mt-1 text-gray-600">+1 today</div>
+                         </div>
+                      
+                       <div className="border mt-3 "></div>
+                       <div className="mt-3 text-xs flex "> Veiw All Buyers<FaLongArrowAltRight className="ml-2 text-Secondary" /></div>
+
                     </div>
-                    <div className="p-4 shadow-md rounded-md flex gap-4 justify-center items-center bg-Primary">
-                        <LiaHandHoldingUsdSolid className="w-10 h-10 fill-Text" />
+
+                    <div className="p-4 shadow-boxShadow shadow rounded-md  gap-4 justify-center items-center bg-Primary">
+                       <div className="flex gap-3">
+                       <LiaUsersSolid className="w-10 h-10 fill-Text" />
                         <div>
-                            <h2 className="text-center text-Text font-semibold text-sm md:text-base">Sellers</h2>
-                            <p className="text-center">{sellers.length}</p>
+                            <h2 className="text-center text-Text font-semibold text-sm md:text-base "> Sellers</h2>
+                            <p className="text-center text-2xl font-semibold">{sellers.length}</p>
                         </div>
-                    </div>
+
+                       </div>
+                   
+                         <div className="flex space-x-1">
+                         <FaArrowTrendUp  className="mr-1 text-green-500"/> 
+                         <div  className=" text-green-500">45.9%</div>
+                          <div className="font-light text-xs mt-1 text-gray-600">+3 today</div>
+                         </div>
+                      
+                       <div className="border mt-3 "></div>
+                       <div className="mt-3 text-xs flex "> Veiw All Sellers <FaLongArrowAltRight className="ml-2 text-Secondary" /></div>
+
+                    </div>   
                 </div>
-                <div className="flex flex-col items-center gap-6 w-full lg:w-1/2 mx-auto">
-                    <div className="w-full">
-                        <div className="h-64">
-                            <Pie data={userChartData} options={{ responsive: true, maintainAspectRatio: false }} />
-                        </div>
-                    </div>
-                    <div className="w-full">
-                        <div className="h-64">
-                            <Pie data={complaintChartData} options={{ responsive: true, maintainAspectRatio: false }} />
-                        </div>
-                    </div>
-                </div>
+        
+            </div>
+
+            <div>
 
             </div>
-            <div className="p-2 md:p-4 shadow-md rounded-md flex gap-2 md:gap-4 justify-center items-center w-full">
-              <LiaMoneyBillSolid className="w-8 md:w-16 h-8 md:h-16 fill-Text" />
-              <div>
-                <h2 className="text-center text-Text font-semibold">
-                  Total Sales
-                </h2>
-                <p className="text-center">{totalSales}</p>
-              </div>
-            </div>
-            <div className="p-2 md:p-4 shadow-md rounded-md flex gap-2 md:gap-4 justify-center items-center w-full">
-              <LiaHandHoldingUsdSolid className="w-8 md:w-16 h-8 md:h-16 fill-Text" />
-              <div>
-                <h2 className="text-center text-Text font-semibold">
-                  Net Income
-                </h2>
-                <p className="text-center">${netIncome}</p>
-              </div>
-            </div>
-            <div className="p-2 md:p-4 shadow-md rounded-md flex gap-2 md:gap-4 justify-center items-center w-full">
-              <LiaFileContractSolid className="w-8 md:w-16 h-8 md:h-16 fill-Text" />
-              <div>
-                <h2 className="text-center text-Text font-semibold">
-                  Contracts
-                </h2>
-                <p className="text-center">{contracts}</p>
-              </div>
-            </div>
+      
           </div>
-          <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-4 w-full max-w-2xl mx-auto">
+          <div className="flex flex-co lg:flex-row items-center gap-2 lg:gap-4 w-full mt-10  content-around  mx-auto ">
             <div className="w-full lg:w-1/3 h-48 mt-5 lg:h-64">
               <Pie
                 data={userChartData}
                 options={{ responsive: true, maintainAspectRatio: false }}
               />
             </div>
-            <div className="w-full lg:w-1/3 h-48 mt-5 lg:h-64">
-              <Pie
-                data={complaintChartData}
-                options={{ responsive: true, maintainAspectRatio: false }}
-              />
-            </div>
+          
             <div className="w-full lg:w-1/3 h-48 mt-5 lg:h-64">
               <Pie
                 data={customerChartData}
                 options={{ responsive: true, maintainAspectRatio: false }}
               />
             </div>
+            <div className="">
+         
+
+            </div>
+
+            <div>
+<div className="p-2 md:p-4 shadow  shadow-boxShadow rounded-md gap-2 md:gap-4 justify-center items-center w-72">
+  
+              <div className="flex">
+              <LiaMoneyBillSolid className="w-2 md:w-28 h-4 md:h-16 fill-Text mr-4" />
+              <div>
+                <h2 className="text-center text-Text font-semibold ">
+                  Total Sales
+                </h2>
+                <p className="text-center text-2xl font-semibold">{totalSales}</p>
+              </div>
+              </div>
+            <p className="text-center text-gray-500 text-xs"> 12% Sales  88% Marked</p>
+            </div>
+            <div className="p-2 md:p-4 shadow shaoe-boxShadow rounded-md gap-2 md:gap-4 justify-center items-center w-full">
+  
+              <div className="flex">
+              <LiaHandHoldingUsdSolid  className="w-2 md:w-28 h-4 md:h-16 fill-Text" />
+              <div>
+                <h2 className="text-center text-Text font-semibold ">
+                  Net Income
+                </h2>
+                <p className="text-center text-2xl font-semibold">$ {netIncome}</p>
+              </div>
+              </div>
+            <p className="text-center text-gray-500 mt-4 text-xs"> 12% Sales  88% Marked</p>
+            </div>
+
+
+
+<div className="p-2 md:p-4 shadow shaoe-boxShadow rounded-md gap-2 md:gap-4 justify-center items-center w-full">
+  
+  <div className="flex">
+  <LiaFileContractSolid  className="w-2 md:w-28 h-4 md:h-16 fill-Text" />
+  <div>
+    <h2 className="text-center text-Text font-semibold ">
+      Contracts
+    </h2>
+    <p className="text-center text-2xl font-semibold">$ 15</p>
+  </div>
+  </div>
+<p className="text-center text-gray-500 mt-4 text-xs"> 12% Sales  88% Marked</p>
+</div>
+            
           </div>
+          </div>
+          <h1 className="text-Text font-bold text-xl text-center lg:text-left ml-2">Recent</h1>
+        <UsersAdmin/>
+     
         </div>
     );
 }

@@ -11,13 +11,15 @@ import headphones from "../../../assets/headphones.png";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import BuyerContext from "../BuyerContext/BuyerContext";
-import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactStars from "react-rating-stars-component";
 
 export const LandingPage = () => {
+
   const { handleAddToCart, handleAddToWishlist } = useContext(BuyerContext)
   const navigate = useNavigate()
+
 
   const categories = [
     { name: "Electronics", icon: electronics },
@@ -34,7 +36,7 @@ export const LandingPage = () => {
 
     fetch("https://my-banda.onrender.com/products", {
       headers: {
-        'Authorization': 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     })
       .then((response) => response.json())
@@ -50,6 +52,7 @@ export const LandingPage = () => {
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
+
   }
 
   return (
@@ -75,13 +78,16 @@ export const LandingPage = () => {
             <h2 className="text-lg md:text-3xl lg:text-4xl text-Text font-bold tracking-wider uppercase">TImely Deliveries</h2>
             <p className="text-Primary text-sm md:text-xl mt-2">Order, Relax, Wait, Enjoy!</p>
           </div>
+
         </div>
       </Carousel>
       <div className="flex flex-col gap-[50px] px-[20px] md:px-[60px] lg:px-[120px]">
         <div className="mt-[25px] lg:mt-[40px]">
           <div className="flex gap-[10px] md:gap-[15px] items-center mb-[20px]">
             <div className="w-3 md:w-5 h-8 md:h-10 rounded-[5px] bg-Secondary"></div>
-            <span className="text-base font-normal text-Secondary">Categories</span>
+            <span className="text-base font-normal text-Secondary">
+              Categories
+            </span>
           </div>
           <h2 className="text-2xl font-bold mb-[30px]">Browse By Category</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -96,7 +102,9 @@ export const LandingPage = () => {
                   alt={`${category.name} icon`}
                   className="w-12 h-12"
                 />
-                <div className="text-center text-base font-normal">{category.name}</div>
+                <div className="text-center text-base font-normal">
+                  {category.name}
+                </div>
               </div>
             ))}
           </div>
@@ -112,12 +120,17 @@ export const LandingPage = () => {
         <div className="mb-[50px]">
           <div className="flex gap-[10px] md:gap-[15px] items-center mb-[20px]">
             <div className="w-3 md:w-5 h-8 md:h-10 rounded-[5px] bg-Secondary"></div>
-            <span className="text-base font-normal text-Secondary">Products</span>
+            <span className="text-base font-normal text-Secondary">
+              Products
+            </span>
           </div>
           <h2 className="text-2xl font-bold mb-[30px]">Explore Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {products.map((product) => (
-              <div key={product.id} className="bg-Primary w-full h-[350px] flex flex-col justify-between relative shadow-inner">
+              <div
+                key={product.id}
+                className="bg-Primary w-full h-[350px] flex flex-col justify-between relative shadow-inner"
+              >
                 <img
                   src={
                     product.images && product.images.length > 0
@@ -125,18 +138,22 @@ export const LandingPage = () => {
                       : ""
                   }
                   onClick={() => handleProductClick(product.id)}
-
                   alt={product.name}
                   className="w-full h-[220px] md:h-[180px] lg:h-[220px] object-cover cursor-pointer"
                 />
-                <h4 className="text-base font-semibold px-2 ">{product.title}</h4>
+                <h4 className="text-base font-semibold px-2 ">
+                  {product.title}
+                </h4>
                 <p className="text-Secondary px-2 ">$ {product.price}</p>
                 <div className="px-2 flex items-center gap-[2px]">
                   <ReactStars
                     count={5}
                     value={
                       product.reviews.length > 0
-                        ? product.reviews.reduce((total, review) => total + review.rating, 0) / product.reviews.length
+                        ? product.reviews.reduce(
+                            (total, review) => total + review.rating,
+                            0
+                          ) / product.reviews.length
                         : 0
                     }
                     size={20}
@@ -144,9 +161,14 @@ export const LandingPage = () => {
                     isHalf={true}
                     edit={false}
                   />
-                  <p className="text-sm font-normal text-Variant2">({product.reviews.length})</p>
+                  <p className="text-sm font-normal text-Variant2">
+                    ({product.reviews.length})
+                  </p>
                 </div>
-                <div onClick={() => handleAddToCart(product.id)} className="text-center py-1 text-white cursor-pointer bg-black" >
+                <div
+                  onClick={() => handleAddToCart(product.id)}
+                  className="text-center py-1 text-white cursor-pointer bg-black"
+                >
                   Add to Cart
                 </div>
                 <button
